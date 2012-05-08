@@ -1,0 +1,8 @@
+C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.Properties.Resources.resources
+C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\bin\Debug\LiftSimulation.exe
+C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\bin\Debug\LiftSimulation.pdb
+C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.exe
+C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.pdb
