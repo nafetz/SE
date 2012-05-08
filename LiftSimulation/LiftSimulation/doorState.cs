@@ -21,8 +21,8 @@ namespace LiftSimulation
     /// </summary>
     class Open : DoorState
     {
-        public void open() { }
-        public void close() { }
+        public new void open() { }
+        public new void close() { }
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ namespace LiftSimulation
     /// </summary>
     class Closed : DoorState
     {
-        public void open() { }
-        public void close() { }
+        public new void open() { }
+        public new void close() { }
     }
 }

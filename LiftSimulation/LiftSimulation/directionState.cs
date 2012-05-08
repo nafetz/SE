@@ -21,8 +21,8 @@ namespace LiftSimulation
     /// </summary>
     class Upward : DirectionState
     {
-        public void change() { }
-        public void stop() { }
+        public new void change() { }
+        public new void stop() { }
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ namespace LiftSimulation
     /// </summary>
     class Downwards : DirectionState
     {
-        public void change() { }
-        public void stop() { }
+        public new void change() { }
+        public new void stop() { }
     }
 }
