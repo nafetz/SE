@@ -12,8 +12,11 @@ namespace LiftSimulation
         #region Member
 
         // State-Patterns
-        private DoorState _door;
-        private DirectionState _direction;
+        private ElevatorState State;
+
+        private ElevatorState Moving = new Moving();
+        private ElevatorState FixedOpen = new FixedOpen();
+        private ElevatorState FixedClosed = new FixedClosed();
 
         // Floor-Stuff
         private int _currentFloor;
