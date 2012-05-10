@@ -12,6 +12,7 @@ namespace LiftSimulation
     /// </summary>
     class ElevatorState
     {
+        public void Move(Elevator Elevator) { }
     }
 
     /// <summary>
@@ -19,6 +20,7 @@ namespace LiftSimulation
     /// </summary>
     class FixedOpen : ElevatorState
     {
+        public new void Move(Elevator Elevator) { }
     }
 
     /// <summary>
@@ -26,9 +28,11 @@ namespace LiftSimulation
     /// </summary>
     class FixedClosed : ElevatorState
     {
+        public new void Move(Elevator Elevator) { }
     }
 
     class Moving : ElevatorState 
     {
+        public new void Move(Elevator Elevator) { }
     }
 }

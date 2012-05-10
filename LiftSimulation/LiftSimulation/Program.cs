@@ -19,6 +19,8 @@ namespace LiftSimulation
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new UserInterface());
+
+            Elevator Elevator = new Elevator();
         }
     }
 }
