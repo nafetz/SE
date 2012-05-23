@@ -22,6 +22,7 @@ namespace LiftSimulation
         private int _currentFloor;
         List<bool> _upwardRequired = new List<bool>( Defaults.Floors );
         List<bool> _downwardRequired = new List<bool>( Defaults.Floors );
+        List<bool> _internRequired = new List<bool>( Defaults.Floors );
 
         // Riding
         /// <summary>
@@ -57,11 +58,21 @@ namespace LiftSimulation
         {
             get { return _downwardRequired; }
         }
+        public List<bool> InternRequired
+        {
+            get { return _internRequired; }
+        }
         public Defaults.Direction Direction
         {
             get { return _direction; }
             set { this._direction = value; }
         }
+        public int Passengers
+        {
+            get { return _passengers; }
+            set { _passengers = value; }
+        }
+        
 
         #endregion
 
@@ -125,6 +136,18 @@ namespace LiftSimulation
                 case Defaults.State.FixedClosed : State = FixedClosed;  break;
                 case Defaults.State.Overload    : State = Overload;     break;
             }          
+        }
+
+        /// <summary>
+        /// überprüft, ob die Anzahl der Passagiere über dem zulässigen Maximum liegt
+        /// </summary>
+        /// <returns>true, wenn Fahrstuhl überladen, sonst false</returns>
+        public bool CheckForOverload()
+        {
+            if ( _passengers > Defaults.MaximumPassengers )
+                return true;
+
+            return false;
         }
 
         #endregion
