@@ -20,21 +20,34 @@ namespace LiftSimulation
     {
         public new void Move( Elevator Elevator ) 
         {
-            /****************************************/
-            /**  Bild im Geschoss auf Offen setzen **/
-            /****************************************/
+            int previousPassengers = Elevator.Passengers;
 
-            System.Threading.Thread.Sleep( 5000 );
-            
-            
+            do
+            {
+                System.Threading.Thread.Sleep(5000);  // geht hier noch was im Elevator (v.A. Ein/Aussteigen)
+            } while (previousPassengers != Elevator.Passengers);
 
-            Elevator.SetState( Defaults.State.Moving );
+            if( Elevator.CheckForOverload() )
+                Elevator.SetState( Defaults.State.Overload );
+            else
+                Elevator.SetState( Defaults.State.FixedOpen );
         }
     }
 
     class FixedClosed : ElevatorState
     {
-        public new void Move( Elevator Elevator ) { }
+        public new void Move( Elevator Elevator ) 
+        {
+            while (true)
+            {
+                if (
+                    Elevator.UpwardRequired.Contains(true) ||
+                    Elevator.DownwardRequired.Contains(true) ||
+                    Elevator.InternRequired.Contains(true)
+                    ) break;
+            }
+            Elevator.SetState(Defaults.State.Moving);
+        }
     }
 
     class Moving : ElevatorState 
@@ -67,7 +80,11 @@ namespace LiftSimulation
     {
         public new void Move( Elevator Elevator ) 
         {
-           
+            while (true)
+            {
+                if (!Elevator.CheckForOverload()) ; break;
+            }
+            Elevator.SetState(Defaults.State.FixedClosed);
         }
     }
 }
