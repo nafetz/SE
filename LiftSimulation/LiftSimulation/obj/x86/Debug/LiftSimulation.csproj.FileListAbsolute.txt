@@ -7,3 +7,5 @@ C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\bin\D
 C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.exe
 C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.pdb
 C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.UserInterface.resources
+E:\GitRepos\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.exe
+E:\GitRepos\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.pdb
