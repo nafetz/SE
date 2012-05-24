@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 #endregion
 
 namespace LiftSimulation
@@ -20,9 +21,9 @@ namespace LiftSimulation
 
         // Floor-Stuff
         private int _currentFloor;
-        List<bool> _upwardRequired = new List<bool>( Defaults.Floors );
-        List<bool> _downwardRequired = new List<bool>( Defaults.Floors );
-        List<bool> _internRequired = new List<bool>( Defaults.Floors );
+        List<bool> _upwardRequired = new List<bool>();
+        List<bool> _downwardRequired = new List<bool>();
+        List<bool> _internRequired = new List<bool>();
 
         // Riding
         /// <summary>
@@ -94,14 +95,13 @@ namespace LiftSimulation
         {
             State = FixedClosed;
             _currentFloor = 0;
-            
+
             // ANGEBLICH ARRAY-OUT-OF-BOUND   BITTE PRÜFEN, ICH HAB KEINE AHNUNG
-            //
-            //for ( int IDX = ( EnvironmentConditions.Floors - 1 ); IDX >= 0; IDX-- ) 
-            //{ 
-            //    _downwardRequired[ IDX ] = false;
-            //    _upwardRequired[ IDX ] = false;
-            //}
+            for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
+            {
+                _downwardRequired.Add(false);
+                _upwardRequired.Add(false);
+            }
 
             State.Move( this );
         }

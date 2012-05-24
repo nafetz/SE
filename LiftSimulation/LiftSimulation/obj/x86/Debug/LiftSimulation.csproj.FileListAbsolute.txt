@@ -9,3 +9,12 @@ C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x
 C:\Users\Paul Kunze\Documents\Studium\Git\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.UserInterface.resources
 E:\GitRepos\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.exe
 E:\GitRepos\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.pdb
+C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.exe
+C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.pdb
+C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.UserInterface.resources
+C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.Properties.Resources.resources
+C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\bin\Debug\LiftSimulation.exe
+C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\bin\Debug\LiftSimulation.pdb
