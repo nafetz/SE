@@ -14,13 +14,20 @@ namespace LiftSimulation
     public partial class UserInterface : Form
     {
 
-        Label[] floor_numbers;
-        Label[] current_position;
-        GroupBox[] floors;
-        CheckedListBox[] required;
+        #region member
+
+        Label[] floor_numbers; //Anzeige der Etatennummern
+        Label[] current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
+        GroupBox[] floors;    //GroupBoxen für die Etagen
+        CheckedListBox[] required; //Fahrwünsche in den jeweiligen Etagen
+
+        #endregion
+
+
         public UserInterface()
         {
-            InitializeComponent();
+            InitializeComponent(); //Intialisierung der statisch erzeugten Formularelemente
+
             floors = new GroupBox[Defaults.Floors];
             floor_numbers = new Label[Defaults.Floors];
             current_position = new Label[Defaults.Floors];
@@ -41,7 +48,7 @@ namespace LiftSimulation
                 switch (i){               
                     case 0: floor_numbers[i].Text = "1. UG"; break;
                     case 1: floor_numbers[i].Text = "EG"; break;
-                    default: floor_numbers[i].Text = i + ". OG"; break;
+                    default: floor_numbers[i].Text = (i -1) + ". OG"; break;
                 }
                 floor_numbers[i].Width = 70;
                 floor_numbers[i].Location = new Point(10,10);
@@ -66,8 +73,6 @@ namespace LiftSimulation
                 if(i!=0)               required[i].Items.Add("Abwärts");
                 required[i].BorderStyle = System.Windows.Forms.BorderStyle.None;
                 required[i].Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                
-
                 floors[i].Controls.Add(required[i]); 
                 
             }
@@ -75,6 +80,92 @@ namespace LiftSimulation
             
             
         }
+
+        public List<bool> get_upwardRequired(){ //gibt aktualisierte Liste mit Aufwärtswünschen zurück
+
+            List<bool> _upwards = new List<bool>();
+            for(int i=0; i<Defaults.Floors;i++){
+                if (i == Defaults.Floors - 1)
+                {    _upwards.Add(false);
+                }
+                else{
+                    if (required[i].GetItemCheckState(0) == CheckState.Checked) _upwards.Add(true);
+                    else _upwards.Add(false);
+                }
+            }
+            return _upwards;
+        }
+
+        public List<bool> get_downwardRequired()
+        { //gibt aktualisierte Liste mit Aufwärtswünschen zurück
+
+            List<bool> _downwards = new List<bool>();
+            for (int i = 0; i < Defaults.Floors; i++)
+            {
+                if (i == 0)
+                {
+                    _downwards.Add(false);
+                }
+                else
+                {
+                    if (required[i].GetItemChecked(1)) _downwards.Add(true);
+                    else _downwards.Add(false);
+                }
+            }
+            return _downwards;
+        }
+
+        public List<bool> get_internRequired()
+        {
+            List<bool> _interns = new List<bool>();
+            for (int i = checkedListBox1.Items.Count; i > 0; i--)
+            {
+                if(checkedListBox1.GetItemChecked(i)) _interns.Add(true);
+                else _interns.Add(false);
+            }
+            return _interns;
+        }
+
+
+
+        public void set_current_position(int pos)
+        {
+            String position_value;
+            if (pos > Defaults.Floors || pos < 0) return;
+            switch (pos)
+            {
+                case 0: position_value = "1. UG"; break;
+                case 1: position_value = "EG"; break;
+                default: position_value = pos + ". OG"; break;
+            }
+
+            foreach (Label poslabel in current_position)
+            {
+                poslabel.Text = position_value; //äußere Label
+            }
+
+            label1.Text = position_value; //Label im inneren
+        }
+
+        public void floor_reached(int floor) //wenn eine Etage erreich wurde, müssen die Haltewünsche von der GUI verschwinden (innen + außen)
+        {
+            if (floor > Defaults.Floors || floor < 0) return;
+            int itemnumber = Defaults.Floors - floor; //Reihenfolge auf der GUI entgegengesetzt zur Liste
+            checkedListBox1.SetItemChecked(floor, false);
+            if (true)  // HILFE, WIE KANN ICH DEN STATUS DES ENUMS RICHTUNG ABFRAGEN???!?!?!?!?!??!?!?!?!?!?!?!?!?!?!!?!?!
+            {
+                if (floor != Defaults.Floors) required[floor].SetItemChecked(0, true);
+            }
+            else
+            {
+                if(floor!=0)
+                required[floor].SetItemChecked(1, true);
+            }
+
+        }
+
+
+ 
 
     }
 }
