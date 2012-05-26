@@ -49,6 +49,18 @@ namespace LiftSimulation
         #endregion
 
         #region Methods
+
+        public static string GetProjectPath()
+        {
+            string projectPath = Environment.CurrentDirectory;
+
+            for (int i = 0; i < 2; i++)
+            {
+                projectPath = System.IO.Path.GetDirectoryName(projectPath);
+            }
+            return projectPath;
+        }
+
         /// <summary>
         /// konvertiert anhand Default.Floors und Defaults.Basements 
         /// FloorNr. in nutzbaren List/Array-Index

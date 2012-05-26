@@ -38,8 +38,9 @@ namespace LiftSimulation
             doorstates = new PictureBox[Defaults.Floors];
 
             //Ich bekommen einfach den relativen Pfad nicht rein....versuch du mal dein Glück :)
-            door1 = Image.FromFile("C:/4.Semester/SE2/SE/LiftSimulation/LiftSimulation/Pictures/zu.png");
-            door2 = Image.FromFile("C:/4.Semester/SE2/SE/LiftSimulation/LiftSimulation/Pictures/auf.png");
+
+            door1 = Image.FromFile( Defaults.GetProjectPath() + @"\Pictures\zu.png");
+            door2 = Image.FromFile( Defaults.GetProjectPath() + @"\Pictures\auf.png");
 
 
             for (int i = Defaults.Floors -1 ; i >= 0; i--)
