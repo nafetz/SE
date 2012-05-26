@@ -16,10 +16,13 @@ namespace LiftSimulation
 
         #region member
 
-        Label[] floor_numbers; //Anzeige der Etatennummern
-        Label[] current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
-        GroupBox[] floors;    //GroupBoxen für die Etagen
-        CheckedListBox[] required; //Fahrwünsche in den jeweiligen Etagen
+        private Label[] floor_numbers; //Anzeige der Etatennummern
+        private Label[] current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
+        private GroupBox[] floors;    //GroupBoxen für die Etagen
+        private CheckedListBox[] required; //Fahrwünsche in den jeweiligen Etagen
+        private PictureBox[] doorstates;
+        private Image door1;
+        private Image door2;
 
         #endregion
 
@@ -32,6 +35,12 @@ namespace LiftSimulation
             floor_numbers = new Label[Defaults.Floors];
             current_position = new Label[Defaults.Floors];
             required = new CheckedListBox[Defaults.Floors];
+            doorstates = new PictureBox[Defaults.Floors];
+
+            //Ich bekommen einfach den relativen Pfad nicht rein....versuch du mal dein Glück :)
+            door1 = Image.FromFile("C:/4.Semester/SE2/SE/LiftSimulation/LiftSimulation/Pictures/zu.png");
+            door2 = Image.FromFile("C:/4.Semester/SE2/SE/LiftSimulation/LiftSimulation/Pictures/auf.png");
+
 
             for (int i = Defaults.Floors -1 ; i >= 0; i--)
             {
@@ -56,6 +65,14 @@ namespace LiftSimulation
                 floors[i].Controls.Add(floor_numbers[i]);
                 floor_numbers[i].Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
+                doorstates[i] = new PictureBox();
+                doorstates[i].Width = 30;
+                doorstates[i].Height = 30;
+                doorstates[i].Location = new Point(100, 50);
+                doorstates[i].Name = "pictureBox_doorstate" + i;
+                doorstates[i].Image = door1;
+                floors[i].Controls.Add(doorstates[i]);
+                
                 current_position[i] = new Label();
                 current_position[i].Text = "#Position";
                 current_position[i].Name = "label_position" + i;
@@ -74,6 +91,8 @@ namespace LiftSimulation
                 required[i].BorderStyle = System.Windows.Forms.BorderStyle.None;
                 required[i].Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 floors[i].Controls.Add(required[i]); 
+
+                
                 
             }
 
@@ -127,6 +146,22 @@ namespace LiftSimulation
         }
 
 
+        public void set_pessenger(int Count)
+        {
+            label5.Text = Count.ToString();
+            if (Count > Defaults.MaximumPassengers)
+            {
+                label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                label5.ForeColor = Color.Red;
+            }
+            else
+            {
+                label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                label5.ForeColor = Color.Black;
+            }
+            
+
+        }
 
         public void set_current_position(int pos)
         {
@@ -154,15 +189,35 @@ namespace LiftSimulation
             checkedListBox1.SetItemChecked(floor, false);
             if (true)  // HILFE, WIE KANN ICH DEN STATUS DES ENUMS RICHTUNG ABFRAGEN???!?!?!?!?!??!?!?!?!?!?!?!?!?!?!!?!?!
             {
-                if (floor != Defaults.Floors) required[floor].SetItemChecked(0, true);
+                if (floor != Defaults.Floors) required[floor].SetItemChecked(0, false);
             }
             else
             {
                 if(floor!=0)
-                required[floor].SetItemChecked(1, true);
+                required[floor].SetItemChecked(1, false);
             }
 
         }
+
+        public void set_direction(int direction){
+            //Ändert die Bilder-Anzeige der Innen-Richtungs-Ansicht
+            //Wieder das Problem, wie Frage ich den Status des ENUMS ab?!
+        }
+
+        public void open_door(int floor)
+        {
+            if (floor < 0 || floor > Defaults.Floors) return;
+            if (doorstates[floor].Image == door1) doorstates[floor].Image = door2;
+        }
+
+        public void close_door(int floor)
+        {
+            if (floor < 0 || floor > Defaults.Floors) return;
+            if (doorstates[floor].Image == door2) doorstates[floor].Image = door1;
+
+        }
+
+
 
 
  
