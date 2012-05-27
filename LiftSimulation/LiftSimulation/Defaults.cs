@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LiftSimulation
 {
-    static class Defaults
+    public static class Defaults
     {
         #region Members
         private static int _numberOfFloors = 6;
@@ -50,6 +50,10 @@ namespace LiftSimulation
 
         #region Methods
 
+        /// <summary>
+        /// Ermittelt den Pfad zum Projektverzeichnis
+        /// </summary>
+        /// <returns>Pfad des VS-Projektes</returns>
         public static string GetProjectPath()
         {
             string projectPath = Environment.CurrentDirectory;

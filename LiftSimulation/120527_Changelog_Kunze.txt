@@ -1,0 +1,40 @@
+0. USER INTERFACE
+
+- get_* und set_* Methoden in Properties umgewandelt (C# üblich):
+
+	get_upwardReqired() --> UpwardRequired mit get{...}
+	get_downwardRequired() --> DownwardRequired mit get{...}
+	get_internRequired() --> InternReqired mit get{...}
+	
+	set_pessenger(int Count) --> Passenger mit set{...}
+	set_current_position(int pos) --> CurrentPosition{...}
+	set_direction(int direction) --> Direction{...}
+	
+	der code blieb an sich gleich.
+	
+- regions jetzt: Member, Konstruktoren, Properties, Methoden
+
+- Kommentare, die die Funktion von Methoden (jetzt t.w. Properties) werklären in Summarys umgewandelt
+	damit die in den Dokumentationscache geladen werden
+
+	
+	
+1. ELEVATOR
+
+- Member vom Typ UserInterface hinzugefügt (für den Zugriff auf die UI über die 
+	State-Klassen [ hoffentlich geht das überhaupt ;) ] )
+- Konstruktor angepasst (parameter UI)
+
+
+
+2. PROGRAM
+
+- die UI wird nun außerhalb von Application.Run(   )  initialisiert und an Run übergeben, 
+	damit man das als Konstruktor-Argument für Elevator nutzen kann
+
+
+	
+3. DEFAULTS
+
+- ist nun Class-Namespace ist nun "public", 
+	es gab sonst komischerweise probleme beim zugriff auf Defaults über UserInterface...

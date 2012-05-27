@@ -26,11 +26,11 @@ namespace LiftSimulation
         List<bool> _internRequired = new List<bool>();
 
         // Riding
-        /// <summary>
-        /// Upward => TRUE  |  Downward => FALSE
-        /// </summary>
         private Defaults.Direction _direction = Defaults.Direction.Upward;
         private int _passengers = 0;
+
+        //User Interface
+        private UserInterface UI;
 
         #endregion
 
@@ -83,8 +83,9 @@ namespace LiftSimulation
         /// <summary>
         /// Konstruktor
         /// </summary>
-        public Elevator()
+        public Elevator(UserInterface myUI)
         {
+            this.UI = myUI;
             InitOrReset();
         }
 
