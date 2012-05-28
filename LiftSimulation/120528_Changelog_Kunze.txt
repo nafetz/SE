@@ -1,0 +1,26 @@
+USER INTERFACE
+
+- _passengerIO sowie entsprechende Property und Reset-Methode hinzu
+	diese gibt an, ob der hinzufügen/abziehen Button gedrück wurde, oder nciht
+	
+- Passenger umbenannt in PassengersCount
+
+
+	
+ELEVATOR STATE
+
+- Move() Methode könnte gehen... wer weiß wer weiß
+
+
+
+DEFAULTS
+
+- enum MoreOrLess für nutzung in USER INTERFACE zum schauen, welcher Button gedrück wurde
+	evtl bauen wir das zum zentralen "welcher Button wurde gedrück" um...
+
+- ManualResetEvent _mre & entsprechende Property hinzugefügt 
+	damit soll später das warten auf einen 
+	
+USER INTERFACE DESIGNER etc.
+
+- button5_Click(..) hinzu. 

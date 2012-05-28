@@ -20,12 +20,26 @@ namespace LiftSimulation
     {
         public new void Move( Elevator Elevator ) 
         {
-            int previousPassengers = Elevator.Passengers;
+            bool breakOut = false;
 
             do
             {
-                System.Threading.Thread.Sleep(5000);  // geht hier noch was im Elevator (v.A. Ein/Aussteigen)
-            } while (previousPassengers != Elevator.Passengers);
+                // 3 sec warten
+                Defaults.ManualResetEvent.WaitOne( 3000 );
+
+                switch( Elevator.UI.PassengersIO )
+                {
+                    case Defaults.MoreOrLess.More:
+                        Elevator.AddPassengers(1); break;
+                    case Defaults.MoreOrLess.Less:
+                        Elevator.RemovePassengers(1); break;
+                    case Defaults.MoreOrLess.Neither:
+                        breakOut = true; break;
+                }
+
+                Elevator.UI.ResetPassengerIO();
+
+            } while (!breakOut);
 
             if( Elevator.CheckForOverload() )
                 Elevator.SetState( Defaults.State.Overload );

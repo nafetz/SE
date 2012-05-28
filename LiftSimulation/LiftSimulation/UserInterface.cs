@@ -14,6 +14,8 @@ namespace LiftSimulation
 
         #region Member
 
+        private Defaults.MoreOrLess _passengersIO;
+
         private Label[] floor_numbers; //Anzeige der Etatennummern
         private Label[] current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
         private GroupBox[] floors;    //GroupBoxen für die Etagen
@@ -32,6 +34,8 @@ namespace LiftSimulation
         public UserInterface()
         {
             InitializeComponent(); //Intialisierung der statisch erzeugten Formularelemente
+
+            _passengersIO = Defaults.MoreOrLess.Neither;
 
             floors = new GroupBox[Defaults.Floors];
             floor_numbers = new Label[Defaults.Floors];
@@ -167,7 +171,7 @@ namespace LiftSimulation
         /// <summary>
         /// Passagiere im Fahrstuhl für die Anzeige in der UI
         /// </summary>
-        public int Passenger
+        public int PassengersCount
         {
             set
             {
@@ -235,6 +239,12 @@ namespace LiftSimulation
             }
         }
 
+        public Defaults.MoreOrLess PassengersIO
+        {
+            get { return _passengersIO; }
+            set { _passengersIO = value; }
+        }
+
         #endregion
 
         #region Methoden
@@ -278,7 +288,18 @@ namespace LiftSimulation
 
         }
 
+        public void ResetPassengerIO() 
+        {
+            _passengersIO = Defaults.MoreOrLess.Neither;
+        }
+
         #endregion
+
+        private void button5_Click( object sender, EventArgs e )
+        {
+            _passengersIO = Defaults.MoreOrLess.More;
+            Defaults.ManualResetEvent.Set();
+        }
 
     }
 }

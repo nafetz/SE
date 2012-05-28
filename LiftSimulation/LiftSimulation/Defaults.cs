@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 #endregion
 
 namespace LiftSimulation
@@ -15,6 +16,9 @@ namespace LiftSimulation
         private static int _maxNumberOfPassengers = 10;
         public  enum State { Moving = 1, FixedOpen, FixedClosed, Overload };
         public  enum Direction { Upward = 1, Downward };
+        public  enum MoreOrLess { More = 1, Less, Neither };
+
+        private static readonly ManualResetEvent _mre = new ManualResetEvent(false);
         #endregion
 
         #region Properties
@@ -43,6 +47,11 @@ namespace LiftSimulation
         public static int MaximumPassengers
         {
             get { return _maxNumberOfPassengers; } 
+        }
+
+        public static ManualResetEvent ManualResetEvent
+        {
+            get { return _mre; }
         }
 
 

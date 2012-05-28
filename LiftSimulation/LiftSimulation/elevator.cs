@@ -30,7 +30,7 @@ namespace LiftSimulation
         private int _passengers = 0;
 
         //User Interface
-        private UserInterface UI;
+        private UserInterface _ui;
 
         #endregion
 
@@ -51,6 +51,7 @@ namespace LiftSimulation
             get { return _currentFloor; }
             set { _currentFloor = value; }
         }
+
         public List<bool> UpwardRequired 
         {
             get { return _upwardRequired; }
@@ -63,15 +64,23 @@ namespace LiftSimulation
         {
             get { return _internRequired; }
         }
+
         public Defaults.Direction Direction
         {
             get { return _direction; }
             set { this._direction = value; }
         }
+
         public int Passengers
         {
             get { return _passengers; }
             set { _passengers = value; }
+        }
+
+        public UserInterface UI
+        {
+            get { return _ui; }
+            set { _ui = value; }
         }
         
 
@@ -85,7 +94,7 @@ namespace LiftSimulation
         /// </summary>
         public Elevator(UserInterface myUI)
         {
-            this.UI = myUI;
+            this._ui = myUI;
             InitOrReset();
         }
 
