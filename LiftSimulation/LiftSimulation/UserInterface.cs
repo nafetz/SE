@@ -245,6 +245,18 @@ namespace LiftSimulation
             set { _passengersIO = value; }
         }
 
+        public String logging{
+            set
+            {
+                /*
+                 * Hier kommt Code zum hinzufügen einer Statuszeile
+                 * was liefert value bei mehreren benötigten Werten - wie kann man es verarbeiten?
+                 * Oder brauchen wir einen Struct als Funktionstyp, der dann unter "value" läuft?
+                 * */
+
+            }
+        }
+
         #endregion
 
         #region Methoden
