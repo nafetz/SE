@@ -24,15 +24,15 @@ namespace LiftSimulation
 
             do
             {
-                // 3 sec warten
+                // 3 sec warten auf Button5
                 Defaults.ManualResetEvent.WaitOne( 3000 );
 
                 switch( Elevator.UI.PassengersIO )
                 {
                     case Defaults.MoreOrLess.More:
-                        Elevator.AddPassengers(1); break;
+                        Elevator.Passengers++; break;
                     case Defaults.MoreOrLess.Less:
-                        Elevator.RemovePassengers(1); break;
+                        Elevator.Passengers++; break;
                     case Defaults.MoreOrLess.Neither:
                         breakOut = true; break;
                 }
@@ -52,15 +52,14 @@ namespace LiftSimulation
     {
         public new void Move( Elevator Elevator ) 
         {
-            while (true)
+            bool breakOut = false;
+
+            do
             {
-                if (
-                    Elevator.UpwardRequired.Contains(true) ||
-                    Elevator.DownwardRequired.Contains(true) ||
-                    Elevator.InternRequired.Contains(true)
-                    ) break;
-            }
-            Elevator.SetState(Defaults.State.Moving);
+                Defaults.ManualResetEvent.WaitOne( 3000 );
+
+
+            } while( !breakOut );
         }
     }
 

@@ -65,6 +65,70 @@ namespace LiftSimulation
             get { return _internRequired; }
         }
 
+        public bool ReachedHighestOrLowestFloor
+        {
+            get
+            { 
+                //niedrigster Floor = ( 0 - AnzahlDerKellerGeschosse )
+                if( _currentFloor == ( 0 - Defaults.Basements ) )
+                    return true;
+                if( _currentFloor == Defaults.Floors )
+                    return true;
+
+                return false;
+            }
+        }
+        public bool ThereAreWishesOnThisFloor
+        {
+            get 
+            {
+                if( _internRequired[ Defaults.FloorToIdx( _currentFloor ) ] )
+                    return true;
+
+                switch( _direction ) 
+                {
+                    case Defaults.Direction.Upward:
+                        {
+                            if( _upwardRequired[ Defaults.FloorToIdx( _currentFloor ) ] )
+                                return true;
+                        } break;
+                    case Defaults.Direction.Downward:
+                        {
+                            if( _downwardRequired[ Defaults.FloorToIdx( _currentFloor ) ] )
+                                return true;
+                        } break;
+                }
+
+                return false;
+            }
+        }
+
+        //mal drüber gucke, glaub nicht dass das so geht
+        public bool ThereAreWishesInMyDirection
+        {
+            get 
+            {
+                switch( _direction )
+                {
+                    case Defaults.Direction.Upward:
+                        {
+                            if( _upwardRequired.IndexOf(    // gibts ein Element das:
+                                true,                       // true ist
+                                Defaults.FloorToIdx( _currentFloor ),   // zw. dem aktuellem und
+                                ( _upwardRequired.Count - Defaults.FloorToIdx( _currentFloor ) ) ) != -1 )  //dem letzten Element liegt?
+                                return true;
+                        } break;
+                    case Defaults.Direction.Downward:
+                        {
+                            if( _downwardRequired.IndexOf( true, Defaults.FloorToIdx( _currentFloor ) ) != -1 )
+                                return true;
+                        } break;
+                }
+
+                return false;
+            }
+        }
+
         public Defaults.Direction Direction
         {
             get { return _direction; }
@@ -114,23 +178,6 @@ namespace LiftSimulation
             }
 
             State.Move( this );
-        }
-
-        public void AddPassengers( int Count ) 
-        { 
-            _passengers += Count;
-            if ( _passengers > Defaults.MaximumPassengers )
-            {
-                State = Overload;
-            }
-        }
-
-        public void RemovePassengers( int Count ) 
-        {
-            if (_passengers - Count < 0)
-                _passengers = 0;
-            else 
-                _passengers -= Count; 
         }
         
         /// <summary>
