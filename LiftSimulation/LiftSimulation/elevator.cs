@@ -39,6 +39,13 @@ namespace LiftSimulation
 
         // Für den Zugriff außerhalb des Class-Scope
         // get
+
+        public ElevatorState CurrentState
+        {
+            get { return State; }
+            set { State = value; }
+        }
+
         /// <summary>
         /// Nummer der gegenwärtigen Etage.
         /// Achtung!!! Nicht nullbasiert :
@@ -205,6 +212,20 @@ namespace LiftSimulation
                 return true;
 
             return false;
+        }
+
+        /// <summary>
+        /// ändert Fahrtrichtung ins entgegengesetzte
+        /// </summary>
+        public void SwitchDirection()
+        {
+            switch( _direction )
+            {
+                case Defaults.Direction.Downward:
+                    { _direction = Defaults.Direction.Upward; } break;
+                case Defaults.Direction.Upward:
+                    { _direction = Defaults.Direction.Downward; } break;
+            }
         }
 
         #endregion

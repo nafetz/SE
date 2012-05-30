@@ -32,34 +32,38 @@ namespace LiftSimulation
                     case Defaults.MoreOrLess.More:
                         Elevator.Passengers++; break;
                     case Defaults.MoreOrLess.Less:
-                        Elevator.Passengers++; break;
+                        Elevator.Passengers--; break;
                     case Defaults.MoreOrLess.Neither:
                         breakOut = true; break;
                 }
 
-                Elevator.UI.ResetPassengerIO();
+                Elevator.UI.ResetPassengerIO();     // wieder Neither
 
             } while (!breakOut);
 
             if( Elevator.CheckForOverload() )
                 Elevator.SetState( Defaults.State.Overload );
+            
+            if( Elevator.ReachedHighestOrLowestFloor || !Elevator.ThereAreWishesInMyDirection )
+                Elevator.SwitchDirection();
+
             else
-                Elevator.SetState( Defaults.State.FixedOpen );
+                Elevator.SetState( Defaults.State.FixedClosed );
         }
     }
 
+    /// <summary>
+    /// Eigentlich PseudoZustand, der nur Übergänge einleitet
+    /// </summary>
     class FixedClosed : ElevatorState
     {
         public new void Move( Elevator Elevator ) 
         {
-            bool breakOut = false;
+            if( Elevator.ThereAreWishesOnThisFloor )
+                Elevator.SetState( Defaults.State.FixedOpen );
+            else
+                Elevator.SetState( Defaults.State.Moving );
 
-            do
-            {
-                Defaults.ManualResetEvent.WaitOne( 3000 );
-
-
-            } while( !breakOut );
         }
     }
 
@@ -93,10 +97,30 @@ namespace LiftSimulation
     {
         public new void Move( Elevator Elevator ) 
         {
-            while (true)
+            bool breakOut = false;
+
+            do
             {
-                if (!Elevator.CheckForOverload()) ; break;
-            }
+                // 3 sec warten auf Button
+                Defaults.ManualResetEvent.WaitOne( 3000 );
+
+                switch( Elevator.UI.PassengersIO )
+                {
+                    case Defaults.MoreOrLess.More:
+                        Elevator.Passengers++; break;
+                    case Defaults.MoreOrLess.Less:
+                        Elevator.Passengers--; break;
+                    case Defaults.MoreOrLess.Neither:
+                        { } break;
+                }
+
+                Elevator.UI.ResetPassengerIO();     // wieder Neither
+
+                if( !Elevator.CheckForOverload() )
+                    breakOut = true;
+
+            } while( !breakOut );
+
             Elevator.SetState(Defaults.State.FixedClosed);
         }
     }

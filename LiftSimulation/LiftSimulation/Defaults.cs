@@ -18,7 +18,8 @@ namespace LiftSimulation
         public  enum Direction { Upward = 1, Downward };
         public  enum MoreOrLess { More = 1, Less, Neither };
 
-        private static readonly ManualResetEvent _mre = new ManualResetEvent(false);
+        private static readonly ManualResetEvent _mre = new ManualResetEvent( false );
+        private static readonly ManualResetEvent _wre = new ManualResetEvent( false ); 
         #endregion
 
         #region Properties
@@ -52,6 +53,11 @@ namespace LiftSimulation
         public static ManualResetEvent ManualResetEvent
         {
             get { return _mre; }
+        }
+
+        public static ManualResetEvent WaitingResetEvent
+        {
+            get { return _wre; }
         }
 
 

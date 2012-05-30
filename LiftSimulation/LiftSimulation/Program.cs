@@ -24,6 +24,11 @@ namespace LiftSimulation
             Application.Run(UI);
 
             Elevator Elevator = new Elevator(UI);
+
+            while( true )
+            {
+                Elevator.CurrentState.Move( Elevator );
+            }
         }
     }
 }

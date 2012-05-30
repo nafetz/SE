@@ -313,5 +313,11 @@ namespace LiftSimulation
             Defaults.ManualResetEvent.Set();
         }
 
+        private void button4_Click( object sender, EventArgs e )
+        {
+            _passengersIO = Defaults.MoreOrLess.Less;
+            Defaults.ManualResetEvent.Set();
+        }
+
     }
 }

@@ -1,0 +1,16 @@
+ELEVATOR: (in Vorbereitung für FixedClosed.Move(Elevator))
+
+- AddPassengers(int) & RemovePassengers(int)  entfernt, da überflüssig
+
+- Property bool ReachedHighestOrLowestFloor mit get{..} hinzu...
+	gibt an, ob man ganz oben oder ganz unten ist
+	
+- Property bool ThereAreWishesOnThisFloor mit get{..} hinzu...
+	gibt an, ob es Fahrtwünsche für diesen Floor gibt
+	berücksichtigt dabei die Fahrtrichtung 
+		(wenn man hochfährt, werden Abwärtswünsche vernachlässigt usw.)
+		
+- Property bool ThereAreWishesInMyDirection mit get{..} hinzu
+	gibt an, ob es Fahrwünsche in Fahrtrichtung gibt
+	
+	
