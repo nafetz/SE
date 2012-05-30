@@ -43,8 +43,8 @@ namespace LiftSimulation
             required = new CheckedListBox[Defaults.Floors];
             doorstates = new PictureBox[Defaults.Floors];
 
-            door1 = Image.FromFile( Defaults.GetProjectPath() + @"\Pictures\zu.png");
-            door2 = Image.FromFile( Defaults.GetProjectPath() + @"\Pictures\auf.png");
+            door1 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.gif");
+            door2 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.gif");
 
 
             for (int i = Defaults.Floors -1 ; i >= 0; i--)
@@ -111,20 +111,31 @@ namespace LiftSimulation
             get
             {
                 List<bool> _upwards = new List<bool>();
-                for( int i = 0; i < Defaults.Floors; i++ )
+                for (int i = 0; i < Defaults.Floors; i++)
                 {
-                    if( i == Defaults.Floors - 1 )
+                    if (i == Defaults.Floors - 1)
                     {
-                        _upwards.Add( false );
+                        _upwards.Add(false);
                     }
                     else
                     {
-                        if( required[ i ].GetItemCheckState( 0 ) == CheckState.Checked ) _upwards.Add( true );
-                        else _upwards.Add( false );
+                        if (required[i].GetItemCheckState(0) == CheckState.Checked) _upwards.Add(true);
+                        else _upwards.Add(false);
                     }
                 }
                 return _upwards;
             }// get
+
+            set
+            {       List<bool> _upwards = value; //kann man die Liste einfach so kopieren?
+                    for (int i = 0; i < Defaults.Floors - 1; i++) //geht bis zum vorletzten, da es oben ohnehin kein "hoch" gibt
+                    {
+                        if (_upwards.ElementAt(i) == true) required[i].SetItemChecked(0, false);
+                    
+                    }               
+
+            }
+
         }
 
         /// <summary>
@@ -134,6 +145,7 @@ namespace LiftSimulation
         {
             get
             {
+               
                 List<bool> _downwards = new List<bool>();
                 for( int i = 0; i < Defaults.Floors; i++ )
                 {
@@ -144,11 +156,20 @@ namespace LiftSimulation
                     else
                     {
                         if( required[ i ].GetItemChecked( 1 ) ) _downwards.Add( true );
-                        else _downwards.Add( false );
+                        else _downwards.Add(false);
                     }
                 }
                 return _downwards;
             }// get
+            set
+            {
+                List<bool> _downwards = value; //kann man die Liste einfach so kopieren?
+                for (int i = 1; i < Defaults.Floors; i++) //startet bei 1, da es unten ohnehin kein "runter" gibt
+                {
+                    if (_downwards.ElementAt(i) == true) required[i].SetItemChecked(0, false);
+
+                }  
+            }
         }
 
         /// <summary>
@@ -159,12 +180,21 @@ namespace LiftSimulation
             get
             {
                 List<bool> _interns = new List<bool>();
-                for( int i = checkedListBox1.Items.Count; i > 0; i-- )
+                for (int i = checkedListBox1.Items.Count; i > 0; i--)
                 {
-                    if( checkedListBox1.GetItemChecked( i ) ) _interns.Add( true );
-                    else _interns.Add( false );
+                    if (checkedListBox1.GetItemChecked(i)) _interns.Add(true);
+                    else _interns.Add(false);
                 }
                 return _interns;
+            }
+            set
+            {
+                List<bool> _interns = value; //kann man die Liste einfach so kopieren?
+                for (int i = checkedListBox1.Items.Count; i > 0; i--) //startet bei 1, da es unten ohnehin kein "runter" gibt
+                {
+                    if (_interns.ElementAt(i) == true) checkedListBox1.SetItemChecked(0, false);
+
+                }
             }
         }
 
@@ -245,14 +275,20 @@ namespace LiftSimulation
             set { _passengersIO = value; }
         }
 
-        public String logging{
+
+        public Defaults._logentry logging{
             set
             {
-                /*
-                 * Hier kommt Code zum hinzufügen einer Statuszeile
-                 * was liefert value bei mehreren benötigten Werten - wie kann man es verarbeiten?
-                 * Oder brauchen wir einen Struct als Funktionstyp, der dann unter "value" läuft?
-                 * */
+
+                int pos = dataGridView1.RowCount + 1;
+                dataGridView1.Rows.Add(pos.ToString(),
+                                       value._direction.ToString(),
+                                       value._floor.ToString(),
+                                       value._passenger.ToString(),
+                                       value._state.ToString()
+                    );
+
+                
 
             }
         }
@@ -261,31 +297,6 @@ namespace LiftSimulation
 
         #region Methoden
 
-        public void floor_reached(int floor) //wenn eine Etage erreich wurde, müssen die Haltewünsche von der GUI verschwinden (innen + außen)
-        {
-
-            /******************************************/
-            /*                                        */
-            /* Ich denke das sollte man anders machen */
-            /* wegen Gamma...                         */
-            /*                                        */
-            /******************************************/ 
-
-
-            if (floor > Defaults.Floors || floor < 0) return;
-            int itemnumber = Defaults.Floors - floor; //Reihenfolge auf der GUI entgegengesetzt zur Liste
-            checkedListBox1.SetItemChecked(floor, false);
-            if (true)  // HILFE, WIE KANN ICH DEN STATUS DES ENUMS RICHTUNG ABFRAGEN???!?!?!?!?!??!?!?!?!?!?!?!?!?!?!!?!?!
-            {
-                if (floor != Defaults.Floors) required[floor].SetItemChecked(0, false);
-            }
-            else
-            {
-                if(floor!=0)
-                required[floor].SetItemChecked(1, false);
-            }
-
-        }
 
         public void open_door(int floor)
         {
@@ -307,15 +318,15 @@ namespace LiftSimulation
 
         #endregion
 
-        private void button5_Click( object sender, EventArgs e )
+        private void button5_Click( object sender, EventArgs e ) //+1 Button
         {
-            _passengersIO = Defaults.MoreOrLess.More;
+            _passengersIO = Defaults.MoreOrLess.More; //Wo ist der Typ von _passengersIO deklariert? wirkt unsauber implementiert?!
             Defaults.ManualResetEvent.Set();
         }
 
-        private void button4_Click( object sender, EventArgs e )
+        private void button4_Click( object sender, EventArgs e ) //-1 Button
         {
-            _passengersIO = Defaults.MoreOrLess.Less;
+            _passengersIO = Defaults.MoreOrLess.Less; 
             Defaults.ManualResetEvent.Set();
         }
 
