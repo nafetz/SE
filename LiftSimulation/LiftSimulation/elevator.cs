@@ -37,9 +37,6 @@ namespace LiftSimulation
 
         #region Properties
 
-        // Für den Zugriff außerhalb des Class-Scope
-        // get
-
         public ElevatorState CurrentState
         {
             get { return State; }
@@ -177,7 +174,6 @@ namespace LiftSimulation
             State = FixedClosed;
             _currentFloor = 0;
 
-            // ANGEBLICH ARRAY-OUT-OF-BOUND   BITTE PRÜFEN, ICH HAB KEINE AHNUNG
             for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
             {
                 _downwardRequired.Add(false);
