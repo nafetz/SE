@@ -63,7 +63,6 @@ namespace LiftSimulation
                 Elevator.SetState( Defaults.State.FixedOpen );
             else
                 Elevator.SetState( Defaults.State.Moving );
-
         }
     }
 
@@ -71,25 +70,37 @@ namespace LiftSimulation
     {
         public new void Move( Elevator Elevator ) 
         {
-            if ( Elevator.Direction == Defaults.Direction.Upward )
+            bool breakout = false;
+
+            while( !breakout )
             {
-                int highestWishIdx = Elevator.UpwardRequired.FindLastIndex ( delegate ( bool wish ) { return wish == true; } );
-                if ( highestWishIdx > Defaults.FloorToIdx (Elevator.CurrentFloor) )
+                if( Elevator.ReachedHighestOrLowestFloor )
                 {
-                    Elevator.CurrentFloor++;
-                    if ( Elevator.UpwardRequired[ Defaults.FloorToIdx( Elevator.CurrentFloor ) ] )
-                    {
-                        Elevator.SetState ( Defaults.State.FixedOpen );
-                    }
-                }
-                else
-                {
-                    Elevator.Direction = Defaults.Direction.Downward;
+                    Elevator.SwitchDirection();
                 }
 
-            }
-            else
-            { }
+                if( Elevator.ThereAreWishesOnThisFloor )
+                {
+                    breakout = true;
+                }
+
+                if( Elevator.ThereAreWishesInMyDirection )
+                {
+                    switch( Elevator.Direction )
+                    {
+                        case Defaults.Direction.Upward:
+                            {
+                                Elevator.CurrentFloor++;
+                            } break;
+                        case Defaults.Direction.Downward:
+                            {
+                                Elevator.CurrentFloor--;
+                            } break;
+                    }// switch
+                }// if
+            }// while
+
+            Elevator.SetState( Defaults.State.FixedClosed );
         }
     }
 
