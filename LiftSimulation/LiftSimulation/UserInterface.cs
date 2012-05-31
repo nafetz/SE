@@ -55,7 +55,7 @@ namespace LiftSimulation
                 floors[i].Height = 110;
                 floors[i].Width = 350;
                 floors[i].Name = "groupBox_floor" + i;
-                groupBox1.Controls.Add(floors[i]);
+                groupBox_outsite.Controls.Add(floors[i]);
 
                 
                 floor_numbers[i] = new Label();
@@ -180,9 +180,9 @@ namespace LiftSimulation
             get
             {
                 List<bool> _interns = new List<bool>();
-                for (int i = checkedListBox1.Items.Count; i > 0; i--)
+                for (int i = checkedListBox_floor_selection.Items.Count; i > 0; i--)
                 {
-                    if (checkedListBox1.GetItemChecked(i)) _interns.Add(true);
+                    if (checkedListBox_floor_selection.GetItemChecked(i)) _interns.Add(true);
                     else _interns.Add(false);
                 }
                 return _interns;
@@ -190,9 +190,9 @@ namespace LiftSimulation
             set
             {
                 List<bool> _interns = value; //kann man die Liste einfach so kopieren?
-                for (int i = checkedListBox1.Items.Count; i > 0; i--) //startet bei 1, da es unten ohnehin kein "runter" gibt
+                for (int i = checkedListBox_floor_selection.Items.Count; i > 0; i--) //startet bei 1, da es unten ohnehin kein "runter" gibt
                 {
-                    if (_interns.ElementAt(i) == true) checkedListBox1.SetItemChecked(0, false);
+                    if (_interns.ElementAt(i) == true) checkedListBox_floor_selection.SetItemChecked(0, false);
 
                 }
             }
@@ -207,16 +207,16 @@ namespace LiftSimulation
             {
                 int Count = value;
 
-                label5.Text = Count.ToString();
+                label_display_passengers.Text = Count.ToString();
                 if (Count > Defaults.MaximumPassengers)
                 {
-                    label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    label5.ForeColor = Color.Red;
+                    label_display_passengers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    label_display_passengers.ForeColor = Color.Red;
                 }
                 else
                 {
-                    label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    label5.ForeColor = Color.Black;
+                    label_display_passengers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    label_display_passengers.ForeColor = Color.Black;
                 }    
             }
         }
@@ -243,7 +243,7 @@ namespace LiftSimulation
                     poslabel.Text = position_value; //äußere Label
                 }
 
-                label1.Text = position_value; //Label im inneren
+                label_floor_display.Text = position_value; //Label im inneren
             }
         }
 
@@ -275,13 +275,15 @@ namespace LiftSimulation
             set { _passengersIO = value; }
         }
 
-
+        /// <summary>
+        /// Anzeige der aktuellen Parameter im DataGridView
+        /// </summary>
         public Defaults._logentry logging{
             set
             {
 
-                int pos = dataGridView1.RowCount + 1;
-                dataGridView1.Rows.Add(pos.ToString(),
+                int pos = dataGridView_log.RowCount + 1;
+                dataGridView_log.Rows.Add(pos.ToString(),
                                        value._direction.ToString(),
                                        value._floor.ToString(),
                                        value._passenger.ToString(),
@@ -297,17 +299,24 @@ namespace LiftSimulation
 
         #region Methoden
 
-
+        /// <summary>
+        /// Tür öffnen auf auf der GUI darstellen
+        /// </summary>
+        /// <param name="floor"></param>
         public void open_door(int floor)
         {
             if (floor < 0 || floor > Defaults.Floors) return;
-            if (doorstates[floor].Image == door1) doorstates[floor].Image = door2;
+            if (doorstates[floor].Image == door2) doorstates[floor].Image = door1;
         }
 
+        /// <summary>
+        /// Tür schießen auf der GUI darstellen
+        /// </summary>
+        /// <param name="floor"></param>
         public void close_door(int floor)
         {
             if (floor < 0 || floor > Defaults.Floors) return;
-            if (doorstates[floor].Image == door2) doorstates[floor].Image = door1;
+            if (doorstates[floor].Image == door1) doorstates[floor].Image = door2;
 
         }
 
@@ -318,16 +327,31 @@ namespace LiftSimulation
 
         #endregion
 
-        private void button5_Click( object sender, EventArgs e ) //+1 Button
+        private void button_more_passenger_Click(object sender, EventArgs e) //+1 Button
         {
             _passengersIO = Defaults.MoreOrLess.More; //Wo ist der Typ von _passengersIO deklariert? wirkt unsauber implementiert?!
             Defaults.ManualResetEvent.Set();
         }
 
-        private void button4_Click( object sender, EventArgs e ) //-1 Button
+        private void button_less_passenger_Click(object sender, EventArgs e) //-1 Button
         {
             _passengersIO = Defaults.MoreOrLess.Less; 
             Defaults.ManualResetEvent.Set();
+        }
+
+        private void button_emergency_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Blöd gelaufen... äh gefahren");  
+        }
+
+        private void button_open_door_Click(object sender, EventArgs e)
+        {
+            open_door(1); // Hier müssen wir die aktuelle Etage ermitteln
+        }
+
+        private void button_close_door_Click(object sender, EventArgs e)
+        {
+            close_door(1); // Hier müssen wir die aktuelle Etage ermitteln
         }
 
     }
