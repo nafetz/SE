@@ -1,16 +1,29 @@
-ELEVATOR: (in Vorbereitung für FixedClosed.Move(Elevator))
+ELEVATOR STATE:
 
-- AddPassengers(int) & RemovePassengers(int)  entfernt, da überflüssig
+- Zustandsübergänge in FixedClosed eingefügt
 
-- Property bool ReachedHighestOrLowestFloor mit get{..} hinzu...
-	gibt an, ob man ganz oben oder ganz unten ist
-	
-- Property bool ThereAreWishesOnThisFloor mit get{..} hinzu...
-	gibt an, ob es Fahrtwünsche für diesen Floor gibt
-	berücksichtigt dabei die Fahrtrichtung 
-		(wenn man hochfährt, werden Abwärtswünsche vernachlässigt usw.)
-		
-- Property bool ThereAreWishesInMyDirection mit get{..} hinzu
-	gibt an, ob es Fahrwünsche in Fahrtrichtung gibt
-	
-	
+- Zustandsübergang in FixedOpen gefixt (war versehendelich auf FixedOpen)
+
+- Richtungswechsellogik in FixedOpen hinzu
+
+- Overload fertig
+
+
+
+ELEVATOR:
+
+- void SwitchDirection hinzu (ändert Fahrtrichtung)
+
+
+
+PROGRAM
+
+- while(true) schleife hinzu, kurbelt den Fahrstuhl an
+
+
+DEFAULTS
+
+- ManualResetEvent _wre  entspr. Property hinzu,
+	damit der sich nicht dumm und dämlich rödelt, wenn niemad fahren will. 
+	dazu bitte Defaults.WaitingResetEvent.Set(); bei jedem drückwunsch einfügen!!!!
+	[das warten ist jedoch noch nicht implementiert.
