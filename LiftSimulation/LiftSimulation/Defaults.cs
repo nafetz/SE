@@ -19,7 +19,24 @@ namespace LiftSimulation
         public  enum MoreOrLess { More = 1, Less, Neither };
 
         private static readonly ManualResetEvent _mre = new ManualResetEvent( false );
-        private static readonly ManualResetEvent _wre = new ManualResetEvent( false ); 
+        private static readonly ManualResetEvent _wre = new ManualResetEvent( false );
+
+        public struct _logentry
+        {
+            public Direction _direction;
+            public int _floor;
+            public int _passenger;
+            public State _state;
+
+            public _logentry(Direction d, int f, int p, State s)
+            {
+                _direction = d;
+                _floor = f;
+                _passenger = p;
+                _state = s;
+            }
+
+        }
         #endregion
 
         #region Properties
