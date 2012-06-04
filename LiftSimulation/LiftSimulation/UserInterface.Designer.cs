@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserInterface));
             this.groupBox_outsite = new System.Windows.Forms.GroupBox();
             this.groupBox_inside = new System.Windows.Forms.GroupBox();
@@ -52,8 +52,7 @@
             this.checkedListBox_floor_selection = new System.Windows.Forms.CheckedListBox();
             this.label_geschosswahl = new System.Windows.Forms.Label();
             this.groupBox_position_display = new System.Windows.Forms.GroupBox();
-            this.pictureBox_upward = new System.Windows.Forms.PictureBox();
-            this.pictureBox_downward = new System.Windows.Forms.PictureBox();
+            this.pictureBox_direction = new System.Windows.Forms.PictureBox();
             this.label_floor_display = new System.Windows.Forms.Label();
             this.groupBox_inside.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_log)).BeginInit();
@@ -62,8 +61,7 @@
             this.groupBox_door_control.SuspendLayout();
             this.groupBox_floor_selection.SuspendLayout();
             this.groupBox_position_display.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_upward)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_downward)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_direction)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox_outsite
@@ -90,11 +88,11 @@
             // 
             this.dataGridView_log.AllowUserToAddRows = false;
             this.dataGridView_log.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle3.NullValue = "-";
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle1.NullValue = "-";
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_log.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView_log.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -291,8 +289,7 @@
             // 
             // groupBox_position_display
             // 
-            this.groupBox_position_display.Controls.Add(this.pictureBox_upward);
-            this.groupBox_position_display.Controls.Add(this.pictureBox_downward);
+            this.groupBox_position_display.Controls.Add(this.pictureBox_direction);
             this.groupBox_position_display.Controls.Add(this.label_floor_display);
             this.groupBox_position_display.Location = new System.Drawing.Point(186, 53);
             this.groupBox_position_display.Name = "groupBox_position_display";
@@ -300,29 +297,21 @@
             this.groupBox_position_display.TabIndex = 0;
             this.groupBox_position_display.TabStop = false;
             // 
-            // pictureBox_upward
+            // pictureBox_direction
             // 
-            this.pictureBox_upward.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_upward.Image")));
-            this.pictureBox_upward.Location = new System.Drawing.Point(83, 55);
-            this.pictureBox_upward.Name = "pictureBox_upward";
-            this.pictureBox_upward.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox_upward.TabIndex = 3;
-            this.pictureBox_upward.TabStop = false;
-            // 
-            // pictureBox_downward
-            // 
-            this.pictureBox_downward.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_downward.Image")));
-            this.pictureBox_downward.Location = new System.Drawing.Point(21, 55);
-            this.pictureBox_downward.Name = "pictureBox_downward";
-            this.pictureBox_downward.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox_downward.TabIndex = 2;
-            this.pictureBox_downward.TabStop = false;
+            this.pictureBox_direction.ErrorImage = null;
+            this.pictureBox_direction.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_direction.Image")));
+            this.pictureBox_direction.Location = new System.Drawing.Point(50, 55);
+            this.pictureBox_direction.Name = "pictureBox_direction";
+            this.pictureBox_direction.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox_direction.TabIndex = 3;
+            this.pictureBox_direction.TabStop = false;
             // 
             // label_floor_display
             // 
             this.label_floor_display.AutoSize = true;
             this.label_floor_display.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_floor_display.Location = new System.Drawing.Point(46, 16);
+            this.label_floor_display.Location = new System.Drawing.Point(44, 16);
             this.label_floor_display.Name = "label_floor_display";
             this.label_floor_display.Size = new System.Drawing.Size(40, 25);
             this.label_floor_display.TabIndex = 0;
@@ -345,8 +334,7 @@
             this.groupBox_floor_selection.PerformLayout();
             this.groupBox_position_display.ResumeLayout(false);
             this.groupBox_position_display.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_upward)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_downward)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_direction)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -370,8 +358,7 @@
         private System.Windows.Forms.Button button_less_passenger;
         private System.Windows.Forms.Label label_display_passengers;
         private System.Windows.Forms.Label label_passengers;
-        private System.Windows.Forms.PictureBox pictureBox_upward;
-        private System.Windows.Forms.PictureBox pictureBox_downward;
+        private System.Windows.Forms.PictureBox pictureBox_direction;
         private System.Windows.Forms.DataGridView dataGridView_log;
         private System.Windows.Forms.DataGridViewTextBoxColumn Eintrag;
         private System.Windows.Forms.DataGridViewTextBoxColumn Richtung;

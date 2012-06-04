@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+
+
 namespace LiftSimulation
 {
     public partial class UserInterface : Form
@@ -21,8 +23,10 @@ namespace LiftSimulation
         private GroupBox[] floors;    //GroupBoxen für die Etagen
         private CheckedListBox[] required; //Fahrwünsche in den jeweiligen Etagen
         private PictureBox[] doorstates;
-        private Image door1;
-        private Image door2;
+        private Image img_door1;
+        private Image img_door2;
+        private Image img_direction;
+ 
 
         #endregion
 
@@ -34,7 +38,7 @@ namespace LiftSimulation
         public UserInterface()
         {
             InitializeComponent(); //Intialisierung der statisch erzeugten Formularelemente
-
+            ChangeDirection();            
             _passengersIO = Defaults.MoreOrLess.Neither;
 
             floors = new GroupBox[Defaults.Floors];
@@ -43,8 +47,8 @@ namespace LiftSimulation
             required = new CheckedListBox[Defaults.Floors];
             doorstates = new PictureBox[Defaults.Floors];
 
-            door1 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.gif");
-            door2 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.gif");
+            img_door1 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.gif");
+            img_door2 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.gif");
 
 
             for (int i = Defaults.Floors -1 ; i >= 0; i--)
@@ -75,7 +79,7 @@ namespace LiftSimulation
                 doorstates[i].Height = 30;
                 doorstates[i].Location = new Point(100, 50);
                 doorstates[i].Name = "pictureBox_doorstate" + i;
-                doorstates[i].Image = door1;
+                doorstates[i].Image = img_door1;
                 floors[i].Controls.Add(doorstates[i]);
                 
                 current_position[i] = new Label();
@@ -259,6 +263,7 @@ namespace LiftSimulation
                 {
                     case Defaults.Direction.Downward:
                         {
+                            pictureBox_direction.Hide();
                             // dein Code hier
                         } break;
                     case Defaults.Direction.Upward:
@@ -295,6 +300,7 @@ namespace LiftSimulation
             }
         }
 
+
         #endregion
 
         #region Methoden
@@ -306,7 +312,7 @@ namespace LiftSimulation
         public void open_door(int floor)
         {
             if (floor < 0 || floor > Defaults.Floors) return;
-            if (doorstates[floor].Image == door2) doorstates[floor].Image = door1;
+            if (doorstates[floor].Image == img_door2) doorstates[floor].Image = img_door1;
         }
 
         /// <summary>
@@ -316,7 +322,7 @@ namespace LiftSimulation
         public void close_door(int floor)
         {
             if (floor < 0 || floor > Defaults.Floors) return;
-            if (doorstates[floor].Image == door1) doorstates[floor].Image = door2;
+            if (doorstates[floor].Image == img_door1) doorstates[floor].Image = img_door2;
 
         }
 
@@ -329,7 +335,7 @@ namespace LiftSimulation
 
         private void button_more_passenger_Click(object sender, EventArgs e) //+1 Button
         {
-            _passengersIO = Defaults.MoreOrLess.More; //Wo ist der Typ von _passengersIO deklariert? wirkt unsauber implementiert?!
+            _passengersIO = Defaults.MoreOrLess.More; 
             Defaults.ManualResetEvent.Set();
         }
 
@@ -352,6 +358,16 @@ namespace LiftSimulation
         private void button_close_door_Click(object sender, EventArgs e)
         {
             close_door(1); // Hier müssen wir die aktuelle Etage ermitteln
+        }
+
+        public void ChangeDirection()
+        {
+            
+                img_direction =  pictureBox_direction.Image;
+                img_direction.RotateFlip(RotateFlipType.Rotate180FlipX);
+                pictureBox_direction.Image = img_direction;
+           
+
         }
 
     }

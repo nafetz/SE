@@ -30,9 +30,13 @@ namespace LiftSimulation
                 switch( Elevator.UI.PassengersIO )
                 {
                     case Defaults.MoreOrLess.More:
-                        Elevator.Passengers++; break;
+                        Elevator.Passengers++;
+                        Elevator.UI.PassengersCount = Elevator.Passengers;
+                        break;
                     case Defaults.MoreOrLess.Less:
-                        Elevator.Passengers--; break;
+                        Elevator.Passengers--;
+                        Elevator.UI.PassengersCount = Elevator.Passengers;
+                        break;
                     case Defaults.MoreOrLess.Neither:
                         breakOut = true; break;
                 }
@@ -118,11 +122,15 @@ namespace LiftSimulation
                 switch( Elevator.UI.PassengersIO )
                 {
                     case Defaults.MoreOrLess.More:
-                        Elevator.Passengers++; break;
+                        Elevator.Passengers++;
+                        Elevator.UI.PassengersCount = Elevator.Passengers;
+                        break;
                     case Defaults.MoreOrLess.Less:
-                        Elevator.Passengers--; break;
+                        Elevator.Passengers--;
+                        Elevator.UI.PassengersCount = Elevator.Passengers;
+                        break;
                     case Defaults.MoreOrLess.Neither:
-                        { } break;
+                        breakOut = true; break;
                 }
 
                 Elevator.UI.ResetPassengerIO();     // wieder Neither
