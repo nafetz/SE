@@ -11,14 +11,14 @@ namespace LiftSimulation
     /// State-Class, nur Methoden, keine Member!
     /// Konkrete States bitte in Defaults.State ergänzen
     /// </summary>
-    class ElevatorState
+    interface ElevatorState
     {
-        public void Move(Elevator Elevator) { }
+        void Move( Elevator Elevator );
     }
 
     class FixedOpen : ElevatorState
     {
-        public new void Move( Elevator Elevator ) 
+        public void Move( Elevator Elevator ) 
         {
             bool breakOut = false;
 
@@ -57,7 +57,7 @@ namespace LiftSimulation
     /// </summary>
     class FixedClosed : ElevatorState
     {
-        public new void Move( Elevator Elevator ) 
+        public void Move( Elevator Elevator ) 
         {
             if( Elevator.ThereAreWishesOnThisFloor )
                 Elevator.SetState( Defaults.State.FixedOpen );
@@ -68,7 +68,7 @@ namespace LiftSimulation
 
     class Moving : ElevatorState 
     {
-        public new void Move( Elevator Elevator ) 
+        public void Move( Elevator Elevator ) 
         {
             bool breakout = false;
 
@@ -106,7 +106,7 @@ namespace LiftSimulation
 
     class Overload : ElevatorState 
     {
-        public new void Move( Elevator Elevator ) 
+        public void Move( Elevator Elevator ) 
         {
             bool breakOut = false;
 

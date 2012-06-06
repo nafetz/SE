@@ -21,9 +21,9 @@ namespace LiftSimulation
 
         // Floor-Stuff
         private int _currentFloor;
-        List<bool> _upwardRequired = new List<bool>();
-        List<bool> _downwardRequired = new List<bool>();
-        List<bool> _internRequired = new List<bool>();
+        private static List<bool> _upwardRequired = new List<bool>();
+        private static List<bool> _downwardRequired = new List<bool>();
+        private static List<bool> _internRequired = new List<bool>();
 
         // Riding
         private Defaults.Direction _direction = Defaults.Direction.Upward;
@@ -59,14 +59,17 @@ namespace LiftSimulation
         public List<bool> UpwardRequired 
         {
             get { return _upwardRequired; }
+            set { _upwardRequired = value; }
         }
         public List<bool> DownwardRequired 
         {
             get { return _downwardRequired; }
+            set { _downwardRequired = value; }
         }
         public List<bool> InternRequired
         {
             get { return _internRequired; }
+            set { _internRequired = value; }
         }
 
         public bool ReachedHighestOrLowestFloor
@@ -171,16 +174,24 @@ namespace LiftSimulation
         /// </summary>
         public void InitOrReset()
         {
-            State = FixedClosed;
             _currentFloor = 0;
 
-            for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
+            for ( int IDX = Defaults.FloorToIdx( Defaults.Floors ) ; IDX >= 0; IDX-- )
             {
-                _downwardRequired.Add(false);
-                _upwardRequired.Add(false);
+                _downwardRequired.Add( false );
+                _upwardRequired.Add( false );
+                _internRequired.Add( false );
             }
 
+            State = FixedClosed;
             State.Move( this );
+        }
+
+        public void Sync()
+        {
+            _downwardRequired = UI.DownwardRequired;
+            _internRequired = UI.InternRequired;
+            _upwardRequired = UI.UpwardRequired;
         }
         
         /// <summary>
