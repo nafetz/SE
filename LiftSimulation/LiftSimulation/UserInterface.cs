@@ -79,7 +79,7 @@ namespace LiftSimulation
                 doorstates[i].Height = 30;
                 doorstates[i].Location = new Point(100, 50);
                 doorstates[i].Name = "pictureBox_doorstate" + i;
-                doorstates[i].Image = img_door1;
+                doorstates[i].Image = img_door2;
                 floors[i].Controls.Add(doorstates[i]);
                 
                 current_position[i] = new Label();
@@ -95,12 +95,16 @@ namespace LiftSimulation
                 required[i].Height = 50;
                 required[i].Name = "checkedListBox_floor" + i;
                 required[i].BackColor = System.Drawing.SystemColors.Control;
+                required[i].ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkOutsideItems);
                 if(i!=Defaults.Floors - 1 ) required[i].Items.Add("Aufwärts");
                 if(i!=0)               required[i].Items.Add("Abwärts");
                 required[i].BorderStyle = System.Windows.Forms.BorderStyle.None;
                 required[i].Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 floors[i].Controls.Add(required[i]);                   
             }// Ende der for-Schleife
+           
+
+
         }
 
         #endregion
@@ -159,7 +163,7 @@ namespace LiftSimulation
                     }
                     else
                     {
-                        if( required[ i ].GetItemChecked( 1 ) ) _downwards.Add( true );
+                        if( required[ i ].GetItemChecked( 0 ) ) _downwards.Add( true );
                         else _downwards.Add(false);
                     }
                 }
@@ -184,7 +188,7 @@ namespace LiftSimulation
             get
             {
                 List<bool> _interns = new List<bool>();
-                for (int i = checkedListBox_floor_selection.Items.Count; i > 0; i--)
+                for (int i = checkedListBox_floor_selection.Items.Count -1; i > 0; i--)
                 {
                     if (checkedListBox_floor_selection.GetItemChecked(i)) _interns.Add(true);
                     else _interns.Add(false);
@@ -293,17 +297,35 @@ namespace LiftSimulation
                                        value._floor.ToString(),
                                        value._passenger.ToString(),
                                        value._state.ToString()
-                    );
-
-                
-
-            }
+                    );          
+                }
         }
 
+        public Button PlusPassengersButton
+        {
+            get { return button_more_passenger; }
+            set { button_more_passenger = value; }
+        }
+
+        public Button MinusPassengersButton
+        {
+            get { return button_less_passenger; }
+            set { button_less_passenger = value; }
+        }
+
+        public Timer Doortimer
+        {
+
+            get { return timer_tuer_zu; }
+            set { timer_tuer_zu = value; }
+
+        }
 
         #endregion
 
         #region Methoden
+
+        
 
         /// <summary>
         /// Tür öffnen auf auf der GUI darstellen
@@ -313,6 +335,7 @@ namespace LiftSimulation
         {
             if (floor < 0 || floor > Defaults.Floors) return;
             if (doorstates[floor].Image == img_door2) doorstates[floor].Image = img_door1;
+            Syncronize.SetState(Defaults.State.Fixed);
         }
 
         /// <summary>
@@ -335,14 +358,18 @@ namespace LiftSimulation
 
         private void button_more_passenger_Click(object sender, EventArgs e) //+1 Button
         {
-            _passengersIO = Defaults.MoreOrLess.More; 
-            Defaults.ManualResetEvent.Set();
+            _passengersIO = Defaults.MoreOrLess.More;
+            Syncronize.syncPassengers();
+            //Defaults.ManualResetEvent.Set();
+            Syncronize.TimerReset();
         }
 
         private void button_less_passenger_Click(object sender, EventArgs e) //-1 Button
         {
-            _passengersIO = Defaults.MoreOrLess.Less; 
-            Defaults.ManualResetEvent.Set();
+            _passengersIO = Defaults.MoreOrLess.Less;
+            Syncronize.syncPassengers();
+            Syncronize.TimerReset();
+            //Defaults.ManualResetEvent.Set();
         }
 
         private void button_emergency_Click(object sender, EventArgs e)
@@ -352,12 +379,21 @@ namespace LiftSimulation
 
         private void button_open_door_Click(object sender, EventArgs e)
         {
-            open_door(1); // Hier müssen wir die aktuelle Etage ermitteln
+            button_less_passenger.Enabled = true;
+            button_more_passenger.Enabled = true;
+            Syncronize.TimerReset();
+            Syncronize.SetState(Defaults.State.Fixed);
+            open_door(Syncronize.syncFloor()); 
+            
         }
 
         private void button_close_door_Click(object sender, EventArgs e)
         {
-            close_door(1); // Hier müssen wir die aktuelle Etage ermitteln
+            button_less_passenger.Enabled = false;
+            button_more_passenger.Enabled = false;
+            Syncronize.TimerStop();
+            Syncronize.SetState(Defaults.State.Fixed);
+            close_door(Syncronize.syncFloor());
         }
 
         public void ChangeDirection()
@@ -365,9 +401,26 @@ namespace LiftSimulation
             
                 img_direction =  pictureBox_direction.Image;
                 img_direction.RotateFlip(RotateFlipType.Rotate180FlipX);
-                pictureBox_direction.Image = img_direction;
-           
+                pictureBox_direction.Image = img_direction;           
 
+        }
+
+        private void timer_tuer_zu_Tick(object sender, EventArgs e)
+        {
+            MessageBox.Show("Abgelaufen");
+            Syncronize.SetState(Defaults.State.Fixed);
+            
+        }
+
+        private void checkInnerItem(object sender, ItemCheckEventArgs e)
+        {
+            Syncronize.syncinnerWishes(Syncronize.To.Elevator);
+        }
+
+        private void checkOutsideItems(object sender, ItemCheckEventArgs e)
+        {
+            Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
+            Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
         }
 
     }

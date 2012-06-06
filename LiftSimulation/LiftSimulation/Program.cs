@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace LiftSimulation
 {    
-    static class Program
+    class Program
     {
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
@@ -21,14 +21,16 @@ namespace LiftSimulation
 
             UserInterface UI = new UserInterface();
 
-            Application.Run(UI);
+            Elevator Elevator = new Elevator();
 
-            Elevator Elevator = new Elevator(UI);
+            Syncronize Sync = new Syncronize(ref Elevator, ref UI);
 
-            while( true )
-            {
-                Elevator.CurrentState.Move( Elevator );
-            }
+            Application.Run(UI);         
+
+            //while(true)
+            //{
+            //    Elevator.CurrentState.Move( Elevator );
+            //}
         }
     }
 }

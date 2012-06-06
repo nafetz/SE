@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Defaults.cs" />
     <Compile Include="Elevator.cs" />
+    <Compile Include="Syncronize.cs" />
     <Compile Include="UserInterface.cs">
       <SubType>Form</SubType>
     </Compile>

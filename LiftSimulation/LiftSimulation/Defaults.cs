@@ -14,7 +14,7 @@ namespace LiftSimulation
         private static int _numberOfFloors = 6;
         private static int _numberOfBasementFloors = 1;
         private static int _maxNumberOfPassengers = 10;
-        public  enum State { Moving = 1, FixedOpen, FixedClosed, Overload };
+        public  enum State { Moving = 1, Fixed, Overload };
         public  enum Direction { Upward = 1, Downward };
         public  enum MoreOrLess { More = 1, Less, Neither };
 

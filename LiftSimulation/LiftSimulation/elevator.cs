@@ -15,8 +15,8 @@ namespace LiftSimulation
         // State-Patterns
         private ElevatorState State;
         private ElevatorState Moving = new Moving();
-        private ElevatorState FixedOpen = new FixedOpen();
-        private ElevatorState FixedClosed = new FixedClosed();
+        private ElevatorState Fixed = new Fixed();
+       // private ElevatorState FixedClosed = new FixedClosed();
         private ElevatorState Overload = new Overload();
 
         // Floor-Stuff
@@ -30,7 +30,7 @@ namespace LiftSimulation
         private int _passengers = 0;
 
         //User Interface
-        private UserInterface _ui;
+        //private UserInterface _ui;
 
         #endregion
 
@@ -62,14 +62,17 @@ namespace LiftSimulation
         public List<bool> UpwardRequired 
         {
             get { return _upwardRequired; }
+            set { _upwardRequired = value; }
         }
         public List<bool> DownwardRequired 
         {
             get { return _downwardRequired; }
+            set { _downwardRequired = value; }
         }
         public List<bool> InternRequired
         {
             get { return _internRequired; }
+            set { _internRequired = value; }
         }
 
         public bool ReachedHighestOrLowestFloor
@@ -79,7 +82,7 @@ namespace LiftSimulation
                 //niedrigster Floor = ( 0 - AnzahlDerKellerGeschosse )
                 if( _currentFloor == ( 0 - Defaults.Basements ) )
                     return true;
-                if( _currentFloor == Defaults.Floors )
+                if( _currentFloor == Defaults.Floors - Defaults.Basements )
                     return true;
 
                 return false;
@@ -89,8 +92,11 @@ namespace LiftSimulation
         {
             get 
             {
-                if( _internRequired[ Defaults.FloorToIdx( _currentFloor ) ] )
+                if (_internRequired[Defaults.FloorToIdx(_currentFloor)])
+                {
+                    MessageBox.Show("Gefunden");
                     return true;
+                }
 
                 switch( _direction ) 
                 {
@@ -132,6 +138,11 @@ namespace LiftSimulation
                         } break;
                 }
 
+                if (_internRequired.IndexOf(true, Defaults.FloorToIdx(_currentFloor)) != 1)
+                {
+                    return true;
+                }
+
                 return false;
             }
         }
@@ -148,11 +159,11 @@ namespace LiftSimulation
             set { _passengers = value; }
         }
 
-        public UserInterface UI
+        /*public UserInterface UI
         {
             get { return _ui; }
             set { _ui = value; }
-        }
+        }*/
         
 
         #endregion
@@ -163,10 +174,26 @@ namespace LiftSimulation
         /// <summary>
         /// Konstruktor
         /// </summary>
-        public Elevator(UserInterface myUI)
+        public Elevator(/*UserInterface myUI*/)
         {
-            this._ui = myUI;
-            InitOrReset();
+            //this._ui = myUI;
+
+            
+            _currentFloor = 0;
+
+            // ANGEBLICH ARRAY-OUT-OF-BOUND   BITTE PRÜFEN, ICH HAB KEINE AHNUNG
+            for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
+            {
+                _downwardRequired.Add(false);
+                _upwardRequired.Add(false);
+                _internRequired.Add(false);
+            }
+
+            //this.SetState(Defaults.State.FixedOpen);
+
+            //State.Move(this);
+            
+            //InitOrReset();
         }
 
         /// <summary>
@@ -174,7 +201,7 @@ namespace LiftSimulation
         /// </summary>
         public void InitOrReset()
         {
-            State = FixedClosed;
+            State = Fixed;
             _currentFloor = 0;
 
             // ANGEBLICH ARRAY-OUT-OF-BOUND   BITTE PRÜFEN, ICH HAB KEINE AHNUNG
@@ -184,7 +211,7 @@ namespace LiftSimulation
                 _upwardRequired.Add(false);
             }
 
-            State.Move( this );
+            State.Loop( this );
         }
         
         /// <summary>
@@ -196,10 +223,12 @@ namespace LiftSimulation
             switch ( newState )
             {
                 case Defaults.State.Moving      : State = Moving;       break;
-                case Defaults.State.FixedOpen   : State = FixedOpen;    break;
-                case Defaults.State.FixedClosed : State = FixedClosed;  break;
+                case Defaults.State.Fixed   : State = Fixed;    break;
+               // case Defaults.State.FixedClosed : State = FixedClosed;  break;
                 case Defaults.State.Overload    : State = Overload;     break;
-            }          
+            }
+
+            State.Loop(this);
         }
 
         /// <summary>
@@ -226,6 +255,8 @@ namespace LiftSimulation
                 case Defaults.Direction.Upward:
                     { _direction = Defaults.Direction.Downward; } break;
             }
+
+            Syncronize.SwitchDirection();
         }
 
         #endregion

@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserInterface));
             this.groupBox_outsite = new System.Windows.Forms.GroupBox();
             this.groupBox_inside = new System.Windows.Forms.GroupBox();
@@ -54,6 +55,8 @@
             this.groupBox_position_display = new System.Windows.Forms.GroupBox();
             this.pictureBox_direction = new System.Windows.Forms.PictureBox();
             this.label_floor_display = new System.Windows.Forms.Label();
+            this.timer_tuer_zu = new System.Windows.Forms.Timer(this.components);
+            this.timer_fahren = new System.Windows.Forms.Timer(this.components);
             this.groupBox_inside.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_log)).BeginInit();
             this.groupBox_control_inside.SuspendLayout();
@@ -88,11 +91,11 @@
             // 
             this.dataGridView_log.AllowUserToAddRows = false;
             this.dataGridView_log.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle1.NullValue = "-";
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle2.NullValue = "-";
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView_log.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView_log.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -276,6 +279,7 @@
             this.checkedListBox_floor_selection.Name = "checkedListBox_floor_selection";
             this.checkedListBox_floor_selection.Size = new System.Drawing.Size(100, 184);
             this.checkedListBox_floor_selection.TabIndex = 1;
+            this.checkedListBox_floor_selection.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkInnerItem);
             // 
             // label_geschosswahl
             // 
@@ -316,6 +320,15 @@
             this.label_floor_display.Size = new System.Drawing.Size(40, 25);
             this.label_floor_display.TabIndex = 0;
             this.label_floor_display.Text = "EG";
+            // 
+            // timer_tuer_zu
+            // 
+            this.timer_tuer_zu.Interval = 5000;
+            this.timer_tuer_zu.Tick += new System.EventHandler(this.timer_tuer_zu_Tick);
+            // 
+            // timer_fahren
+            // 
+            this.timer_fahren.Interval = 2500;
             // 
             // UserInterface
             // 
@@ -365,6 +378,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Etage;
         private System.Windows.Forms.DataGridViewTextBoxColumn Passagierer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Status;
+        private System.Windows.Forms.Timer timer_tuer_zu;
+        private System.Windows.Forms.Timer timer_fahren;
 
 
 
