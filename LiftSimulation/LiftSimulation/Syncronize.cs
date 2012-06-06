@@ -23,6 +23,8 @@ namespace LiftSimulation
             _ui = UI;
 
             //_elevator.SetState(Defaults.State.Fixed);
+
+            _ui.CurrentPosition = Elevator.CurrentFloor;
         }
 
         #endregion
@@ -120,15 +122,20 @@ namespace LiftSimulation
             _elevator.CurrentState.Loop(_elevator);
         }
 
-        public static void TimerReset()
+        public static void DoorTimerReset()
         {
             _ui.Doortimer.Stop();
             _ui.Doortimer.Start();
         }
 
-        public static void TimerStop()
+        public static void DoorTimerStop()
         {
             _ui.Doortimer.Stop();
+        }
+
+        public static void MoveTimerReset()
+        {
+            _ui.Movetimer.Start();
         }
 
         public static void SwitchDirection()
@@ -140,6 +147,11 @@ namespace LiftSimulation
         {
             _ui.CurrentPosition = _elevator.CurrentFloor;
             
+        }
+
+        public static void visibleDirection()
+        {
+            _ui.show_direction();
         }
 
 

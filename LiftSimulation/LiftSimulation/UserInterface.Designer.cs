@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserInterface));
             this.groupBox_outsite = new System.Windows.Forms.GroupBox();
             this.groupBox_inside = new System.Windows.Forms.GroupBox();
@@ -91,11 +91,11 @@
             // 
             this.dataGridView_log.AllowUserToAddRows = false;
             this.dataGridView_log.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle2.NullValue = "-";
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle3.NullValue = "-";
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView_log.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView_log.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -154,7 +154,9 @@
             this.groupBox_control_inside.Controls.Add(this.groupBox_door_control);
             this.groupBox_control_inside.Controls.Add(this.groupBox_floor_selection);
             this.groupBox_control_inside.Controls.Add(this.groupBox_position_display);
-            this.groupBox_control_inside.Location = new System.Drawing.Point(45, 51);
+            this.groupBox_control_inside.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox_control_inside.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.groupBox_control_inside.Location = new System.Drawing.Point(45, 52);
             this.groupBox_control_inside.Name = "groupBox_control_inside";
             this.groupBox_control_inside.Size = new System.Drawing.Size(329, 529);
             this.groupBox_control_inside.TabIndex = 0;
@@ -310,6 +312,7 @@
             this.pictureBox_direction.Size = new System.Drawing.Size(32, 32);
             this.pictureBox_direction.TabIndex = 3;
             this.pictureBox_direction.TabStop = false;
+            this.pictureBox_direction.Visible = false;
             // 
             // label_floor_display
             // 
@@ -329,6 +332,7 @@
             // timer_fahren
             // 
             this.timer_fahren.Interval = 2500;
+            this.timer_fahren.Tick += new System.EventHandler(this.timer_fahren_Tick);
             // 
             // UserInterface
             // 

@@ -97,11 +97,15 @@ namespace LiftSimulation
                                 
                             } break;
                     }// switch
+                    breakout = true;
+                    Syncronize.MoveTimerReset();
+                    Syncronize.visibleDirection();
+                    
 
                 }// if
             }// while
 
-            Elevator.SetState( Defaults.State.Fixed );
+            //Elevator.SetState( Defaults.State.Fixed );
         }
     }
 

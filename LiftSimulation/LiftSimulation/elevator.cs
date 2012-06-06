@@ -266,20 +266,20 @@ namespace LiftSimulation
         public void delete_requireds()
         {
 
-            int i = this._currentFloor;
+            int i = Defaults.FloorToIdx(this._currentFloor);
 
             switch (this.Direction)
             {
                 case Defaults.Direction.Upward:
                     {
-                        Syncronize.syncUpwardWishes(Syncronize.To.UI);
                         _upwardRequired[i] = false;
+                        Syncronize.syncUpwardWishes(Syncronize.To.UI);
                         break;
                     }
                 case Defaults.Direction.Downward:
                     {
-                        Syncronize.syncDownwardWishes(Syncronize.To.UI);
                         _downwardRequired[i] = false;
+                        Syncronize.syncDownwardWishes(Syncronize.To.UI);                        
                         break;
                     }
             }
