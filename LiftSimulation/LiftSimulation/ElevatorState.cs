@@ -86,12 +86,18 @@ namespace LiftSimulation
                         case Defaults.Direction.Upward:
                             {
                                 Elevator.CurrentFloor++;
+                                Syncronize.SyncCurrentFloor();
+                                Elevator.delete_requireds();
                             } break;
                         case Defaults.Direction.Downward:
                             {
                                 Elevator.CurrentFloor--;
+                                Syncronize.SyncCurrentFloor();
+                                Elevator.delete_requireds();
+                                
                             } break;
                     }// switch
+
                 }// if
             }// while
 

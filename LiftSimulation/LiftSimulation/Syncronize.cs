@@ -22,7 +22,7 @@ namespace LiftSimulation
             _elevator = Elevator;
             _ui = UI;
 
-            _elevator.SetState(Defaults.State.Fixed);
+            //_elevator.SetState(Defaults.State.Fixed);
         }
 
         #endregion
@@ -100,14 +100,6 @@ namespace LiftSimulation
                 return true;
         }
 
-        public static void syncSomethingElse(To who)
-        {
-            switch (who)
-            {
-                case To.UI: { } break;
-                case To.Elevator: { } break;
-            }
-        }
 
         //public static void PassengerButtonsEnable(bool value)
         //{
@@ -147,6 +139,7 @@ namespace LiftSimulation
         public static void SyncCurrentFloor()
         {
             _ui.CurrentPosition = _elevator.CurrentFloor;
+            
         }
 
 

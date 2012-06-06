@@ -188,17 +188,24 @@ namespace LiftSimulation
             get
             {
                 List<bool> _interns = new List<bool>();
-                for (int i = checkedListBox_floor_selection.Items.Count -1; i > 0; i--)
+                
+                for (int i = checkedListBox_floor_selection.Items.Count - 1 ; i >= 0; i--)
                 {
-                    if (checkedListBox_floor_selection.GetItemChecked(i)) _interns.Add(true);
-                    else _interns.Add(false);
+                    if(i == checkedListBox_floor_selection.SelectedIndex){
+                        _interns.Add(true);
+                    }
+                    else
+                    {
+                       _interns.Add(false);
+                    }
                 }
+                               
                 return _interns;
             }
             set
             {
                 List<bool> _interns = value; //kann man die Liste einfach so kopieren?
-                for (int i = checkedListBox_floor_selection.Items.Count; i > 0; i--) //startet bei 1, da es unten ohnehin kein "runter" gibt
+                for (int i = checkedListBox_floor_selection.Items.Count -1 ; i >= 0; i--) //startet bei 1, da es unten ohnehin kein "runter" gibt
                 {
                     if (_interns.ElementAt(i) == true) checkedListBox_floor_selection.SetItemChecked(0, false);
 
@@ -399,9 +406,10 @@ namespace LiftSimulation
         public void ChangeDirection()
         {
             
-                img_direction =  pictureBox_direction.Image;
-                img_direction.RotateFlip(RotateFlipType.Rotate180FlipX);
-                pictureBox_direction.Image = img_direction;           
+                //img_direction =  pictureBox_direction.Image;
+                //img_direction.RotateFlip(RotateFlipType.Rotate180FlipX);
+                //pictureBox_direction.Image = img_direction;
+               
 
         }
 

@@ -90,11 +90,10 @@ namespace LiftSimulation
         }
         public bool ThereAreWishesOnThisFloor
         {
-            get 
+            get
             {
-                if (_internRequired[Defaults.FloorToIdx(_currentFloor)])
+               if (_internRequired[Defaults.FloorToIdx(_currentFloor)])
                 {
-                    MessageBox.Show("Gefunden");
                     return true;
                 }
 
@@ -119,33 +118,40 @@ namespace LiftSimulation
         //mal drüber gucke, glaub nicht dass das so geht
         public bool ThereAreWishesInMyDirection
         {
-            get 
+            get
             {
-                switch( _direction )
+                switch (_direction)
                 {
                     case Defaults.Direction.Upward:
                         {
-                            if( _upwardRequired.IndexOf(    // gibts ein Element das:
+                            if (_upwardRequired.IndexOf(    // gibts ein Element das:
                                 true,                       // true ist
-                                Defaults.FloorToIdx( _currentFloor ),   // zw. dem aktuellem und
-                                ( _upwardRequired.Count - Defaults.FloorToIdx( _currentFloor ) ) ) != -1 )  //dem letzten Element liegt?
+                                Defaults.FloorToIdx(_currentFloor),   // zw. dem aktuellem und
+                                (_upwardRequired.Count - Defaults.FloorToIdx(_currentFloor))) != -1)  //dem letzten Element liegt?
                                 return true;
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
+                            {
+                                if (_internRequired.ElementAt(i) == true) return true;
+                            }
+
                         } break;
                     case Defaults.Direction.Downward:
                         {
-                            if( _downwardRequired.IndexOf( true, Defaults.FloorToIdx( _currentFloor ) ) != -1 )
+                            if (_downwardRequired.IndexOf(true, Defaults.FloorToIdx(_currentFloor)) != -1)
                                 return true;
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
+                            {
+                                if (_internRequired.ElementAt(i) == true) return true;
+                            }
                         } break;
                 }
 
-                if (_internRequired.IndexOf(true, Defaults.FloorToIdx(_currentFloor)) != 1)
-                {
-                    return true;
-                }
+
 
                 return false;
             }
         }
+        
 
         public Defaults.Direction Direction
         {
@@ -174,14 +180,12 @@ namespace LiftSimulation
         /// <summary>
         /// Konstruktor
         /// </summary>
-        public Elevator(/*UserInterface myUI*/)
+        public Elevator()
         {
-            //this._ui = myUI;
-
-            
+              
             _currentFloor = 0;
-
-            // ANGEBLICH ARRAY-OUT-OF-BOUND   BITTE PRÜFEN, ICH HAB KEINE AHNUNG
+            State = Fixed;
+                     
             for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
             {
                 _downwardRequired.Add(false);
@@ -258,6 +262,31 @@ namespace LiftSimulation
 
             Syncronize.SwitchDirection();
         }
+
+        public void delete_requireds()
+        {
+
+            int i = this._currentFloor;
+
+            switch (this.Direction)
+            {
+                case Defaults.Direction.Upward:
+                    {
+                        Syncronize.syncUpwardWishes(Syncronize.To.UI);
+                        _upwardRequired[i] = false;
+                        break;
+                    }
+                case Defaults.Direction.Downward:
+                    {
+                        Syncronize.syncDownwardWishes(Syncronize.To.UI);
+                        _downwardRequired[i] = false;
+                        break;
+                    }
+            }
+            _internRequired[i] = false;                  
+            Syncronize.syncinnerWishes(Syncronize.To.UI);         
+            
+}
 
         #endregion
     }
