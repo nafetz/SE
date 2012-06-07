@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserInterface));
             this.groupBox_outsite = new System.Windows.Forms.GroupBox();
             this.groupBox_inside = new System.Windows.Forms.GroupBox();
@@ -50,7 +50,6 @@
             this.button_open_door = new System.Windows.Forms.Button();
             this.button_emergency = new System.Windows.Forms.Button();
             this.groupBox_floor_selection = new System.Windows.Forms.GroupBox();
-            this.checkedListBox_floor_selection = new System.Windows.Forms.CheckedListBox();
             this.label_geschosswahl = new System.Windows.Forms.Label();
             this.groupBox_position_display = new System.Windows.Forms.GroupBox();
             this.pictureBox_direction = new System.Windows.Forms.PictureBox();
@@ -91,11 +90,11 @@
             // 
             this.dataGridView_log.AllowUserToAddRows = false;
             this.dataGridView_log.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle3.NullValue = "-";
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle1.NullValue = "-";
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_log.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView_log.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -257,31 +256,12 @@
             // 
             // groupBox_floor_selection
             // 
-            this.groupBox_floor_selection.Controls.Add(this.checkedListBox_floor_selection);
             this.groupBox_floor_selection.Controls.Add(this.label_geschosswahl);
             this.groupBox_floor_selection.Location = new System.Drawing.Point(28, 53);
             this.groupBox_floor_selection.Name = "groupBox_floor_selection";
             this.groupBox_floor_selection.Size = new System.Drawing.Size(133, 338);
             this.groupBox_floor_selection.TabIndex = 1;
             this.groupBox_floor_selection.TabStop = false;
-            // 
-            // checkedListBox_floor_selection
-            // 
-            this.checkedListBox_floor_selection.BackColor = System.Drawing.SystemColors.Control;
-            this.checkedListBox_floor_selection.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkedListBox_floor_selection.FormattingEnabled = true;
-            this.checkedListBox_floor_selection.Items.AddRange(new object[] {
-            "4. OG",
-            "3. OG",
-            "2. OG",
-            "1. OG",
-            "EG",
-            "1. UG"});
-            this.checkedListBox_floor_selection.Location = new System.Drawing.Point(21, 46);
-            this.checkedListBox_floor_selection.Name = "checkedListBox_floor_selection";
-            this.checkedListBox_floor_selection.Size = new System.Drawing.Size(100, 184);
-            this.checkedListBox_floor_selection.TabIndex = 1;
-            this.checkedListBox_floor_selection.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkInnerItem);
             // 
             // label_geschosswahl
             // 
@@ -369,7 +349,6 @@
         private System.Windows.Forms.GroupBox groupBox_position_display;
         private System.Windows.Forms.Label label_floor_display;
         private System.Windows.Forms.Label label_geschosswahl;
-        private System.Windows.Forms.CheckedListBox checkedListBox_floor_selection;
         private System.Windows.Forms.GroupBox groupBox_passengers_control;
         private System.Windows.Forms.Button button_more_passenger;
         private System.Windows.Forms.Button button_less_passenger;

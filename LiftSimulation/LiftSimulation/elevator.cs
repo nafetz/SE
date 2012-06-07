@@ -266,25 +266,25 @@ namespace LiftSimulation
         public void delete_requireds()
         {
 
-            int i = Defaults.FloorToIdx(this._currentFloor);
+            //int i = Defaults.FloorToIdx(this._currentFloor);
 
-            switch (this.Direction)
-            {
-                case Defaults.Direction.Upward:
-                    {
-                        _upwardRequired[i] = false;
-                        Syncronize.syncUpwardWishes(Syncronize.To.UI);
-                        break;
-                    }
-                case Defaults.Direction.Downward:
-                    {
-                        _downwardRequired[i] = false;
-                        Syncronize.syncDownwardWishes(Syncronize.To.UI);                        
-                        break;
-                    }
-            }
-            _internRequired[i] = false;                  
-            Syncronize.syncinnerWishes(Syncronize.To.UI);         
+            //switch (this.Direction)
+            //{
+            //    case Defaults.Direction.Upward:
+            //        {
+            //            _upwardRequired[i] = false;
+            //            Syncronize.syncUpwardWishes(Syncronize.To.UI);
+            //            break;
+            //        }
+            //    case Defaults.Direction.Downward:
+            //        {
+            //            _downwardRequired[i] = false;
+            //            Syncronize.syncDownwardWishes(Syncronize.To.UI);                        
+            //            break;
+            //        }
+            //}
+            //_internRequired[i] = false;                  
+            //Syncronize.syncinnerWishes(Syncronize.To.UI);         
             
 }
 

@@ -21,11 +21,13 @@ namespace LiftSimulation
         private Label[] floor_numbers; //Anzeige der Etatennummern
         private Label[] current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
         private GroupBox[] floors;    //GroupBoxen für die Etagen
-        private CheckedListBox[] required; //Fahrwünsche in den jeweiligen Etagen
         private PictureBox[] doorstates;
         private Image img_door1;
         private Image img_door2;
         private Image img_direction;
+        private Button[] button_intern;
+        private Button[] button_upward;
+        private Button[] button_downward;
  
 
         #endregion
@@ -43,9 +45,12 @@ namespace LiftSimulation
 
             floors = new GroupBox[Defaults.Floors];
             floor_numbers = new Label[Defaults.Floors];
-            current_position = new Label[Defaults.Floors];
-            required = new CheckedListBox[Defaults.Floors];
+            current_position = new Label[Defaults.Floors];            
             doorstates = new PictureBox[Defaults.Floors];
+            button_intern = new Button[Defaults.Floors];
+            button_upward = new Button[Defaults.Floors];
+            button_downward = new Button[Defaults.Floors];
+
 
             img_door1 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.gif");
             img_door2 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.gif");
@@ -88,23 +93,51 @@ namespace LiftSimulation
                 current_position[i].Width = 60;
                 current_position[i].Location = new Point(100, 12);
                 floors[i].Controls.Add(current_position[i]);
+
+
+                button_intern[i] = new Button();
+                button_intern[i].Location = new Point(20, Defaults.Floors*45 - 45 * i);
+                button_intern[i].Height = 40;
+                button_intern[i].Width = 100;
+                button_intern[i].Name = "Button_int"+i;
+                switch (i){               
+                    case 0: button_intern[i].Text = "1. UG"; break;
+                    case 1: button_intern[i].Text = "EG"; break;
+                    default: button_intern[i].Text = (i -1) + ". OG"; break;
+                }
+                groupBox_floor_selection.Controls.Add(button_intern[i]);
+                button_intern[i].Click += new System.EventHandler(checkInnerItem);
+                if (i == 0)
+                {
+                    MessageBox.Show(i.ToString());
+                }
+                if(i!=Defaults.Floors - 1){
+                    button_upward[i] = new Button();
+                    button_upward[i].Location = new Point(250, 25);
+                    button_upward[i].Height = 30;
+                    button_upward[i].Width = 70;
+                    button_upward[i].Text = "Offwärts";
+                    button_upward[i].Name = "Button_up_" + i;
+                    floors[i].Controls.Add(button_upward[i]);
+                    button_upward[i].Click += new System.EventHandler(checkOutsideItems);
+                   
+                }
                 
-
-                required[i] = new CheckedListBox();
-                required[i].Location = new Point(210, 20);
-                required[i].Height = 50;
-                required[i].Name = "checkedListBox_floor" + i;
-                required[i].BackColor = System.Drawing.SystemColors.Control;
-                required[i].ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkOutsideItems);
-                if(i!=Defaults.Floors - 1 ) required[i].Items.Add("Aufwärts");
-                if(i!=0)               required[i].Items.Add("Abwärts");
-                required[i].BorderStyle = System.Windows.Forms.BorderStyle.None;
-                required[i].Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                floors[i].Controls.Add(required[i]);                   
-            }// Ende der for-Schleife
-           
-
-
+                if (i != 0)
+                {
+                    button_downward[i] = new Button();
+                    button_downward[i].Location = new Point(250, 65);
+                    button_downward[i].Height = 30;
+                    button_downward[i].Width = 70;
+                    button_downward[i].Text = "Zum Teufel";
+                    button_downward[i].Name = "Button_up_" + i;
+                    floors[i].Controls.Add(button_downward[i]);
+                    button_downward[i].Click += new System.EventHandler(checkOutsideItems);
+                 
+                }
+                                      
+            }// Ende der for-Schleife       
+            
         }
 
         #endregion
@@ -127,7 +160,7 @@ namespace LiftSimulation
                     }
                     else
                     {
-                        if (required[i].GetItemCheckState(0) == CheckState.Checked) _upwards.Add(true);
+                        if (button_upward[i].Enabled == false) _upwards.Add(true);
                         else _upwards.Add(false);
                     }
                 }
@@ -138,7 +171,7 @@ namespace LiftSimulation
             {       List<bool> _upwards = value; //kann man die Liste einfach so kopieren?
                     for (int i = 0; i < Defaults.Floors - 1; i++) //geht bis zum vorletzten, da es oben ohnehin kein "hoch" gibt
                     {
-                        if (_upwards[i] == true) required[i].SetItemChecked(0, false);
+                        if (_upwards[i] == true) button_upward[i].Enabled = true; ;
                     
                     }               
 
@@ -163,7 +196,7 @@ namespace LiftSimulation
                     }
                     else
                     {
-                        if( required[ i ].GetItemChecked( 0 ) ) _downwards.Add( true );
+                        if( button_downward[i].Enabled == false ) _downwards.Add( true );
                         else _downwards.Add(false);
                     }
                 }
@@ -174,7 +207,7 @@ namespace LiftSimulation
                 List<bool> _downwards = value; //kann man die Liste einfach so kopieren?
                 for (int i = 1; i < Defaults.Floors; i++) //startet bei 1, da es unten ohnehin kein "runter" gibt
                 {
-                    if (_downwards[i] == true) required[i].SetItemChecked(0, false);
+                    if (_downwards[i] == true) button_downward[i].Enabled = true; ;
 
                 }  
             }
@@ -188,15 +221,20 @@ namespace LiftSimulation
             get
             {
                 List<bool> _interns = new List<bool>();
-                
-                for (int i = checkedListBox_floor_selection.Items.Count - 1 ; i >= 0; i--)
+
+                for (int i = 0; i < Defaults.Floors; i++)
                 {
-                    if(i == checkedListBox_floor_selection.SelectedIndex){
-                        _interns.Add(true);
-                    }
+                    if (i == Defaults.Floors - 1) _interns.Add(false);
                     else
                     {
-                       _interns.Add(false);
+                        if (button_intern[i].Enabled == false)
+                        {
+                            _interns.Add(true);
+                        }
+                        else
+                        {
+                            _interns.Add(false);
+                        }
                     }
                 }
                                
@@ -204,17 +242,10 @@ namespace LiftSimulation
             }
             set
             {
-                List<bool> _interns = value; //kann man die Liste einfach so kopieren?
-                for (int i = checkedListBox_floor_selection.Items.Count -1 ; i >= 0; i--) //startet bei 1, da es unten ohnehin kein "runter" gibt
-                {
-                    if (i == checkedListBox_floor_selection.SelectedIndex)
-                    {
-                        checkedListBox_floor_selection.ClearSelected(); 
-                        checkedListBox_floor_selection.SetItemChecked(i+1, false);
-
-                                         
-                    }
-
+                List<bool> _interns = value; 
+                for (int i = 0 ; i <Defaults.Floors; i++) 
+                {               
+                    if (_interns[i] == true) button_intern[i].Enabled = true;                                     
                 }
             }
         }
@@ -271,12 +302,12 @@ namespace LiftSimulation
                     if (i == pos)
                     {
                         floors[i].BackColor = Color.White;
-                        required[i].BackColor = Color.White;
+                        //required[i].BackColor = Color.White;
                     }
                     else
                     {
                         floors[i].BackColor = System.Drawing.SystemColors.Control;
-                        required[i].BackColor = System.Drawing.SystemColors.Control;
+                        //required[i].BackColor = System.Drawing.SystemColors.Control;
                     }
                 }
             }
@@ -446,15 +477,19 @@ namespace LiftSimulation
             
         }
 
-        private void checkInnerItem(object sender, ItemCheckEventArgs e)
+        private void checkInnerItem(object sender, EventArgs e)
         {
+           
             Syncronize.syncinnerWishes(Syncronize.To.Elevator);
+            
         }
 
-        private void checkOutsideItems(object sender, ItemCheckEventArgs e)
+        private void checkOutsideItems(object sender, EventArgs e)
         {
-            Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
-            Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
+            Button Test = sender as Button;
+            Test.Enabled = false;
+           Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
+           Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
         }
 
         private void timer_fahren_Tick(object sender, EventArgs e)
