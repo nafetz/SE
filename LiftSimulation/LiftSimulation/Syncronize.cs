@@ -78,7 +78,6 @@ namespace LiftSimulation
                 case To.Elevator: 
                     {
                         _elevator.InternRequired = _ui.InternRequired;
-                        _elevator.CurrentState.Loop(_elevator);
                     } break;
             }
         }
@@ -103,11 +102,11 @@ namespace LiftSimulation
         }
 
 
-        //public static void PassengerButtonsEnable(bool value)
-        //{
-        //    _ui.PlusPassengersButton.Enabled = value;
-        //    _ui.MinusPassengersButton.Enabled = value;
-        //}
+        public static void PassengerButtonsEnable(bool value)
+        {
+            _ui.PlusPassengersButton.Enabled = value;
+            _ui.MinusPassengersButton.Enabled = value;
+        }
 
         public static void PassenderMinusButtonEnable(bool value)
         {
@@ -119,7 +118,7 @@ namespace LiftSimulation
             //_ui.Doortimer.Start();
 
             _elevator.SetState(state);
-            _elevator.CurrentState.Loop(_elevator);
+        
         }
 
         public static void DoorTimerReset()
@@ -153,6 +152,28 @@ namespace LiftSimulation
         {
             _ui.show_direction();
         }
+
+        public static void executeLoop()
+        {
+            _elevator.CurrentState.Loop(_elevator);
+        }
+
+        public static void executeFinish()
+        {
+            _elevator.CurrentState.finish(_elevator);
+        }
+
+        public static void open_door()
+        {
+            _ui.open_door(Defaults.FloorToIdx(_elevator.CurrentFloor));
+        }
+
+        public static void close_door()
+        {
+            _ui.close_door(Defaults.FloorToIdx(_elevator.CurrentFloor));
+        }
+
+
 
 
 

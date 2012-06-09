@@ -106,11 +106,8 @@ namespace LiftSimulation
                     default: button_intern[i].Text = (i -1) + ". OG"; break;
                 }
                 groupBox_floor_selection.Controls.Add(button_intern[i]);
-                button_intern[i].Click += new System.EventHandler(checkInnerItem);
-                if (i == 0)
-                {
-                    MessageBox.Show(i.ToString());
-                }
+                button_intern[i].Click += new System.EventHandler(ClickInnerButton);
+
                 if(i!=Defaults.Floors - 1){
                     button_upward[i] = new Button();
                     button_upward[i].Location = new Point(250, 25);
@@ -119,7 +116,7 @@ namespace LiftSimulation
                     button_upward[i].Text = "Offwärts";
                     button_upward[i].Name = "Button_up_" + i;
                     floors[i].Controls.Add(button_upward[i]);
-                    button_upward[i].Click += new System.EventHandler(checkOutsideItems);
+                    button_upward[i].Click += new System.EventHandler(ClickOutsideButton);
                    
                 }
                 
@@ -132,7 +129,7 @@ namespace LiftSimulation
                     button_downward[i].Text = "Zum Teufel";
                     button_downward[i].Name = "Button_up_" + i;
                     floors[i].Controls.Add(button_downward[i]);
-                    button_downward[i].Click += new System.EventHandler(checkOutsideItems);
+                    button_downward[i].Click += new System.EventHandler(ClickOutsideButton);
                  
                 }
                                       
@@ -399,7 +396,7 @@ namespace LiftSimulation
         {
             if (floor < 0 || floor > Defaults.Floors) return;
             if (doorstates[floor].Image == img_door2) doorstates[floor].Image = img_door1;
-            Syncronize.SetState(Defaults.State.Fixed);
+            
         }
 
         /// <summary>
@@ -423,16 +420,18 @@ namespace LiftSimulation
         private void button_more_passenger_Click(object sender, EventArgs e) //+1 Button
         {
             _passengersIO = Defaults.MoreOrLess.More;
-            Syncronize.syncPassengers();
+             Syncronize.executeLoop();
+            _passengersIO = Defaults.MoreOrLess.Neither;
             //Defaults.ManualResetEvent.Set();
-            Syncronize.DoorTimerReset();
+           // Syncronize.DoorTimerReset();
         }
 
         private void button_less_passenger_Click(object sender, EventArgs e) //-1 Button
         {
             _passengersIO = Defaults.MoreOrLess.Less;
-            Syncronize.syncPassengers();
-            Syncronize.DoorTimerReset();
+            Syncronize.executeLoop();
+            _passengersIO = Defaults.MoreOrLess.Neither;
+            //Syncronize.DoorTimerReset();
             //Defaults.ManualResetEvent.Set();
         }
 
@@ -446,7 +445,7 @@ namespace LiftSimulation
             button_less_passenger.Enabled = true;
             button_more_passenger.Enabled = true;
             Syncronize.DoorTimerReset();
-            Syncronize.SetState(Defaults.State.Fixed);
+            Syncronize.SetState(Defaults.State.FixedOpen); //ggf. überdenken
             open_door(Syncronize.syncFloor()); 
             
         }
@@ -456,7 +455,7 @@ namespace LiftSimulation
             button_less_passenger.Enabled = false;
             button_more_passenger.Enabled = false;
             Syncronize.DoorTimerStop();
-            Syncronize.SetState(Defaults.State.Fixed);
+            Syncronize.SetState(Defaults.State.FixedClosed);
             close_door(Syncronize.syncFloor());
         }
 
@@ -472,31 +471,33 @@ namespace LiftSimulation
 
         private void timer_tuer_zu_Tick(object sender, EventArgs e)
         {
-            MessageBox.Show("Abgelaufen");
-            Syncronize.SetState(Defaults.State.Fixed);
+            Syncronize.executeFinish();
             
         }
 
-        private void checkInnerItem(object sender, EventArgs e)
+        private void ClickInnerButton(object sender, EventArgs e)
         {
-           
-            Syncronize.syncinnerWishes(Syncronize.To.Elevator);
+           Button Test = sender as Button;
+           Test.Enabled = false;
+           Syncronize.syncinnerWishes(Syncronize.To.Elevator);
+           Syncronize.executeLoop();
             
         }
 
-        private void checkOutsideItems(object sender, EventArgs e)
+        private void ClickOutsideButton(object sender, EventArgs e)
         {
-            Button Test = sender as Button;
-            Test.Enabled = false;
+           Button Test = sender as Button;
+           Test.Enabled = false;
            Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
            Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
+           Syncronize.executeLoop();
         }
 
         private void timer_fahren_Tick(object sender, EventArgs e)
         {
            pictureBox_direction.Visible = false;
            Syncronize.syncinnerWishes(Syncronize.To.UI);
-           Syncronize.SetState(Defaults.State.Fixed);
+           Syncronize.executeLoop();
         }
 
         public void show_direction()

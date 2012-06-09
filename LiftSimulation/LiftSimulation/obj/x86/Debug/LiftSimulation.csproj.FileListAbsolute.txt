@@ -36,3 +36,12 @@ Z:\SEBeleg\nafetz-SE-7fa9af2\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSim
 Z:\SEBeleg\nafetz-SE-7fa9af2\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.Properties.Resources.resources
 Z:\SEBeleg\nafetz-SE-7fa9af2\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.read.1.tlog
 Z:\SEBeleg\nafetz-SE-7fa9af2\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.write.1.tlog
+Z:\SEBeleg\nafetz-SE-f51ebcb\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.exe
+Z:\SEBeleg\nafetz-SE-f51ebcb\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.pdb
+Z:\SEBeleg\nafetz-SE-f51ebcb\LiftSimulation\LiftSimulation\bin\Debug\LiftSimulation.exe
+Z:\SEBeleg\nafetz-SE-f51ebcb\LiftSimulation\LiftSimulation\bin\Debug\LiftSimulation.pdb
+Z:\SEBeleg\nafetz-SE-f51ebcb\LiftSimulation\LiftSimulation\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\SEBeleg\nafetz-SE-f51ebcb\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.UserInterface.resources
+Z:\SEBeleg\nafetz-SE-f51ebcb\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.Properties.Resources.resources
+Z:\SEBeleg\nafetz-SE-f51ebcb\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.read.1.tlog
+Z:\SEBeleg\nafetz-SE-f51ebcb\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.write.1.tlog

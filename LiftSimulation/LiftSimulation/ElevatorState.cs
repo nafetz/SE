@@ -11,141 +11,114 @@ namespace LiftSimulation
     /// State-Class, nur Methoden, keine Member!
     /// Konkrete States bitte in Defaults.State ergänzen
     /// </summary>
-    interface ElevatorState
+    class ElevatorState
     {
-        void Loop(Elevator Elevator);
+        public virtual void Loop(Elevator Elevator) { }
+        public virtual void finish(Elevator Elevator) { }
     }
 
-    class Fixed : ElevatorState
+    class FixedOpen : ElevatorState
     {
-        public void Loop( Elevator Elevator ) 
+        public override void Loop( Elevator Elevator ) 
         {
-           // Syncronize.PassengerButtonsEnable(true);
+            Syncronize.open_door();
+            Syncronize.DoorTimerReset();
+            
+            if (!Syncronize.syncPassengers()) 
+                Syncronize.DoorTimerReset(); //Lichtschrake übertreten --> Neustart des Türtimers
 
-            bool breakOut = false;
-
-            do
+            if (Elevator.CheckForOverload())
             {
-                //Syncronize.TimerReset();
-                breakOut = Syncronize.syncPassengers();
+                Elevator.SetState(Defaults.State.Overload);
+                Syncronize.DoorTimerStop();
+                // return ;
+            }            
+        } 
 
-            } while (!breakOut);
-
-            if( Elevator.CheckForOverload() )
-                Elevator.SetState( Defaults.State.Overload );
-
-            //Syncronize.PassengerButtonsEnable(false);
-
-            if (Elevator.ReachedHighestOrLowestFloor || !Elevator.ThereAreWishesInMyDirection)
-                Elevator.SwitchDirection();
-
-            if (Elevator.ThereAreWishesInMyDirection)
-                Elevator.SetState(Defaults.State.Moving);
-
-            //else
-            //    Elevator.SetState( Defaults.State.FixedClosed );
-        }
+        public override void finish(Elevator Elevator)
+        {
+            Syncronize.PassengerButtonsEnable(false);
+            Elevator.SetState(Defaults.State.FixedClosed);
+            //Elevator.CurrentState.Loop(Elevator);
+        }   
     }
 
     /// <summary>
     /// Eigentlich PseudoZustand, der nur Übergänge einleitet
     /// </summary>
-    //class FixedClosed : ElevatorState
-    //{
-    //    public void Move( Elevator Elevator ) 
-    //    {
-    //        if( Elevator.ThereAreWishesOnThisFloor )
-    //            Elevator.SetState( Defaults.State.FixedOpen );
-    //        else
-    //            Elevator.SetState( Defaults.State.Moving );
-    //    }
-    //}
+    class FixedClosed : ElevatorState
+    {
+        public override void Loop(Elevator Elevator)
+        {
+            Syncronize.close_door();
+            if (Elevator.ThereAreWishesOnThisFloor)
+            {
+                Syncronize.PassengerButtonsEnable(true);
+                Elevator.SetState(Defaults.State.FixedOpen);
+            }
+            else if (Elevator.ThereAreWishesInMyDirection)
+            {
+                Elevator.SetState(Defaults.State.Moving);
+                
+            }
+            //else if (Wünsche in der Gegenrichtung ||)
+            //  richtungswechesel & go!
+        }
+    }
 
     class Moving : ElevatorState 
     {
-        public void Loop( Elevator Elevator ) 
+        public override void Loop(Elevator Elevator) 
         {
-            bool breakout = false;
 
-            while( !breakout )
+            //if( Elevator.ReachedHighestOrLowestFloor )
+            //{
+            //    Elevator.SwitchDirection();
+            //}
+
+            if( Elevator.ThereAreWishesOnThisFloor )
             {
-                if( Elevator.ReachedHighestOrLowestFloor )
+                Elevator.SetState(Defaults.State.FixedClosed);
+                return ;
+            }  
+              
+            if( Elevator.ThereAreWishesInMyDirection )
+            {
+                switch( Elevator.Direction )
                 {
-                    Elevator.SwitchDirection();
-                }
-
-                if( Elevator.ThereAreWishesOnThisFloor )
-                {
-                    breakout = true;
-                }                
-
-                else if( Elevator.ThereAreWishesInMyDirection )
-                {
-                    switch( Elevator.Direction )
-                    {
-                        case Defaults.Direction.Upward:
-                            {
-                                Elevator.CurrentFloor++;
-                                Syncronize.SyncCurrentFloor();
-                                Elevator.delete_requireds();
-                            } break;
-                        case Defaults.Direction.Downward:
-                            {
-                                Elevator.CurrentFloor--;
-                                Syncronize.SyncCurrentFloor();
-                                Elevator.delete_requireds();
+                    case Defaults.Direction.Upward:
+                        {
+                            Elevator.CurrentFloor++;
+                            Syncronize.SyncCurrentFloor();
+                            Elevator.delete_requireds();
+                        } break;
+                    case Defaults.Direction.Downward:
+                        {
+                            Elevator.CurrentFloor--;
+                            Syncronize.SyncCurrentFloor();
+                            Elevator.delete_requireds();
                                 
-                            } break;
-                    }// switch
-                    breakout = true;
-                    Syncronize.MoveTimerReset();
-                    Syncronize.visibleDirection();
-                    
+                        } break;
+                }// switch
+                Syncronize.MoveTimerReset();
+                Syncronize.visibleDirection();
+                return ;
 
-                }// if
-            }// while
+            }// if
+           
 
-            //Elevator.SetState( Defaults.State.Fixed );
+        
         }
     }
 
     class Overload : ElevatorState 
     {
-        public void Loop( Elevator Elevator ) 
+        public override void Loop(Elevator Elevator) 
         {
-            bool breakOut = false;
-
-            do
+            if (!Elevator.CheckForOverload())
             {
-                // 3 sec warten auf Button
-                /*
-                Defaults.ManualResetEvent.WaitOne( 3000 );
-
-                switch( Elevator.UI.PassengersIO )
-                {
-                    case Defaults.MoreOrLess.More:
-                        Elevator.Passengers++;
-                        Elevator.UI.PassengersCount = Elevator.Passengers;
-                        break;
-                    case Defaults.MoreOrLess.Less:
-                        Elevator.Passengers--;
-                        Elevator.UI.PassengersCount = Elevator.Passengers;
-                        break;
-                    case Defaults.MoreOrLess.Neither:
-                        breakOut = true; break;
-                }
-
-                Elevator.UI.ResetPassengerIO();     // wieder Neither
-                */
-
-                
-
-                if( !Elevator.CheckForOverload() )
-                    breakOut = true;
-
-            } while( !breakOut );
-
-            Elevator.SetState(Defaults.State.Fixed);
+                Elevator.SetState(Defaults.State.FixedOpen);
+            }
         }
     }
 }
