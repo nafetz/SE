@@ -14,18 +14,20 @@ namespace LiftSimulation
     class ElevatorState
     {
         public virtual void Loop(Elevator Elevator) { }
-        public virtual void finish(Elevator Elevator) { }
+        public virtual void Finish(Elevator Elevator) { }
     }
 
     class FixedOpen : ElevatorState
     {
         public override void Loop( Elevator Elevator ) 
         {
+            Elevator.DeleteReqired();
+
             Syncronize.open_door();
             Syncronize.DoorTimerReset();
             
             if (!Syncronize.syncPassengers()) 
-                Syncronize.DoorTimerReset(); //Lichtschrake übertreten --> Neustart des Türtimers
+                Syncronize.DoorTimerReset(); // Lichtschrake übertreten --> Neustart des Türtimers
 
             if (Elevator.CheckForOverload())
             {
@@ -35,7 +37,7 @@ namespace LiftSimulation
             }            
         } 
 
-        public override void finish(Elevator Elevator)
+        public override void Finish(Elevator Elevator)
         {
             Syncronize.PassengerButtonsEnable(false);
             Elevator.SetState(Defaults.State.FixedClosed);
@@ -70,15 +72,9 @@ namespace LiftSimulation
     {
         public override void Loop(Elevator Elevator) 
         {
-
-            //if( Elevator.ReachedHighestOrLowestFloor )
-            //{
-            //    Elevator.SwitchDirection();
-            //}
-
             if( Elevator.ThereAreWishesOnThisFloor )
             {
-                Elevator.SetState(Defaults.State.FixedClosed);
+                Elevator.SetState( Defaults.State.FixedClosed );
                 return ;
             }  
               
@@ -90,24 +86,21 @@ namespace LiftSimulation
                         {
                             Elevator.CurrentFloor++;
                             Syncronize.SyncCurrentFloor();
-                            Elevator.delete_requireds();
+                            //Elevator.DeleteReqired();
                         } break;
                     case Defaults.Direction.Downward:
                         {
                             Elevator.CurrentFloor--;
                             Syncronize.SyncCurrentFloor();
-                            Elevator.delete_requireds();
-                                
+                            //Elevator.DeleteReqired();
                         } break;
                 }// switch
+
                 Syncronize.MoveTimerReset();
                 Syncronize.visibleDirection();
                 return ;
 
-            }// if
-           
-
-        
+            }// if       
         }
     }
 

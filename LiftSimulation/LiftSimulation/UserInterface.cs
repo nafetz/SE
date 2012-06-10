@@ -480,8 +480,7 @@ namespace LiftSimulation
            Button Test = sender as Button;
            Test.Enabled = false;
            Syncronize.syncinnerWishes(Syncronize.To.Elevator);
-           Syncronize.executeLoop();
-            
+           Syncronize.executeLoop();            
         }
 
         private void ClickOutsideButton(object sender, EventArgs e)
@@ -504,6 +503,5 @@ namespace LiftSimulation
         {
             pictureBox_direction.Visible = true;         
         }
-
     }
 }

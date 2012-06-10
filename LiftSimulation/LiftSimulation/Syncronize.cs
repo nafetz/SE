@@ -160,7 +160,7 @@ namespace LiftSimulation
 
         public static void executeFinish()
         {
-            _elevator.CurrentState.finish(_elevator);
+            _elevator.CurrentState.Finish(_elevator);
         }
 
         public static void open_door()

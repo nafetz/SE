@@ -113,7 +113,6 @@ namespace LiftSimulation
             }
         }
 
-        //überarbetien!!!
         public bool ThereAreWishesInMyDirection
         {
             get
@@ -122,24 +121,18 @@ namespace LiftSimulation
                 {
                     case Defaults.Direction.Upward:
                         {
-                            if (_upwardRequired.IndexOf(    // gibts ein Element das:
-                                true,                       // true ist
-                                Defaults.FloorToIdx(_currentFloor),   // zw. dem aktuellem und
-                                (_upwardRequired.Count - Defaults.FloorToIdx(_currentFloor))) != -1)  //dem letzten Element liegt?
-                                return true;
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
+                            for ( int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++ )
                             {
-                                if (_internRequired[i] == true) return true;
+                                if ( _internRequired[i] || _downwardRequired[i] || _upwardRequired[i] ) 
+                                    return true;
                             }
-
                         } break;
                     case Defaults.Direction.Downward:
                         {
-                            if (_downwardRequired.IndexOf(true, Defaults.FloorToIdx(_currentFloor)) != -1)
-                                return true;
                             for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
                             {
-                                if (_internRequired[i] == true) return true;
+                                if( _internRequired[ i ] || _downwardRequired[ i ] || _upwardRequired[ i ] )
+                                    return true;
                             }
                         } break;
                 }
@@ -173,10 +166,8 @@ namespace LiftSimulation
         /// Konstruktor
         /// </summary>
         public Elevator()
-        {
-              
-            _currentFloor = 0;
-            State = FixedOpen;
+        {              
+            _currentFloor = 0;           
                      
             for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
             {
@@ -184,30 +175,8 @@ namespace LiftSimulation
                 _upwardRequired.Add(false);
                 _internRequired.Add(false);
             }
-
-            //this.SetState(Defaults.State.FixedOpen);
-
-            //State.Move(this);
             
-            //InitOrReset();
-        }
-
-        /// <summary>
-        /// Setzt fahrstuhl in Ausgangszustand
-        /// </summary>
-        public void InitOrReset()
-        {
-            State = FixedOpen;
-            _currentFloor = 0;
-
-            // ANGEBLICH ARRAY-OUT-OF-BOUND   BITTE PRÜFEN, ICH HAB KEINE AHNUNG
-            for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
-            {
-                _downwardRequired.Add(false);
-                _upwardRequired.Add(false);
-            }
-
-            State.Loop( this );
+            State = FixedClosed;
         }
         
         /// <summary>
@@ -224,7 +193,6 @@ namespace LiftSimulation
                 case Defaults.State.Overload    : State = Overload;     break;
             }
             this.CurrentState.Loop(this);
-                        
         }
 
         /// <summary>
@@ -255,30 +223,28 @@ namespace LiftSimulation
             Syncronize.SwitchDirection();
         }
 
-        public void delete_requireds()
+        public void DeleteReqired()
         {
+            int i = Defaults.FloorToIdx( _currentFloor );
 
-            //int i = Defaults.FloorToIdx(this._currentFloor);
-
-            //switch (this.Direction)
-            //{
-            //    case Defaults.Direction.Upward:
-            //        {
-            //            _upwardRequired[i] = false;
-            //            Syncronize.syncUpwardWishes(Syncronize.To.UI);
-            //            break;
-            //        }
-            //    case Defaults.Direction.Downward:
-            //        {
-            //            _downwardRequired[i] = false;
-            //            Syncronize.syncDownwardWishes(Syncronize.To.UI);                        
-            //            break;
-            //        }
-            //}
-            //_internRequired[i] = false;                  
-            //Syncronize.syncinnerWishes(Syncronize.To.UI);         
-            
-}
+            switch (_direction)
+            {
+                case Defaults.Direction.Upward:
+                    {
+                        _upwardRequired[ i ] = false;
+                        Syncronize.syncUpwardWishes( Syncronize.To.UI );
+                        break;
+                    }
+                case Defaults.Direction.Downward:
+                    {
+                        _downwardRequired[ i ] = false;
+                        Syncronize.syncDownwardWishes( Syncronize.To.UI );
+                        break;
+                    }
+            }
+            _internRequired[ i ] = false;
+            Syncronize.syncinnerWishes( Syncronize.To.UI );            
+        }
 
         #endregion
     }
