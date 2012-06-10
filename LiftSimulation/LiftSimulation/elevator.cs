@@ -15,8 +15,8 @@ namespace LiftSimulation
         // State-Patterns
         private ElevatorState State;
         private ElevatorState Moving = new Moving();
-        private ElevatorState Fixed = new Fixed();
-       // private ElevatorState FixedClosed = new FixedClosed();
+        private ElevatorState FixedOpen = new FixedOpen();
+        private ElevatorState FixedClosed = new FixedClosed();
         private ElevatorState Overload = new Overload();
 
         // Floor-Stuff
@@ -28,9 +28,6 @@ namespace LiftSimulation
         // Riding
         private Defaults.Direction _direction = Defaults.Direction.Upward;
         private int _passengers = 0;
-
-        //User Interface
-        //private UserInterface _ui;
 
         #endregion
 
@@ -88,6 +85,7 @@ namespace LiftSimulation
                 return false;
             }
         }
+
         public bool ThereAreWishesOnThisFloor
         {
             get
@@ -115,7 +113,7 @@ namespace LiftSimulation
             }
         }
 
-        //mal drüber gucke, glaub nicht dass das so geht
+        //überarbetien!!!
         public bool ThereAreWishesInMyDirection
         {
             get
@@ -131,7 +129,7 @@ namespace LiftSimulation
                                 return true;
                             for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
                             {
-                                if (_internRequired.ElementAt(i) == true) return true;
+                                if (_internRequired[i] == true) return true;
                             }
 
                         } break;
@@ -141,7 +139,7 @@ namespace LiftSimulation
                                 return true;
                             for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
                             {
-                                if (_internRequired.ElementAt(i) == true) return true;
+                                if (_internRequired[i] == true) return true;
                             }
                         } break;
                 }
@@ -165,12 +163,6 @@ namespace LiftSimulation
             set { _passengers = value; }
         }
 
-        /*public UserInterface UI
-        {
-            get { return _ui; }
-            set { _ui = value; }
-        }*/
-        
 
         #endregion
 
@@ -184,7 +176,7 @@ namespace LiftSimulation
         {
               
             _currentFloor = 0;
-            State = Fixed;
+            State = FixedOpen;
                      
             for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
             {
@@ -205,7 +197,7 @@ namespace LiftSimulation
         /// </summary>
         public void InitOrReset()
         {
-            State = Fixed;
+            State = FixedOpen;
             _currentFloor = 0;
 
             // ANGEBLICH ARRAY-OUT-OF-BOUND   BITTE PRÜFEN, ICH HAB KEINE AHNUNG
@@ -227,12 +219,12 @@ namespace LiftSimulation
             switch ( newState )
             {
                 case Defaults.State.Moving      : State = Moving;       break;
-                case Defaults.State.Fixed   : State = Fixed;    break;
-               // case Defaults.State.FixedClosed : State = FixedClosed;  break;
+                case Defaults.State.FixedOpen  : State = FixedOpen;    break;
+                case Defaults.State.FixedClosed : State = FixedClosed;  break;
                 case Defaults.State.Overload    : State = Overload;     break;
             }
-
-            State.Loop(this);
+            this.CurrentState.Loop(this);
+                        
         }
 
         /// <summary>
@@ -266,25 +258,25 @@ namespace LiftSimulation
         public void delete_requireds()
         {
 
-            int i = this._currentFloor;
+            //int i = Defaults.FloorToIdx(this._currentFloor);
 
-            switch (this.Direction)
-            {
-                case Defaults.Direction.Upward:
-                    {
-                        Syncronize.syncUpwardWishes(Syncronize.To.UI);
-                        _upwardRequired[i] = false;
-                        break;
-                    }
-                case Defaults.Direction.Downward:
-                    {
-                        Syncronize.syncDownwardWishes(Syncronize.To.UI);
-                        _downwardRequired[i] = false;
-                        break;
-                    }
-            }
-            _internRequired[i] = false;                  
-            Syncronize.syncinnerWishes(Syncronize.To.UI);         
+            //switch (this.Direction)
+            //{
+            //    case Defaults.Direction.Upward:
+            //        {
+            //            _upwardRequired[i] = false;
+            //            Syncronize.syncUpwardWishes(Syncronize.To.UI);
+            //            break;
+            //        }
+            //    case Defaults.Direction.Downward:
+            //        {
+            //            _downwardRequired[i] = false;
+            //            Syncronize.syncDownwardWishes(Syncronize.To.UI);                        
+            //            break;
+            //        }
+            //}
+            //_internRequired[i] = false;                  
+            //Syncronize.syncinnerWishes(Syncronize.To.UI);         
             
 }
 

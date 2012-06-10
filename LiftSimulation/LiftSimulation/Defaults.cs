@@ -14,12 +14,12 @@ namespace LiftSimulation
         private static int _numberOfFloors = 6;
         private static int _numberOfBasementFloors = 1;
         private static int _maxNumberOfPassengers = 10;
-        public  enum State { Moving = 1, Fixed, Overload };
+        public  enum State { Moving = 1, FixedOpen, FixedClosed, Overload };
         public  enum Direction { Upward = 1, Downward };
         public  enum MoreOrLess { More = 1, Less, Neither };
 
-        private static readonly ManualResetEvent _mre = new ManualResetEvent( false );
-        private static readonly ManualResetEvent _wre = new ManualResetEvent( false );
+        //private static readonly ManualResetEvent _mre = new ManualResetEvent( false );
+        //private static readonly ManualResetEvent _wre = new ManualResetEvent( false );
 
         public struct _logentry
         {
@@ -67,15 +67,15 @@ namespace LiftSimulation
             get { return _maxNumberOfPassengers; } 
         }
 
-        public static ManualResetEvent ManualResetEvent
-        {
-            get { return _mre; }
-        }
+        //public static ManualResetEvent ManualResetEvent
+        //{
+        //    get { return _mre; }
+        //}
 
-        public static ManualResetEvent WaitingResetEvent
-        {
-            get { return _wre; }
-        }
+        //public static ManualResetEvent WaitingResetEvent
+        //{
+        //    get { return _wre; }
+        //}
 
 
         #endregion
