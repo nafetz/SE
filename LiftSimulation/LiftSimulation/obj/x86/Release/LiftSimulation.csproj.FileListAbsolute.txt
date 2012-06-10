@@ -7,3 +7,5 @@ C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Release\GenerateResou
 C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Release\GenerateResource.write.1.tlog
 C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Release\LiftSimulation.exe
 C:\4.Semester\SE2\SE\LiftSimulation\LiftSimulation\obj\x86\Release\LiftSimulation.pdb
+E:\GitRepositorys\SE\LiftSimulation\LiftSimulation\obj\x86\Release\LiftSimulation.exe
+E:\GitRepositorys\SE\LiftSimulation\LiftSimulation\obj\x86\Release\LiftSimulation.pdb

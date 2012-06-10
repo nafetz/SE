@@ -1,0 +1,4 @@
+ELEVATOR:
+
+- Konstruktor angepasst -> _internRequired initialisiert
+- alle Fahrtwunsch-Listen static (für den Zugriff von außen)
