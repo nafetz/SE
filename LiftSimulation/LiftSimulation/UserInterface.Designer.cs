@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserInterface));
             this.groupBox_outsite = new System.Windows.Forms.GroupBox();
             this.groupBox_inside = new System.Windows.Forms.GroupBox();
@@ -90,11 +90,11 @@
             // 
             this.dataGridView_log.AllowUserToAddRows = false;
             this.dataGridView_log.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle5.NullValue = "-";
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle2.NullValue = "-";
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView_log.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView_log.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -175,6 +175,7 @@
             // 
             // button_more_passenger
             // 
+            this.button_more_passenger.Enabled = false;
             this.button_more_passenger.Location = new System.Drawing.Point(176, 19);
             this.button_more_passenger.Name = "button_more_passenger";
             this.button_more_passenger.Size = new System.Drawing.Size(90, 25);
@@ -185,6 +186,7 @@
             // 
             // button_less_passenger
             // 
+            this.button_less_passenger.Enabled = false;
             this.button_less_passenger.Location = new System.Drawing.Point(176, 54);
             this.button_less_passenger.Name = "button_less_passenger";
             this.button_less_passenger.Size = new System.Drawing.Size(90, 25);
@@ -311,12 +313,12 @@
             // 
             // timer_fahren
             // 
-            this.timer_fahren.Interval = 1500;
+            this.timer_fahren.Interval = 2000;
             this.timer_fahren.Tick += new System.EventHandler(this.timer_fahren_Tick);
             // 
             // UserInterface
             // 
-            this.ClientSize = new System.Drawing.Size(992, 773);
+            this.ClientSize = new System.Drawing.Size(984, 762);
             this.Controls.Add(this.groupBox_inside);
             this.Controls.Add(this.groupBox_outsite);
             this.MaximizeBox = false;

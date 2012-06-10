@@ -29,6 +29,7 @@ namespace LiftSimulation
         private Defaults.Direction _direction = Defaults.Direction.Upward;
         private int _passengers = 0;
 
+        private bool _hasTask = false;
         #endregion
 
 
@@ -37,6 +38,12 @@ namespace LiftSimulation
         // Für den Zugriff außerhalb des Class-Scope
         // get
 
+        public bool TaskStatus
+        {
+            get { return _hasTask; }
+            set { _hasTask = value; }
+        }
+        
         public ElevatorState CurrentState
         {
             get { return State; }
@@ -50,6 +57,7 @@ namespace LiftSimulation
         /// 1. OG   => 1;
         /// 2. UG   => -2
         /// </summary>
+       
         public int CurrentFloor 
         {
             get { return _currentFloor; }
@@ -123,7 +131,7 @@ namespace LiftSimulation
                         {
                             for ( int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++ )
                             {
-                                if ( _internRequired[i] || _downwardRequired[i] || _upwardRequired[i] ) 
+                                if ( _internRequired[i]  || _upwardRequired[i] ) 
                                     return true;
                             }
                         } break;
@@ -131,14 +139,38 @@ namespace LiftSimulation
                         {
                             for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
                             {
-                                if( _internRequired[ i ] || _downwardRequired[ i ] || _upwardRequired[ i ] )
+                                if( _internRequired[ i ] || _downwardRequired[ i ] )
                                     return true;
                             }
                         } break;
                 }
+                return false;
+            }
+        }
 
-
-
+        public bool ThereAreWishesInTheDirectionWhichIsNotMyDirection
+        {
+            get
+            {
+                switch (_direction)
+                {
+                    case Defaults.Direction.Upward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i > 0; i--)
+                            {
+                                if (_internRequired[i] || _upwardRequired[i])
+                                    return true;
+                            }
+                        } break;
+                    case Defaults.Direction.Downward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
+                            {
+                                if (_internRequired[i] || _downwardRequired[i] )
+                                    return true;
+                            }
+                        } break;
+                }
                 return false;
             }
         }
@@ -232,7 +264,7 @@ namespace LiftSimulation
                 case Defaults.Direction.Upward:
                     {
                         _upwardRequired[ i ] = false;
-                        Syncronize.syncUpwardWishes( Syncronize.To.UI );
+                        Syncronize.syncUpwardWishes(Syncronize.To.UI);
                         break;
                     }
                 case Defaults.Direction.Downward:
@@ -243,7 +275,7 @@ namespace LiftSimulation
                     }
             }
             _internRequired[ i ] = false;
-            Syncronize.syncinnerWishes( Syncronize.To.UI );            
+            //Syncronize.syncinnerWishes( Syncronize.To.UI );            
         }
 
         #endregion

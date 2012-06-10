@@ -25,6 +25,23 @@ namespace LiftSimulation
             //_elevator.SetState(Defaults.State.Fixed);
 
             _ui.CurrentPosition = Elevator.CurrentFloor;
+            _ui.enableInnerButtons(false);
+        }
+
+        #endregion
+
+        #region Property
+
+        public static bool TaskStatus
+        {
+            get{
+                return _elevator.TaskStatus;
+            }
+
+            set{
+               _elevator.TaskStatus = value;
+            }
+
         }
 
         #endregion
@@ -172,6 +189,14 @@ namespace LiftSimulation
         {
             _ui.close_door(Defaults.FloorToIdx(_elevator.CurrentFloor));
         }
+
+        public static void enableInnerButton(bool value)
+        {
+            _ui.enableInnerButtons(true);
+        }
+
+        
+
 
 
 

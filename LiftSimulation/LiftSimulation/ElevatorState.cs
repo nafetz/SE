@@ -22,12 +22,24 @@ namespace LiftSimulation
         public override void Loop( Elevator Elevator ) 
         {
             Elevator.DeleteReqired();
-
+                       
             Syncronize.open_door();
             Syncronize.DoorTimerReset();
+            Syncronize.PassengerButtonsEnable(true);           
             
             if (!Syncronize.syncPassengers()) 
                 Syncronize.DoorTimerReset(); // Lichtschrake übertreten --> Neustart des Türtimers
+
+            if (Elevator.Passengers <= 0)
+            {
+                Syncronize.PassenderMinusButtonEnable(false);
+                Syncronize.enableInnerButton(false);
+            }
+            else
+            {
+                Syncronize.PassenderMinusButtonEnable(true);
+                Syncronize.enableInnerButton(true);
+            }
 
             if (Elevator.CheckForOverload())
             {
@@ -52,8 +64,14 @@ namespace LiftSimulation
     {
         public override void Loop(Elevator Elevator)
         {
+
             Syncronize.close_door();
-            if (Elevator.ThereAreWishesOnThisFloor)
+            if (Elevator.CheckForOverload())
+            {
+                Elevator.SetState(Defaults.State.FixedOpen);                
+            }
+            
+            else if (Elevator.ThereAreWishesOnThisFloor)
             {
                 Syncronize.PassengerButtonsEnable(true);
                 Elevator.SetState(Defaults.State.FixedOpen);
@@ -61,8 +79,14 @@ namespace LiftSimulation
             else if (Elevator.ThereAreWishesInMyDirection)
             {
                 Elevator.SetState(Defaults.State.Moving);
-                
             }
+            else if (Elevator.ThereAreWishesInTheDirectionWhichIsNotMyDirection || Elevator.ReachedHighestOrLowestFloor)
+            {
+                Elevator.SwitchDirection();
+                Elevator.SetState(Defaults.State.Moving);
+            }
+
+            else Elevator.TaskStatus = false;
             //else if (Wünsche in der Gegenrichtung ||)
             //  richtungswechesel & go!
         }
@@ -72,15 +96,10 @@ namespace LiftSimulation
     {
         public override void Loop(Elevator Elevator) 
         {
-            if( Elevator.ThereAreWishesOnThisFloor )
+
+            if (Elevator.ThereAreWishesInMyDirection)
             {
-                Elevator.SetState( Defaults.State.FixedClosed );
-                return ;
-            }  
-              
-            if( Elevator.ThereAreWishesInMyDirection )
-            {
-                switch( Elevator.Direction )
+                switch (Elevator.Direction)
                 {
                     case Defaults.Direction.Upward:
                         {
@@ -96,11 +115,17 @@ namespace LiftSimulation
                         } break;
                 }// switch
 
-                Syncronize.MoveTimerReset();
-                Syncronize.visibleDirection();
-                return ;
+               Syncronize.MoveTimerReset();
+              Syncronize.visibleDirection();
+                Elevator.DeleteReqired();
+                return;
 
-            }// if       
+            }
+            else
+            {
+                Elevator.SetState(Defaults.State.FixedClosed);
+                return;
+            }
         }
     }
 
@@ -108,6 +133,7 @@ namespace LiftSimulation
     {
         public override void Loop(Elevator Elevator) 
         {
+            Syncronize.syncPassengers();
             if (!Elevator.CheckForOverload())
             {
                 Elevator.SetState(Defaults.State.FixedOpen);

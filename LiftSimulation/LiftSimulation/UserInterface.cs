@@ -220,10 +220,7 @@ namespace LiftSimulation
                 List<bool> _interns = new List<bool>();
 
                 for (int i = 0; i < Defaults.Floors; i++)
-                {
-                    if (i == Defaults.Floors - 1) _interns.Add(false);
-                    else
-                    {
+                {                   
                         if (button_intern[i].Enabled == false)
                         {
                             _interns.Add(true);
@@ -232,7 +229,7 @@ namespace LiftSimulation
                         {
                             _interns.Add(false);
                         }
-                    }
+                    
                 }
                                
                 return _interns;
@@ -242,7 +239,7 @@ namespace LiftSimulation
                 List<bool> _interns = value; 
                 for (int i = 0 ; i <Defaults.Floors; i++) 
                 {               
-                    if (_interns[i] == true) button_intern[i].Enabled = true;                                     
+                   if (_interns[i] == true) button_intern[i].Enabled = true;                                     
                 }
             }
         }
@@ -437,7 +434,16 @@ namespace LiftSimulation
 
         private void button_emergency_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Blöd gelaufen... äh gefahren");  
+            MessageBox.Show("Blöd gelaufen... äh gefahren");
+            for (int i = 0; i < Defaults.Floors; i++ )
+            {
+                button_intern[i].Enabled = true;
+                if (i != 0) button_downward[i].Enabled = true;
+                if (i != Defaults.Floors - 1) button_intern[i].Enabled = true;
+            }
+            Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
+            Syncronize.syncinnerWishes(Syncronize.To.Elevator);
+            Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
         }
 
         private void button_open_door_Click(object sender, EventArgs e)
@@ -469,8 +475,18 @@ namespace LiftSimulation
 
         }
 
+        public void BusyCheck()
+        {
+            if (Syncronize.TaskStatus == false)
+            {
+                Syncronize.TaskStatus = true;
+                Syncronize.executeLoop();
+            }
+        }
+
         private void timer_tuer_zu_Tick(object sender, EventArgs e)
         {
+            timer_tuer_zu.Stop();
             Syncronize.executeFinish();
             
         }
@@ -478,9 +494,13 @@ namespace LiftSimulation
         private void ClickInnerButton(object sender, EventArgs e)
         {
            Button Test = sender as Button;
+           
            Test.Enabled = false;
+           
+           
            Syncronize.syncinnerWishes(Syncronize.To.Elevator);
-           Syncronize.executeLoop();            
+           BusyCheck();
+          // Syncronize.executeLoop();            
         }
 
         private void ClickOutsideButton(object sender, EventArgs e)
@@ -489,19 +509,27 @@ namespace LiftSimulation
            Test.Enabled = false;
            Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
            Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
-           Syncronize.executeLoop();
+           BusyCheck();
+           //Syncronize.executeLoop();
         }
 
         private void timer_fahren_Tick(object sender, EventArgs e)
         {
+           timer_fahren.Stop(); 
            pictureBox_direction.Visible = false;
            Syncronize.syncinnerWishes(Syncronize.To.UI);
            Syncronize.executeLoop();
+          
         }
 
         public void show_direction()
         {
             pictureBox_direction.Visible = true;         
         }
+
+        public void enableInnerButtons(bool value){
+            for (int i = 0; i < Defaults.Floors; i++)                       
+                 button_intern[i].Enabled = value;            
+         }
     }
 }
