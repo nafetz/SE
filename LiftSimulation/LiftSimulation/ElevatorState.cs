@@ -22,6 +22,8 @@ namespace LiftSimulation
         public override void Loop( Elevator Elevator ) 
         {
             Elevator.DeleteReqired();
+            
+           
                        
             Syncronize.open_door();
             Syncronize.DoorTimerReset();
@@ -29,6 +31,8 @@ namespace LiftSimulation
             
             if (!Syncronize.syncPassengers()) 
                 Syncronize.DoorTimerReset(); // Lichtschrake übertreten --> Neustart des Türtimers
+
+            Elevator.loggin();
 
             if (Elevator.Passengers <= 0)
             {
@@ -51,8 +55,8 @@ namespace LiftSimulation
 
         public override void Finish(Elevator Elevator)
         {
-            Syncronize.PassengerButtonsEnable(false);
-            Elevator.SetState(Defaults.State.FixedClosed);
+            //Syncronize.PassengerButtonsEnable(false);
+            //Syncronize.SetState(Defaults.State.FixedClosed);
             //Elevator.CurrentState.Loop(Elevator);
         }   
     }
@@ -64,14 +68,10 @@ namespace LiftSimulation
     {
         public override void Loop(Elevator Elevator)
         {
-
+            Elevator.loggin();
             Syncronize.close_door();
-            if (Elevator.CheckForOverload())
-            {
-                Elevator.SetState(Defaults.State.FixedOpen);                
-            }
             
-            else if (Elevator.ThereAreWishesOnThisFloor)
+            if (Elevator.ThereAreWishesOnThisFloor)
             {
                 Syncronize.PassengerButtonsEnable(true);
                 Elevator.SetState(Defaults.State.FixedOpen);
@@ -96,8 +96,14 @@ namespace LiftSimulation
     {
         public override void Loop(Elevator Elevator) 
         {
+            
+            if(Elevator.ThereAreWishesOnThisFloor)
+            {
+                Elevator.SetState(Defaults.State.FixedClosed);
+                return;
+            }
 
-            if (Elevator.ThereAreWishesInMyDirection)
+            else if (Elevator.ThereAreWishesInMyDirection)
             {
                 switch (Elevator.Direction)
                 {
@@ -114,18 +120,13 @@ namespace LiftSimulation
                             //Elevator.DeleteReqired();
                         } break;
                 }// switch
-
+                Elevator.loggin();
                Syncronize.MoveTimerReset();
               Syncronize.visibleDirection();
-                Elevator.DeleteReqired();
-                return;
-
-            }
-            else
-            {
-                Elevator.SetState(Defaults.State.FixedClosed);
+               // Elevator.DeleteReqired();
                 return;
             }
+           
         }
     }
 
@@ -133,6 +134,7 @@ namespace LiftSimulation
     {
         public override void Loop(Elevator Elevator) 
         {
+            Elevator.loggin();
             Syncronize.syncPassengers();
             if (!Elevator.CheckForOverload())
             {

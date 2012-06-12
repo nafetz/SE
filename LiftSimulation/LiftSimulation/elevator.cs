@@ -264,18 +264,40 @@ namespace LiftSimulation
                 case Defaults.Direction.Upward:
                     {
                         _upwardRequired[ i ] = false;
-                        Syncronize.syncUpwardWishes(Syncronize.To.UI);
+                       // Syncronize.syncUpwardWishes(Syncronize.To.UI);
                         break;
                     }
                 case Defaults.Direction.Downward:
                     {
                         _downwardRequired[ i ] = false;
-                        Syncronize.syncDownwardWishes( Syncronize.To.UI );
+                       // Syncronize.syncDownwardWishes( Syncronize.To.UI );
                         break;
                     }
             }
             _internRequired[ i ] = false;
             //Syncronize.syncinnerWishes( Syncronize.To.UI );            
+        }
+
+     
+
+        public void loggin()
+        {
+            Defaults._logentry entry;
+           if (CurrentState  == Moving)            {
+                   entry = new Defaults._logentry(_direction, CurrentFloor, Passengers, Defaults.State.Moving);
+            }
+           else if (CurrentState == FixedClosed)
+           {
+                entry = new Defaults._logentry(_direction, CurrentFloor, Passengers, Defaults.State.FixedClosed);
+           }
+
+           else if (CurrentState == FixedOpen)
+           {
+                entry = new Defaults._logentry(_direction, CurrentFloor, Passengers, Defaults.State.FixedOpen);
+           }
+           else   entry = new Defaults._logentry(_direction, CurrentFloor, Passengers, Defaults.State.Overload);
+
+           Syncronize._logging(entry);
         }
 
         #endregion

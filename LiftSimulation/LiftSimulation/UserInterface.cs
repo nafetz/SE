@@ -238,8 +238,9 @@ namespace LiftSimulation
             {
                 List<bool> _interns = value; 
                 for (int i = 0 ; i <Defaults.Floors; i++) 
-                {               
-                   if (_interns[i] == true) button_intern[i].Enabled = true;                                     
+                {
+                    if (_interns[i] == true) button_intern[i].Enabled = false;
+                    else button_intern[i].Enabled = true;
                 }
             }
         }
@@ -349,7 +350,8 @@ namespace LiftSimulation
                                        value._floor.ToString(),
                                        value._passenger.ToString(),
                                        value._state.ToString()
-                    );          
+                    );
+                dataGridView_log.FirstDisplayedCell = dataGridView_log.Rows[dataGridView_log.RowCount - 1].Cells[0];
                 }
         }
 
@@ -392,7 +394,8 @@ namespace LiftSimulation
         public void open_door(int floor)
         {
             if (floor < 0 || floor > Defaults.Floors) return;
-            if (doorstates[floor].Image == img_door2) doorstates[floor].Image = img_door1;
+            //if (doorstates[floor].Image == img_door2)
+                doorstates[floor].Image = img_door1;
             
         }
 
@@ -458,11 +461,11 @@ namespace LiftSimulation
 
         private void button_close_door_Click(object sender, EventArgs e)
         {
-            button_less_passenger.Enabled = false;
-            button_more_passenger.Enabled = false;
-            Syncronize.DoorTimerStop();
-            Syncronize.SetState(Defaults.State.FixedClosed);
-            close_door(Syncronize.syncFloor());
+            //button_less_passenger.Enabled = false;
+            //button_more_passenger.Enabled = false;
+            //Syncronize.DoorTimerStop();
+            //Syncronize.SetState(Defaults.State.FixedClosed);
+            
         }
 
         public void ChangeDirection()
@@ -487,16 +490,15 @@ namespace LiftSimulation
         private void timer_tuer_zu_Tick(object sender, EventArgs e)
         {
             timer_tuer_zu.Stop();
-            Syncronize.executeFinish();
+            Syncronize.PassengerButtonsEnable(false);
+            Syncronize.SetState(Defaults.State.FixedClosed);
             
         }
 
         private void ClickInnerButton(object sender, EventArgs e)
         {
-           Button Test = sender as Button;
-           
-           Test.Enabled = false;
-           
+           Button currentButton = sender as Button;           
+           currentButton.Enabled = false;           
            
            Syncronize.syncinnerWishes(Syncronize.To.Elevator);
            BusyCheck();
@@ -505,8 +507,9 @@ namespace LiftSimulation
 
         private void ClickOutsideButton(object sender, EventArgs e)
         {
-           Button Test = sender as Button;
-           Test.Enabled = false;
+           Button currentButt = sender as Button;
+           currentButt.Enabled = false;
+
            Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
            Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
            BusyCheck();
@@ -518,6 +521,8 @@ namespace LiftSimulation
            timer_fahren.Stop(); 
            pictureBox_direction.Visible = false;
            Syncronize.syncinnerWishes(Syncronize.To.UI);
+           Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
+           Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
            Syncronize.executeLoop();
           
         }

@@ -105,10 +105,10 @@
             this.Passagierer,
             this.Status});
             this.dataGridView_log.GridColor = System.Drawing.SystemColors.Control;
-            this.dataGridView_log.Location = new System.Drawing.Point(20, 600);
+            this.dataGridView_log.Location = new System.Drawing.Point(21, 572);
             this.dataGridView_log.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView_log.Name = "dataGridView_log";
-            this.dataGridView_log.Size = new System.Drawing.Size(390, 120);
+            this.dataGridView_log.Size = new System.Drawing.Size(390, 153);
             this.dataGridView_log.TabIndex = 1;
             // 
             // Eintrag
@@ -155,9 +155,9 @@
             this.groupBox_control_inside.Controls.Add(this.groupBox_position_display);
             this.groupBox_control_inside.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox_control_inside.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox_control_inside.Location = new System.Drawing.Point(45, 52);
+            this.groupBox_control_inside.Location = new System.Drawing.Point(45, 32);
             this.groupBox_control_inside.Name = "groupBox_control_inside";
-            this.groupBox_control_inside.Size = new System.Drawing.Size(329, 529);
+            this.groupBox_control_inside.Size = new System.Drawing.Size(329, 521);
             this.groupBox_control_inside.TabIndex = 0;
             this.groupBox_control_inside.TabStop = false;
             // 

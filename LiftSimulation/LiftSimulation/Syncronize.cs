@@ -9,8 +9,8 @@ namespace LiftSimulation
     {
         #region member
 
-        private static Elevator _elevator;
-        private static UserInterface _ui;
+        public static Elevator _elevator; //wieder Private machen
+        public static UserInterface _ui; //wieder Private machen
         public enum To { UI=1, Elevator }
 
         #endregion
@@ -64,7 +64,7 @@ namespace LiftSimulation
                 case To.Elevator: 
                     {
                         _elevator.UpwardRequired = _ui.UpwardRequired;
-                        _elevator.CurrentState.Loop(_elevator);
+                       
                     } break;
             }
         }
@@ -79,22 +79,25 @@ namespace LiftSimulation
                 case To.Elevator: 
                     {
                         _elevator.DownwardRequired = _ui.DownwardRequired;
-                        _elevator.CurrentState.Loop(_elevator);
+                        
                     } break;
             }
         }
 
         public static void syncinnerWishes(To who)
         {
+            
             switch (who)
             {
                 case To.UI: 
                     {
                         _ui.InternRequired = _elevator.InternRequired;
-                    } break;
+                        
+                    } break; 
                 case To.Elevator: 
                     {
                         _elevator.InternRequired = _ui.InternRequired;
+
                     } break;
             }
         }
@@ -105,6 +108,7 @@ namespace LiftSimulation
             {
                 _elevator.Passengers--;
                 _ui.PassengersCount = _elevator.Passengers;
+                _ui.ResetPassengerIO();
                 return false;
             }
                         
@@ -112,6 +116,7 @@ namespace LiftSimulation
             {
                 _elevator.Passengers++;
                 _ui.PassengersCount = _elevator.Passengers;
+                _ui.ResetPassengerIO();
                 return false;
             }
             else
@@ -193,6 +198,11 @@ namespace LiftSimulation
         public static void enableInnerButton(bool value)
         {
             _ui.enableInnerButtons(true);
+        }
+
+        public static void _logging(Defaults._logentry entry)
+        {
+            _ui.logging = entry;
         }
 
         
