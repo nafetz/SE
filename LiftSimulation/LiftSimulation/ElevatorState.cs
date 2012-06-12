@@ -55,9 +55,9 @@ namespace LiftSimulation
 
         public override void Finish(Elevator Elevator)
         {
-            //Syncronize.PassengerButtonsEnable(false);
-            //Syncronize.SetState(Defaults.State.FixedClosed);
-            //Elevator.CurrentState.Loop(Elevator);
+            Syncronize.PassengerButtonsEnable( false );
+            Syncronize.SetState( Defaults.State.FixedClosed );
+            //Elevator.CurrentState.Loop( Elevator );
         }   
     }
 
