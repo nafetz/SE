@@ -21,10 +21,7 @@ namespace LiftSimulation
     {
         public override void Loop( Elevator Elevator ) 
         {
-            Elevator.DeleteReqired();
-            
-           
-                       
+            Elevator.DeleteReqired();                   
             Syncronize.open_door();
             Syncronize.DoorTimerReset();
             Syncronize.PassengerButtonsEnable(true);           
@@ -37,14 +34,14 @@ namespace LiftSimulation
             if (Elevator.Passengers <= 0)
             {
                 Syncronize.PassenderMinusButtonEnable(false);
-                Syncronize.enableInnerButton(false);
             }
-            else
-            {
+            else{
                 Syncronize.PassenderMinusButtonEnable(true);
-                Syncronize.enableInnerButton(true);
             }
-
+                Syncronize.syncinnerWishes(Syncronize.To.UI);
+                Syncronize.syncDownwardWishes(Syncronize.To.UI);
+                Syncronize.syncUpwardWishes(Syncronize.To.UI);                                
+                       
             if (Elevator.CheckForOverload())
             {
                 Elevator.SetState(Defaults.State.Overload);
