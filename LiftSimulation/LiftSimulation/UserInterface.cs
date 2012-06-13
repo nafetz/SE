@@ -168,7 +168,8 @@ namespace LiftSimulation
             {       List<bool> _upwards = value; //kann man die Liste einfach so kopieren?
                     for (int i = 0; i < Defaults.Floors - 1; i++) //geht bis zum vorletzten, da es oben ohnehin kein "hoch" gibt
                     {
-                        if (_upwards[i] == true) button_upward[i].Enabled = true; ;
+                        if (_upwards[i] == true) button_upward[i].Enabled = false;
+                        else button_upward[i].Enabled = true;
                     
                     }               
 
@@ -204,7 +205,8 @@ namespace LiftSimulation
                 List<bool> _downwards = value; //kann man die Liste einfach so kopieren?
                 for (int i = 1; i < Defaults.Floors; i++) //startet bei 1, da es unten ohnehin kein "runter" gibt
                 {
-                    if (_downwards[i] == true) button_downward[i].Enabled = true; ;
+                    if (_downwards[i] == true) button_downward[i].Enabled = false;
+                    else button_downward[i].Enabled = true;
 
                 }  
             }

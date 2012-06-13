@@ -156,9 +156,9 @@ namespace LiftSimulation
                 {
                     case Defaults.Direction.Upward:
                         {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i > 0; i--)
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
                             {
-                                if (_internRequired[i] || _upwardRequired[i])
+                                if (_internRequired[i] || _downwardRequired[i])
                                     return true;
                             }
                         } break;
@@ -166,7 +166,7 @@ namespace LiftSimulation
                         {
                             for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
                             {
-                                if (_internRequired[i] || _downwardRequired[i] )
+                                if (_internRequired[i] || _upwardRequired[i] )
                                     return true;
                             }
                         } break;
