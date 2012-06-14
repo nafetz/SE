@@ -113,7 +113,7 @@ namespace LiftSimulation
                     button_upward[i].Location = new Point(250, 25);
                     button_upward[i].Height = 30;
                     button_upward[i].Width = 70;
-                    button_upward[i].Text = "Offwärts";
+                    button_upward[i].Text = "Aufwärts";
                     button_upward[i].Name = "Button_up_" + i;
                     floors[i].Controls.Add(button_upward[i]);
                     button_upward[i].Click += new System.EventHandler(ClickOutsideButton);
@@ -126,7 +126,7 @@ namespace LiftSimulation
                     button_downward[i].Location = new Point(250, 65);
                     button_downward[i].Height = 30;
                     button_downward[i].Width = 70;
-                    button_downward[i].Text = "Zum Teufel";
+                    button_downward[i].Text = "Abwärts";
                     button_downward[i].Name = "Button_up_" + i;
                     floors[i].Controls.Add(button_downward[i]);
                     button_downward[i].Click += new System.EventHandler(ClickOutsideButton);
@@ -439,7 +439,7 @@ namespace LiftSimulation
 
         private void button_emergency_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Blöd gelaufen... äh gefahren");
+            MessageBox.Show("Notruf betätigt. Fahrstuhl kommt an der nächstbesten Etage zum Stillstand. Fahrwünsche werden gelöscht.");
             for (int i = 0; i < Defaults.Floors; i++ )
             {
                 button_intern[i].Enabled = true;
