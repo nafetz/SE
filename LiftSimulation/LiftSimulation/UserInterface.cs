@@ -445,7 +445,7 @@ namespace LiftSimulation
             {
                 button_intern[i].Enabled = true;
                 if (i != 0) button_downward[i].Enabled = true;
-                if (i != Defaults.Floors - 1) button_intern[i].Enabled = true;
+                if (i != Defaults.Floors - 1) button_upward[i].Enabled = true;
             }
             Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
             Syncronize.syncinnerWishes(Syncronize.To.Elevator);
