@@ -113,7 +113,7 @@ namespace LiftSimulation
                     button_upward[i].Location = new Point(250, 25);
                     button_upward[i].Height = 30;
                     button_upward[i].Width = 70;
-                    button_upward[i].Text = "Hoch";
+                    button_upward[i].Text = "Aufwärts";
                     button_upward[i].Name = "Button_up_" + i;
                     floors[i].Controls.Add(button_upward[i]);
                     button_upward[i].Click += new System.EventHandler(ClickOutsideButton);
@@ -126,7 +126,7 @@ namespace LiftSimulation
                     button_downward[i].Location = new Point(250, 65);
                     button_downward[i].Height = 30;
                     button_downward[i].Width = 70;
-                    button_downward[i].Text = "Runter";
+                    button_downward[i].Text = "Abwärts";
                     button_downward[i].Name = "Button_up_" + i;
                     floors[i].Controls.Add(button_downward[i]);
                     button_downward[i].Click += new System.EventHandler(ClickOutsideButton);
@@ -347,14 +347,15 @@ namespace LiftSimulation
             {
 
                 int pos = dataGridView_log.RowCount + 1;
-                dataGridView_log.Rows.Add(pos.ToString(),
+              /*  dataGridView_log.Rows.Add(pos.ToString(),
                                        value._direction.ToString(),
                                        value._floor.ToString(),
                                        value._passenger.ToString(),
                                        value._state.ToString()
                     );
                 dataGridView_log.FirstDisplayedCell = dataGridView_log.Rows[dataGridView_log.RowCount - 1].Cells[0];
-                }
+                */
+            }
         }
 
         public Button PlusPassengersButton
@@ -439,7 +440,7 @@ namespace LiftSimulation
 
         private void button_emergency_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Blöd gelaufen... äh gefahren");
+            MessageBox.Show("Notruf betätigt. Fahrstuhl kommt an der nächstbesten Etage zum Stillstand. Fahrwünsche werden gelöscht.");
             for (int i = 0; i < Defaults.Floors; i++ )
             {
                 button_intern[i].Enabled = true;
@@ -492,7 +493,9 @@ namespace LiftSimulation
         private void timer_tuer_zu_Tick(object sender, EventArgs e)
         {
             timer_tuer_zu.Stop();
-            Syncronize.executeFinish();
+            Syncronize.PassengerButtonsEnable(false);
+            Syncronize.SetState(Defaults.State.FixedClosed);
+            
         }
 
         private void ClickInnerButton(object sender, EventArgs e)

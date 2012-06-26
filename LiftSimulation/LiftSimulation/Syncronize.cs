@@ -9,8 +9,8 @@ namespace LiftSimulation
     {
         #region member
 
-        public static Elevator _elevator; //wieder Private machen
-        public static UserInterface _ui; //wieder Private machen
+        private static Elevator _elevator; //wieder Private machen
+        private static UserInterface _ui; //wieder Private machen
         public enum To { UI=1, Elevator }
 
         #endregion
@@ -180,10 +180,6 @@ namespace LiftSimulation
             _elevator.CurrentState.Loop(_elevator);
         }
 
-        public static void executeFinish()
-        {
-            _elevator.CurrentState.Finish(_elevator);
-        }
 
         public static void open_door()
         {

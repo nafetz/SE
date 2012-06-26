@@ -87,7 +87,7 @@ namespace LiftSimulation
                 //niedrigster Floor = ( 0 - AnzahlDerKellerGeschosse )
                 if( _currentFloor == ( 0 - Defaults.Basements ) )
                     return true;
-                if( _currentFloor == Defaults.Floors - Defaults.Basements )
+                if( _currentFloor == Defaults.Floors - Defaults.Basements -1  )
                     return true;
 
                 return false;
@@ -121,6 +121,28 @@ namespace LiftSimulation
             }
         }
 
+        public bool ThereAreOppositeWishesOnThisFloor
+        {
+            get
+            {
+                switch (_direction)
+                {
+                    case Defaults.Direction.Upward:
+                        {
+                            if (_downwardRequired[Defaults.FloorToIdx(_currentFloor)])
+                                return true;
+                        } break;
+                    case Defaults.Direction.Downward:
+                        {
+                            if (_upwardRequired[Defaults.FloorToIdx(_currentFloor)])
+                                return true;
+                        } break;
+                }
+
+                return false;
+            }
+        }
+/*
         public bool ThereAreWishesInMyDirection
         {
             get
@@ -147,7 +169,9 @@ namespace LiftSimulation
                 return false;
             }
         }
+*/
 
+        /*
         public bool ThereAreWishesInTheDirectionWhichIsNotMyDirection
         {
             get
@@ -174,7 +198,145 @@ namespace LiftSimulation
                 return false;
             }
         }
+         * */
+
+        /// <summary>
+        /// Wünsche in folgenen Etagen entlang der Fahrtrichtung
+        /// Bsp: Hochfahren und weiter oben der Wunsch nach oben zu fahren
+        /// </summary>
+        public bool DirectionWishesInMyDirection
+        {
+            get
+            {
+                switch (_direction)
+                {
+                    case Defaults.Direction.Upward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
+                            {
+                                if (_internRequired[i] || _upwardRequired[i])
+                                    return true;
+                            }
+                        } break;
+                    case Defaults.Direction.Downward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
+                            {
+                                if (_internRequired[i] || _downwardRequired[i])
+                                    return true;
+                            }
+                        } break;
+                }
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Wünsche  in folgenden Etagen entgegen der Fahrtrichtung
+        ///  Bsp: Hochfahren und weiter oben der Wunsch nach unten zu fahren
+        /// </summary>
+        public bool OppositeDirectionWishesInMyDirection
+        {
+            get
+            {
+                switch (_direction)
+                {
+                    case Defaults.Direction.Upward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
+                            {
+                                if (_downwardRequired[i])
+                                    return true;
+                            }
+                        } break;
+                    case Defaults.Direction.Downward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
+                            {
+                                if (_upwardRequired[i])
+                                    return true;
+                            }
+                        } break;
+                }
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Wünsche in vorherigen Etagen entgegen der Fahrtrichtung
+        /// Bsp: Hochfahren und in unterer Etage Wunsch nach unten zu fahren
+        /// </summary>
+
+        public bool OppositeDirectionWishesInMyOppositeDirection
+        {
+            get
+            {
+                switch (_direction)
+                {
+                    case Defaults.Direction.Upward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
+                            {
+                                if (_internRequired[i] || _downwardRequired[i])
+                                    return true;
+                            }
+                        } break;
+                    case Defaults.Direction.Downward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
+                            {
+                                if (_internRequired[i] || _upwardRequired[i])
+                                    return true;
+                            }
+                        } break;
+                }
+                return false;
+            }
+        }
+        /// <summary>
+        /// Wünsche in vorherigen Etagen entlang der Fahrtrichtung
+        /// Bsp: Hochfahren und in unterer Etage Wunsch nach oben zu fahren
+        /// </summary>
+
+        public bool DirectionWishesInMyOppositeDirection
+        {
+            get
+            {
+                switch (_direction)
+                {
+                    case Defaults.Direction.Upward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
+                            {
+                                if (_upwardRequired[i])
+                                    return true;
+                            }
+                        } break;
+                    case Defaults.Direction.Downward:
+                        {
+                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
+                            {
+                                if (_downwardRequired[i])
+                                    return true;
+                            }
+                        } break;
+                }
+                return false;
+            }
+        }
+
+        public bool AnyWishes
+        {
+            get
+            {
+                if (DirectionWishesInMyDirection || DirectionWishesInMyOppositeDirection || OppositeDirectionWishesInMyDirection || OppositeDirectionWishesInMyOppositeDirection)
+                    return true;
+                return false;
+
+            }
+        }
         
+
 
         public Defaults.Direction Direction
         {
@@ -255,7 +417,7 @@ namespace LiftSimulation
             Syncronize.SwitchDirection();
         }
 
-        public void DeleteReqired()
+        public void DeleteReqiredDirection()
         {
             int i = Defaults.FloorToIdx( _currentFloor );
 
@@ -264,18 +426,41 @@ namespace LiftSimulation
                 case Defaults.Direction.Upward:
                     {
                         _upwardRequired[ i ] = false;
-                       // Syncronize.syncUpwardWishes(Syncronize.To.UI);
+                        Syncronize.syncUpwardWishes(Syncronize.To.UI);
                         break;
                     }
                 case Defaults.Direction.Downward:
                     {
                         _downwardRequired[ i ] = false;
-                       // Syncronize.syncDownwardWishes( Syncronize.To.UI );
+                        Syncronize.syncDownwardWishes( Syncronize.To.UI );
                         break;
                     }
             }
             _internRequired[ i ] = false;
-            //Syncronize.syncinnerWishes( Syncronize.To.UI );            
+            Syncronize.syncinnerWishes( Syncronize.To.UI );            
+        }
+
+        public void DeleteReqiredOppositeDirection()
+        {
+            int i = Defaults.FloorToIdx(_currentFloor);
+
+            switch (_direction)
+            {
+                case Defaults.Direction.Downward:
+                    {
+                        _upwardRequired[i] = false;
+                         Syncronize.syncDownwardWishes(Syncronize.To.UI);
+                        break;
+                    }
+                case Defaults.Direction.Upward:
+                    {
+                        _downwardRequired[i] = false;
+                         Syncronize.syncUpwardWishes( Syncronize.To.UI );
+                        break;
+                    }
+            }
+            _internRequired[i] = false;
+           Syncronize.syncinnerWishes( Syncronize.To.UI );            
         }
 
      
