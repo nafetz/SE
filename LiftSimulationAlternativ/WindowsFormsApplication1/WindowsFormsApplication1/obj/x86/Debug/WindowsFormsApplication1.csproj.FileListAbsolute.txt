@@ -1,0 +1,9 @@
+c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\LiftSimulationALternativ.Properties.Resources.resources
+c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\LiftSimulationALternativ.UserInterface.resources
+c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
