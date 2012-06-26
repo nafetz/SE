@@ -201,13 +201,6 @@ namespace LiftSimulation
             _ui.logging = entry;
         }
 
-        
-
-
-
-
-
-
         #endregion
     }
 }

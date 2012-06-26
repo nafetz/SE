@@ -18,10 +18,10 @@ namespace LiftSimulation
 
         private Defaults.MoreOrLess _passengersIO;
 
-        private Label[] floor_numbers; //Anzeige der Etatennummern
-        private Label[] current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
-        private GroupBox[] floors;    //GroupBoxen für die Etagen
-        private PictureBox[] doorstates;
+        private Label[] label_FloorNumbers;     //Anzeige der Etatennummern
+        private Label[] label_CurrentPosition;  //Anzeige der aktuellen Etage (gleich in allen Labels)
+        private GroupBox[] groupBox_Floors;     //GroupBoxen für die Etagen
+        private PictureBox[] pictBox_DoorStates;
         private Image img_door1;
         private Image img_door2;
         private Image img_direction;
@@ -39,61 +39,58 @@ namespace LiftSimulation
         /// </summary>
         public UserInterface()
         {
-            InitializeComponent(); //Intialisierung der statisch erzeugten Formularelemente
+            InitializeComponent();  //Intialisierung der statisch erzeugten Formularelemente
             ChangeDirection();            
             _passengersIO = Defaults.MoreOrLess.Neither;
 
-            floors = new GroupBox[Defaults.Floors];
-            floor_numbers = new Label[Defaults.Floors];
-            current_position = new Label[Defaults.Floors];            
-            doorstates = new PictureBox[Defaults.Floors];
+            groupBox_Floors = new GroupBox[Defaults.Floors];
+            label_FloorNumbers = new Label[ Defaults.Floors ];
+            label_CurrentPosition = new Label[Defaults.Floors];            
+            pictBox_DoorStates = new PictureBox[Defaults.Floors];
             button_intern = new Button[Defaults.Floors];
             button_upward = new Button[Defaults.Floors];
             button_downward = new Button[Defaults.Floors];
 
-
             img_door1 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.gif");
             img_door2 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.gif");
 
-
             for (int i = Defaults.Floors -1 ; i >= 0; i--)
             {
-                floors[i] = new GroupBox();
-                floors[i].Text = "";
-                floors[i].Location = new Point(30, Defaults.Floors*100 - 110*i );
-                floors[i].Height = 110;
-                floors[i].Width = 350;
-                floors[i].Name = "groupBox_floor" + i;
-                groupBox_outsite.Controls.Add(floors[i]);
+                groupBox_Floors[i] = new GroupBox();
+                groupBox_Floors[i].Text = "";
+                groupBox_Floors[i].Location = new Point(30, Defaults.Floors*100 - 110*i );
+                groupBox_Floors[i].Height = 110;
+                groupBox_Floors[i].Width = 350;
+                groupBox_Floors[i].Name = "groupBox_floor" + i;
+                groupBox_outsite.Controls.Add(groupBox_Floors[i]);
 
-                
-                floor_numbers[i] = new Label();
-                switch (i){               
-                    case 0: floor_numbers[i].Text = "1. UG"; break;
-                    case 1: floor_numbers[i].Text = "EG"; break;
-                    default: floor_numbers[i].Text = (i -1) + ". OG"; break;
+
+                label_FloorNumbers[ i ] = new Label();
+                switch (i)
+                {
+                    case 0: label_FloorNumbers[ i ].Text = "1. UG"; break;
+                    case 1: label_FloorNumbers[ i ].Text = "EG"; break;
+                    default: label_FloorNumbers[ i ].Text = ( i - 1 ) + ". OG"; break;
                 }
-                floor_numbers[i].Width = 70;
-                floor_numbers[i].Location = new Point(10,10);
-                floor_numbers[i].Name = "label_floor" + i;
-                floors[i].Controls.Add(floor_numbers[i]);
-                floor_numbers[i].Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                label_FloorNumbers[ i ].Width = 70;
+                label_FloorNumbers[i].Name = "label_floor" + i;
+                groupBox_Floors[ i ].Controls.Add( label_FloorNumbers[ i ] );
+                label_FloorNumbers[ i ].Font = new System.Drawing.Font( "Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
 
-                doorstates[i] = new PictureBox();
-                doorstates[i].Width = 30;
-                doorstates[i].Height = 30;
-                doorstates[i].Location = new Point(100, 50);
-                doorstates[i].Name = "pictureBox_doorstate" + i;
-                doorstates[i].Image = img_door2;
-                floors[i].Controls.Add(doorstates[i]);
+                pictBox_DoorStates[i] = new PictureBox();
+                pictBox_DoorStates[i].Width = 30;
+                pictBox_DoorStates[i].Height = 30;
+                pictBox_DoorStates[i].Location = new Point(100, 50);
+                pictBox_DoorStates[i].Name = "pictureBox_doorstate" + i;
+                pictBox_DoorStates[i].Image = img_door2;
+                groupBox_Floors[i].Controls.Add(pictBox_DoorStates[i]);
                 
-                current_position[i] = new Label();
-                current_position[i].Text = "#Position";
-                current_position[i].Name = "label_position" + i;
-                current_position[i].Width = 60;
-                current_position[i].Location = new Point(100, 12);
-                floors[i].Controls.Add(current_position[i]);
-
+                label_CurrentPosition[i] = new Label();
+                label_CurrentPosition[i].Text = "#Position";
+                label_CurrentPosition[i].Name = "label_position" + i;
+                label_CurrentPosition[i].Width = 60;
+                label_CurrentPosition[i].Location = new Point(100, 12);
+                groupBox_Floors[i].Controls.Add(label_CurrentPosition[i]);
 
                 button_intern[i] = new Button();
                 button_intern[i].Location = new Point(20, Defaults.Floors*45 - 45 * i);
@@ -115,9 +112,8 @@ namespace LiftSimulation
                     button_upward[i].Width = 70;
                     button_upward[i].Text = "Aufwärts";
                     button_upward[i].Name = "Button_up_" + i;
-                    floors[i].Controls.Add(button_upward[i]);
-                    button_upward[i].Click += new System.EventHandler(ClickOutsideButton);
-                   
+                    groupBox_Floors[i].Controls.Add(button_upward[i]);
+                    button_upward[i].Click += new System.EventHandler(ClickOutsideButton);                   
                 }
                 
                 if (i != 0)
@@ -128,13 +124,10 @@ namespace LiftSimulation
                     button_downward[i].Width = 70;
                     button_downward[i].Text = "Abwärts";
                     button_downward[i].Name = "Button_up_" + i;
-                    floors[i].Controls.Add(button_downward[i]);
-                    button_downward[i].Click += new System.EventHandler(ClickOutsideButton);
-                 
-                }
-                                      
-            }// Ende der for-Schleife       
-            
+                    groupBox_Floors[i].Controls.Add(button_downward[i]);
+                    button_downward[i].Click += new System.EventHandler(ClickOutsideButton);                 
+                }                                      
+            }// for-Schleife            
         }
 
         #endregion
@@ -287,7 +280,7 @@ namespace LiftSimulation
                     default: position_value = pos-1 + ". OG"; break;
                 }
 
-                foreach (Label poslabel in current_position)
+                foreach (Label poslabel in label_CurrentPosition)
                 {
                     poslabel.Text = position_value; //äußere Label
                 }
@@ -298,20 +291,22 @@ namespace LiftSimulation
                 {
                     if (i == pos)
                     {
-                        floors[i].BackColor = Color.White;
+                        groupBox_Floors[i].BackColor = Color.White;
                         //required[i].BackColor = Color.White;
                     }
                     else
                     {
-                        floors[i].BackColor = System.Drawing.SystemColors.Control;
+                        groupBox_Floors[i].BackColor = System.Drawing.SystemColors.Control;
                         //required[i].BackColor = System.Drawing.SystemColors.Control;
                     }
                 }
             }
         }
 
+        /*  Kein Verweis gefunden
         /// <summary>
         /// Wert zur Anzeige der aktuellen Richtung
+        /// Wird das überhaupt gebraucht?
         /// </summary>
         public Defaults.Direction Direction
         {
@@ -332,6 +327,7 @@ namespace LiftSimulation
                 }
             }
         }
+        */
 
         public Defaults.MoreOrLess PassengersIO
         {
@@ -388,8 +384,6 @@ namespace LiftSimulation
 
         #region Methoden
 
-        
-
         /// <summary>
         /// Tür öffnen auf auf der GUI darstellen
         /// </summary>
@@ -398,8 +392,7 @@ namespace LiftSimulation
         {
             if (floor < 0 || floor > Defaults.Floors) return;
             //if (doorstates[floor].Image == img_door2)
-                doorstates[floor].Image = img_door1;
-            
+                pictBox_DoorStates[floor].Image = img_door1;            
         }
 
         /// <summary>
@@ -409,8 +402,7 @@ namespace LiftSimulation
         public void close_door(int floor)
         {
             if (floor < 0 || floor > Defaults.Floors) return;
-            if (doorstates[floor].Image == img_door1) doorstates[floor].Image = img_door2;
-
+            if (pictBox_DoorStates[floor].Image == img_door1) pictBox_DoorStates[floor].Image = img_door2;
         }
 
         public void ResetPassengerIO() 
@@ -418,18 +410,38 @@ namespace LiftSimulation
             _passengersIO = Defaults.MoreOrLess.Neither;
         }
 
-        #endregion
-
-        private void button_more_passenger_Click(object sender, EventArgs e) //+1 Button
+        #region Button Clicks
+        private void ClickInnerButton( object sender, EventArgs e )
         {
-            _passengersIO = Defaults.MoreOrLess.More;
-             Syncronize.executeLoop();
-            _passengersIO = Defaults.MoreOrLess.Neither;
-            //Defaults.ManualResetEvent.Set();
-           // Syncronize.DoorTimerReset();
+            Button currentButton = sender as Button;
+            currentButton.Enabled = false;
+
+            Syncronize.syncinnerWishes( Syncronize.To.Elevator );
+            BusyCheck();
+            // Syncronize.executeLoop();            
         }
 
-        private void button_less_passenger_Click(object sender, EventArgs e) //-1 Button
+        private void ClickOutsideButton( object sender, EventArgs e )
+        {
+            Button currentButt = sender as Button;
+            currentButt.Enabled = false;
+
+            Syncronize.syncDownwardWishes( Syncronize.To.Elevator );
+            Syncronize.syncUpwardWishes( Syncronize.To.Elevator );
+            BusyCheck();
+            //Syncronize.executeLoop();
+        }
+
+        private void button_more_passenger_Click( object sender, EventArgs e ) //+1 Button
+        {
+            _passengersIO = Defaults.MoreOrLess.More;
+            Syncronize.executeLoop();
+            _passengersIO = Defaults.MoreOrLess.Neither;
+            //Defaults.ManualResetEvent.Set();
+            // Syncronize.DoorTimerReset();
+        }
+
+        private void button_less_passenger_Click( object sender, EventArgs e ) //-1 Button
         {
             _passengersIO = Defaults.MoreOrLess.Less;
             Syncronize.executeLoop();
@@ -438,106 +450,88 @@ namespace LiftSimulation
             //Defaults.ManualResetEvent.Set();
         }
 
-        private void button_emergency_Click(object sender, EventArgs e)
+        private void button_emergency_Click( object sender, EventArgs e )
         {
-            MessageBox.Show("Notruf betätigt. Fahrstuhl kommt an der nächstbesten Etage zum Stillstand. Fahrwünsche werden gelöscht.");
-            for (int i = 0; i < Defaults.Floors; i++ )
+            MessageBox.Show( "Notruf betätigt. Fahrstuhl kommt an der nächstbesten Etage zum Stillstand. Fahrwünsche werden gelöscht." );
+
+            /********************************************
+             *           das Logging fehlt              *
+             ********************************************/           
+
+            for( int i = 0; i < Defaults.Floors; i++ )
             {
-                button_intern[i].Enabled = true;
-                if (i != 0) button_downward[i].Enabled = true;
-                if (i != Defaults.Floors - 1) button_upward[i].Enabled = true;
+                button_intern[ i ].Enabled = true;
+                if( i != 0 ) button_downward[ i ].Enabled = true;
+                if( i != Defaults.Floors - 1 ) button_upward[ i ].Enabled = true;
             }
-            Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
-            Syncronize.syncinnerWishes(Syncronize.To.Elevator);
-            Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
+            Syncronize.syncDownwardWishes( Syncronize.To.Elevator );
+            Syncronize.syncinnerWishes( Syncronize.To.Elevator );
+            Syncronize.syncUpwardWishes( Syncronize.To.Elevator );
         }
 
-        private void button_open_door_Click(object sender, EventArgs e)
+        private void button_open_door_Click( object sender, EventArgs e )
         {
             button_less_passenger.Enabled = true;
             button_more_passenger.Enabled = true;
             Syncronize.DoorTimerReset();
-            Syncronize.SetState(Defaults.State.FixedOpen); //ggf. überdenken
-            open_door(Syncronize.syncFloor()); 
-            
+            Syncronize.SetState( Defaults.State.FixedOpen ); //ggf. überdenken
+            open_door( Syncronize.syncFloor() );
         }
 
-        private void button_close_door_Click(object sender, EventArgs e)
+        private void button_close_door_Click( object sender, EventArgs e )
         {
+            // Alles Entfernt, da der Button nur Placebo sein soll..
+
             //button_less_passenger.Enabled = false;
             //button_more_passenger.Enabled = false;
             //Syncronize.DoorTimerStop();
             //Syncronize.SetState(Defaults.State.FixedClosed);
-            
         }
+        #endregion
 
         public void ChangeDirection()
         {
-
             img_direction = pictureBox_direction.Image;
-            img_direction.RotateFlip(RotateFlipType.Rotate180FlipX);
+            img_direction.RotateFlip( RotateFlipType.Rotate180FlipX );
             pictureBox_direction.Image = img_direction;
-               
-
         }
 
         public void BusyCheck()
         {
-            if (Syncronize.TaskStatus == false)
+            if( Syncronize.TaskStatus == false )
             {
                 Syncronize.TaskStatus = true;
                 Syncronize.executeLoop();
             }
         }
 
-        private void timer_tuer_zu_Tick(object sender, EventArgs e)
+        private void timer_tuer_zu_Tick( object sender, EventArgs e )
         {
             timer_tuer_zu.Stop();
-            Syncronize.PassengerButtonsEnable(false);
-            Syncronize.SetState(Defaults.State.FixedClosed);
-            
+            Syncronize.PassengerButtonsEnable( false );
+            Syncronize.SetState( Defaults.State.FixedClosed );
         }
 
-        private void ClickInnerButton(object sender, EventArgs e)
+        private void timer_fahren_Tick( object sender, EventArgs e )
         {
-           Button currentButton = sender as Button;           
-           currentButton.Enabled = false;           
-           
-           Syncronize.syncinnerWishes(Syncronize.To.Elevator);
-           BusyCheck();
-          // Syncronize.executeLoop();            
+            timer_fahren.Stop();
+            pictureBox_direction.Visible = false;
+            Syncronize.syncinnerWishes( Syncronize.To.UI );
+            Syncronize.syncDownwardWishes( Syncronize.To.Elevator );
+            Syncronize.syncUpwardWishes( Syncronize.To.Elevator );
+            Syncronize.executeLoop();
         }
 
-        private void ClickOutsideButton(object sender, EventArgs e)
+        public void show_direction() 
+        { pictureBox_direction.Visible = true; }
+
+        public void enableInnerButtons( bool value )
         {
-           Button currentButt = sender as Button;
-           currentButt.Enabled = false;
-
-           Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
-           Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
-           BusyCheck();
-           //Syncronize.executeLoop();
+            for( int i = 0; i < Defaults.Floors; i++ )
+                button_intern[ i ].Enabled = value;
         }
 
-        private void timer_fahren_Tick(object sender, EventArgs e)
-        {
-           timer_fahren.Stop(); 
-           pictureBox_direction.Visible = false;
-           Syncronize.syncinnerWishes(Syncronize.To.UI);
-           Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
-           Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
-           Syncronize.executeLoop();
-          
-        }
+        #endregion
 
-        public void show_direction()
-        {
-            pictureBox_direction.Visible = true;         
-        }
-
-        public void enableInnerButtons(bool value){
-            for (int i = 0; i < Defaults.Floors; i++)                       
-                 button_intern[i].Enabled = value;            
-         }
     }
 }
