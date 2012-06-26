@@ -74,7 +74,6 @@
             this.groupBox_outsite.TabIndex = 0;
             this.groupBox_outsite.TabStop = false;
             this.groupBox_outsite.Text = "Lift-Steuerung außen";
-            this.groupBox_outsite.Enter += new System.EventHandler( this.groupBox_outsite_Enter );
             // 
             // groupBox_inside
             // 
