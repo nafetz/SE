@@ -7,3 +7,12 @@ c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debu
 c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
 c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
 c:\temp\se_alternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+Z:\SEBeleg\nafetz-SE-217ff40\LiftSimulationAlternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+Z:\SEBeleg\nafetz-SE-217ff40\LiftSimulationAlternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+Z:\SEBeleg\nafetz-SE-217ff40\LiftSimulationAlternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\SEBeleg\nafetz-SE-217ff40\LiftSimulationAlternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\LiftSimulationAlternativ.Properties.Resources.resources
+Z:\SEBeleg\nafetz-SE-217ff40\LiftSimulationAlternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\LiftSimulationAlternativ.UserInterface.resources
+Z:\SEBeleg\nafetz-SE-217ff40\LiftSimulationAlternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\GenerateResource.read.1.tlog
+Z:\SEBeleg\nafetz-SE-217ff40\LiftSimulationAlternativ\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\GenerateResource.write.1.tlog
+Z:\SEBeleg\nafetz-SE-217ff40\LiftSimulationAlternativ\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+Z:\SEBeleg\nafetz-SE-217ff40\LiftSimulationAlternativ\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
