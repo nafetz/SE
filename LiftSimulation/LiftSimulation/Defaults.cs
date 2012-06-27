@@ -14,30 +14,28 @@ namespace LiftSimulation
         private static int _numberOfFloors = 6;
         private static int _numberOfBasementFloors = 1;
         private static int _maxNumberOfPassengers = 10;
+
         public  enum State { Moving = 1, FixedOpen, FixedClosed, Overload };
         public  enum Direction { Upward = 1, Downward };
         public  enum MoreOrLess { More = 1, Less, Neither };
 
-        //private static readonly ManualResetEvent _mre = new ManualResetEvent( false );
-        //private static readonly ManualResetEvent _wre = new ManualResetEvent( false );
-
-        public struct _logentry
+        public struct Logentry
         {
             public Direction _direction;
             public int _floor;
             public int _passenger;
             public State _state;
 
-            public _logentry(Direction d, int f, int p, State s)
+            public Logentry(Direction d, int f, int p, State s)
             {
                 _direction = d;
                 _floor = f;
                 _passenger = p;
                 _state = s;
             }
-
         }
         #endregion
+
 
         #region Properties
 
@@ -47,7 +45,6 @@ namespace LiftSimulation
         public static int Floors
         {
             get { return _numberOfFloors; }
-            //set { _numberOfFloors = value; }
         }
 
         /// <summary>
@@ -56,7 +53,6 @@ namespace LiftSimulation
         public static int Basements 
         {
             get { return _numberOfBasementFloors; }
-           // set { _numberOfBasementFloors = value; }
         }
 
         /// <summary>
@@ -67,20 +63,10 @@ namespace LiftSimulation
             get { return _maxNumberOfPassengers; } 
         }
 
-        //public static ManualResetEvent ManualResetEvent
-        //{
-        //    get { return _mre; }
-        //}
-
-        //public static ManualResetEvent WaitingResetEvent
-        //{
-        //    get { return _wre; }
-        //}
-
-
         #endregion
 
-        #region Methods
+
+        #region Methoden
 
         /// <summary>
         /// Ermittelt den Pfad zum Projektverzeichnis
@@ -101,18 +87,18 @@ namespace LiftSimulation
         /// konvertiert anhand Default.Floors und Defaults.Basements 
         /// FloorNr. in nutzbaren List/Array-Index
         /// </summary>
-        public static int FloorToIdx( int Floor )
+        public static int FloorToIdx( int floor )
         {
-            return ( Floor + Basements );
+            return ( floor + _numberOfBasementFloors );
         }
 
         /// <summary>
         /// konvertiert anhand Default.Floors und Defaults.Basements 
         /// Index in nutzbare FloorNr.
         /// </summary>
-        public static int IdxToFloor( int IDX )
+        public static int IdxToFloor( int idx )
         {
-               return ( IDX - Basements );
+               return ( idx - _numberOfBasementFloors );
         }
         #endregion
     }

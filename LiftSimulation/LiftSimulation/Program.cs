@@ -26,11 +26,6 @@ namespace LiftSimulation
             Syncronize Sync = new Syncronize(ref Elevator, ref UI);
 
             Application.Run(UI);         
-
-            //while(true)
-            //{
-            //    Elevator.CurrentState.Move( Elevator );
-            //}
         }
     }
 }

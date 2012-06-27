@@ -7,13 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-
-
 namespace LiftSimulation
 {
     public partial class UserInterface : Form
     {
-
         #region Member
 
         private Defaults.MoreOrLess _passengersIO;
@@ -338,7 +335,7 @@ namespace LiftSimulation
         /// <summary>
         /// Anzeige der aktuellen Parameter im DataGridView
         /// </summary>
-        public Defaults._logentry logging{
+        public Defaults.Logentry logging{
             set
             {
 
@@ -416,7 +413,7 @@ namespace LiftSimulation
             Button currentButton = sender as Button;
             currentButton.Enabled = false;
 
-            Syncronize.syncinnerWishes( Syncronize.To.Elevator );
+            Syncronize.SyncInnerWishes( Syncronize.To.Elevator );
             BusyCheck();
             // Syncronize.executeLoop();            
         }
@@ -426,8 +423,8 @@ namespace LiftSimulation
             Button currentButt = sender as Button;
             currentButt.Enabled = false;
 
-            Syncronize.syncDownwardWishes( Syncronize.To.Elevator );
-            Syncronize.syncUpwardWishes( Syncronize.To.Elevator );
+            Syncronize.SyncDownwardWishes( Syncronize.To.Elevator );
+            Syncronize.SyncUpwardWishes( Syncronize.To.Elevator );
             BusyCheck();
             //Syncronize.executeLoop();
         }
@@ -435,7 +432,7 @@ namespace LiftSimulation
         private void button_more_passenger_Click( object sender, EventArgs e ) //+1 Button
         {
             _passengersIO = Defaults.MoreOrLess.More;
-            Syncronize.executeLoop();
+            Syncronize.ExecuteLoop();
             _passengersIO = Defaults.MoreOrLess.Neither;
             //Defaults.ManualResetEvent.Set();
             // Syncronize.DoorTimerReset();
@@ -444,7 +441,7 @@ namespace LiftSimulation
         private void button_less_passenger_Click( object sender, EventArgs e ) //-1 Button
         {
             _passengersIO = Defaults.MoreOrLess.Less;
-            Syncronize.executeLoop();
+            Syncronize.ExecuteLoop();
             _passengersIO = Defaults.MoreOrLess.Neither;
             //Syncronize.DoorTimerReset();
             //Defaults.ManualResetEvent.Set();
@@ -464,18 +461,18 @@ namespace LiftSimulation
                 if( i != 0 ) button_downward[ i ].Enabled = true;
                 if( i != Defaults.Floors - 1 ) button_upward[ i ].Enabled = true;
             }
-            Syncronize.syncDownwardWishes( Syncronize.To.Elevator );
-            Syncronize.syncinnerWishes( Syncronize.To.Elevator );
-            Syncronize.syncUpwardWishes( Syncronize.To.Elevator );
+            Syncronize.SyncDownwardWishes( Syncronize.To.Elevator );
+            Syncronize.SyncInnerWishes( Syncronize.To.Elevator );
+            Syncronize.SyncUpwardWishes( Syncronize.To.Elevator );
         }
 
         private void button_open_door_Click( object sender, EventArgs e )
         {
             button_less_passenger.Enabled = true;
             button_more_passenger.Enabled = true;
-            Syncronize.DoorTimerReset();
+            Syncronize.ResetDoorTimer();
             Syncronize.SetState( Defaults.State.FixedOpen ); //ggf. überdenken
-            open_door( Syncronize.syncFloor() );
+            open_door( Syncronize.SyncFloor() );
         }
 
         private void button_close_door_Click( object sender, EventArgs e )
@@ -501,14 +498,14 @@ namespace LiftSimulation
             if( Syncronize.TaskStatus == false )
             {
                 Syncronize.TaskStatus = true;
-                Syncronize.executeLoop();
+                Syncronize.ExecuteLoop();
             }
         }
 
         private void timer_tuer_zu_Tick( object sender, EventArgs e )
         {
             timer_tuer_zu.Stop();
-            Syncronize.PassengerButtonsEnable( false );
+            Syncronize.EnablePassengerButtons( false );
             Syncronize.SetState( Defaults.State.FixedClosed );
         }
 
@@ -516,10 +513,10 @@ namespace LiftSimulation
         {
             timer_fahren.Stop();
             pictureBox_direction.Visible = false;
-            Syncronize.syncinnerWishes( Syncronize.To.UI );
-            Syncronize.syncDownwardWishes( Syncronize.To.Elevator );
-            Syncronize.syncUpwardWishes( Syncronize.To.Elevator );
-            Syncronize.executeLoop();
+            Syncronize.SyncInnerWishes( Syncronize.To.UI );
+            Syncronize.SyncDownwardWishes( Syncronize.To.Elevator );
+            Syncronize.SyncUpwardWishes( Syncronize.To.Elevator );
+            Syncronize.ExecuteLoop();
         }
 
         public void show_direction() 
@@ -532,6 +529,5 @@ namespace LiftSimulation
         }
 
         #endregion
-
     }
 }

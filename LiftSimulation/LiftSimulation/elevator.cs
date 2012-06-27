@@ -13,11 +13,11 @@ namespace LiftSimulation
         #region Member
 
         // State-Patterns
-        private ElevatorState State;
-        private ElevatorState Moving = new Moving();
-        private ElevatorState FixedOpen = new FixedOpen();
-        private ElevatorState FixedClosed = new FixedClosed();
-        private ElevatorState Overload = new Overload();
+        private ElevatorState _state;
+        private ElevatorState MOVING = new Moving();
+        private ElevatorState FIXED_OPEN = new FixedOpen();
+        private ElevatorState FIXED_CLOSED = new FixedClosed();
+        private ElevatorState OVERLOAD = new Overload();
 
         // Floor-Stuff
         private int _currentFloor;
@@ -35,9 +35,6 @@ namespace LiftSimulation
 
         #region Properties
 
-        // Für den Zugriff außerhalb des Class-Scope
-        // get
-
         public bool TaskStatus
         {
             get { return _hasTask; }
@@ -46,8 +43,8 @@ namespace LiftSimulation
         
         public ElevatorState CurrentState
         {
-            get { return State; }
-            set { State = value; }
+            get { return _state; }
+            set { _state = value; }
         }
 
         /// <summary>
@@ -265,7 +262,6 @@ namespace LiftSimulation
         /// Wünsche in vorherigen Etagen entgegen der Fahrtrichtung
         /// Bsp: Hochfahren und in unterer Etage Wunsch nach unten zu fahren
         /// </summary>
-
         public bool OppositeDirectionWishesInMyOppositeDirection
         {
             get
@@ -292,11 +288,11 @@ namespace LiftSimulation
                 return false;
             }
         }
+       
         /// <summary>
         /// Wünsche in vorherigen Etagen entlang der Fahrtrichtung
         /// Bsp: Hochfahren und in unterer Etage Wunsch nach oben zu fahren
         /// </summary>
-
         public bool DirectionWishesInMyOppositeDirection
         {
             get
@@ -324,6 +320,7 @@ namespace LiftSimulation
             }
         }
 
+        /* Archiviert: AnyWishes (verweisfrei)
         public bool AnyWishes
         {
             get
@@ -333,8 +330,7 @@ namespace LiftSimulation
                 return false;
 
             }
-        }      
-
+        }      */
 
         public Defaults.Direction Direction
         {
@@ -348,15 +344,10 @@ namespace LiftSimulation
             set { _passengers = value; }
         }
 
-
         #endregion
 
 
-        #region Methods
-
-        /// <summary>
-        /// Konstruktor
-        /// </summary>
+        #region Konstruktoren
         public Elevator()
         {              
             _currentFloor = 0;           
@@ -368,9 +359,13 @@ namespace LiftSimulation
                 _internRequired.Add(false);
             }
             
-            State = FixedClosed;
+            _state = FIXED_CLOSED;
         }
-        
+        #endregion
+
+
+        #region Methoden
+
         /// <summary>
         /// Löst Zustandsübergang des ElevatorObjektes aus
         /// </summary>
@@ -379,12 +374,12 @@ namespace LiftSimulation
         {
             switch ( newState )
             {
-                case Defaults.State.Moving      : State = Moving;       break;
-                case Defaults.State.FixedOpen  : State = FixedOpen;    break;
-                case Defaults.State.FixedClosed : State = FixedClosed;  break;
-                case Defaults.State.Overload    : State = Overload;     break;
+                case Defaults.State.Moving      : _state = MOVING;       break;
+                case Defaults.State.FixedOpen  : _state = FIXED_OPEN;    break;
+                case Defaults.State.FixedClosed : _state = FIXED_CLOSED;  break;
+                case Defaults.State.Overload    : _state = OVERLOAD;     break;
             }
-            this.CurrentState.Loop(this);
+            this._state.Loop(this);
         }
 
         /// <summary>
@@ -477,36 +472,32 @@ namespace LiftSimulation
             _downwardRequired[ i ] = false;
             _internRequired[ i ] = false;
 
-            Syncronize.syncUpwardWishes( Syncronize.To.UI );
-            Syncronize.syncDownwardWishes( Syncronize.To.UI );
-            Syncronize.syncinnerWishes( Syncronize.To.UI );
+            Syncronize.SyncUpwardWishes( Syncronize.To.UI );
+            Syncronize.SyncDownwardWishes( Syncronize.To.UI );
+            Syncronize.SyncInnerWishes( Syncronize.To.UI );
         }
 
         public void loggin()
         {
-            Defaults._logentry entry;
-            if( CurrentState == Moving )
+            Defaults.Logentry entry;
+            if( CurrentState == MOVING )
             {
-                entry = new Defaults._logentry( _direction, CurrentFloor, Passengers, Defaults.State.Moving );
+                entry = new Defaults.Logentry( _direction, _currentFloor, _passengers, Defaults.State.Moving );
             }
-            else if( CurrentState == FixedClosed )
+            else if( CurrentState == FIXED_CLOSED )
             {
-                entry = new Defaults._logentry( _direction, CurrentFloor, Passengers, Defaults.State.FixedClosed );
+                entry = new Defaults.Logentry( _direction, _currentFloor, _passengers, Defaults.State.FixedClosed );
             }
 
-            else if( CurrentState == FixedOpen )
+            else if( CurrentState == FIXED_OPEN )
             {
-                entry = new Defaults._logentry( _direction, CurrentFloor, Passengers, Defaults.State.FixedOpen );
+                entry = new Defaults.Logentry( _direction, _currentFloor, _passengers, Defaults.State.FixedOpen );
             }
-            else entry = new Defaults._logentry( _direction, CurrentFloor, Passengers, Defaults.State.Overload );
+            else entry = new Defaults.Logentry( _direction, _currentFloor, _passengers, Defaults.State.Overload );
 
             Syncronize._logging( entry );
-        }
-            
-        
+        }         
 
-        #endregion
-
-        
+        #endregion        
     }
 }

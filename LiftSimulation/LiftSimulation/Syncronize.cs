@@ -7,13 +7,14 @@ namespace LiftSimulation
 {
     class Syncronize
     {
-        #region member
+        #region Member
 
-        private static Elevator _elevator; //wieder Private machen
-        private static UserInterface _ui; //wieder Private machen
+        private static Elevator _elevator;
+        private static UserInterface _ui;
         public enum To { UI=1, Elevator }
 
         #endregion
+
 
         #region Konstruktoren
 
@@ -30,7 +31,8 @@ namespace LiftSimulation
 
         #endregion
 
-        #region Property
+
+        #region Properties
 
         public static bool TaskStatus
         {
@@ -46,47 +48,47 @@ namespace LiftSimulation
 
         #endregion
 
+
         #region Methoden
 
-        public static int syncFloor()
+        public static int SyncFloor()
         {
             return Defaults.FloorToIdx(_elevator.CurrentFloor);
 
         }
 
-        public static void syncUpwardWishes(To who)
+        public static void SyncUpwardWishes(To who)
         {
             switch (who)
             {
-                case To.UI: {
+                case To.UI: 
+                    {
                     _ui.UpwardRequired = _elevator.UpwardRequired;
-                } break;
+                    } break;
                 case To.Elevator: 
                     {
-                        _elevator.UpwardRequired = _ui.UpwardRequired;
-                       
+                        _elevator.UpwardRequired = _ui.UpwardRequired;                       
                     } break;
             }
         }
 
-        public static void syncDownwardWishes(To who)
+        public static void SyncDownwardWishes(To who)
         {
             switch (who)
             {
-                case To.UI: {
+                case To.UI: 
+                    {
                     _ui.DownwardRequired = _elevator.DownwardRequired;
-                } break;
+                    } break;
                 case To.Elevator: 
                     {
-                        _elevator.DownwardRequired = _ui.DownwardRequired;
-                        
+                        _elevator.DownwardRequired = _ui.DownwardRequired;                        
                     } break;
             }
         }
 
-        public static void syncinnerWishes(To who)
-        {
-            
+        public static void SyncInnerWishes(To who)
+        {            
             switch (who)
             {
                 case To.UI: 
@@ -97,12 +99,11 @@ namespace LiftSimulation
                 case To.Elevator: 
                     {
                         _elevator.InternRequired = _ui.InternRequired;
-
                     } break;
             }
         }
 
-        public static bool syncPassengers()
+        public static bool SyncPassengers()
         {
             if (_ui.PassengersIO == Defaults.MoreOrLess.Less)
             {
@@ -123,14 +124,19 @@ namespace LiftSimulation
                 return true;
         }
 
+        public static void SyncCurrentFloor()
+        {
+            _ui.CurrentPosition = _elevator.CurrentFloor;            
+        }
 
-        public static void PassengerButtonsEnable(bool value)
+
+        public static void EnablePassengerButtons(bool value)
         {
             _ui.PlusPassengersButton.Enabled = value;
             _ui.MinusPassengersButton.Enabled = value;
         }
 
-        public static void PassenderMinusButtonEnable(bool value)
+        public static void EnablePassengerMinusButton(bool value)
         {
             _ui.MinusPassengersButton.Enabled = value;
         }
@@ -139,22 +145,21 @@ namespace LiftSimulation
         {
             //_ui.Doortimer.Start();
 
-            _elevator.SetState(state);
-        
+            _elevator.SetState(state);        
         }
 
-        public static void DoorTimerReset()
+        public static void ResetDoorTimer()
         {
             _ui.Doortimer.Stop();
             _ui.Doortimer.Start();
         }
 
-        public static void DoorTimerStop()
+        public static void StopDoorTimer()
         {
             _ui.Doortimer.Stop();
         }
 
-        public static void MoveTimerReset()
+        public static void ResetMoveTimer()
         {
             _ui.Movetimer.Start();
         }
@@ -162,41 +167,35 @@ namespace LiftSimulation
         public static void SwitchDirection()
         {
             _ui.ChangeDirection();
-        }
+        }        
 
-        public static void SyncCurrentFloor()
-        {
-            _ui.CurrentPosition = _elevator.CurrentFloor;
-            
-        }
-
-        public static void visibleDirection()
+        public static void ShowDirection()
         {
             _ui.show_direction();
         }
 
-        public static void executeLoop()
+        public static void ExecuteLoop()
         {
             _elevator.CurrentState.Loop(_elevator);
         }
 
 
-        public static void open_door()
+        public static void OpenDoor()
         {
             _ui.open_door(Defaults.FloorToIdx(_elevator.CurrentFloor));
         }
 
-        public static void close_door()
+        public static void CloseDoor()
         {
             _ui.close_door(Defaults.FloorToIdx(_elevator.CurrentFloor));
         }
 
-        public static void enableInnerButton(bool value)
+        public static void EnableInnerButtons(bool value)
         {
             _ui.enableInnerButtons(true);
         }
 
-        public static void _logging(Defaults._logentry entry)
+        public static void _logging(Defaults.Logentry entry)
         {
             _ui.logging = entry;
         }
