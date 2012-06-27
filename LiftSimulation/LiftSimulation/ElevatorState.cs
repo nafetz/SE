@@ -23,8 +23,11 @@ namespace LiftSimulation
             Syncronize.open_door();
             Syncronize.DoorTimerReset();
             Syncronize.PassengerButtonsEnable(true);
-            Elevator.DeleteReqiredOppositeDirection();
-            Elevator.DeleteReqiredDirection();
+
+            Elevator.DeleteRequirementsHere();
+
+            //Elevator.DeleteReqiredOppositeDirection();
+            //Elevator.DeleteReqiredDirection();
             
             if (!Syncronize.syncPassengers()) 
                 Syncronize.DoorTimerReset(); // Lichtschrake übertreten --> Neustart des Türtimers

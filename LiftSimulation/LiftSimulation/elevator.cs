@@ -140,7 +140,8 @@ namespace LiftSimulation
                 return false;
             }
         }
-/*
+
+        /* Archiviert: ThereAreWishesInMyDirection
         public bool ThereAreWishesInMyDirection
         {
             get
@@ -169,7 +170,7 @@ namespace LiftSimulation
         }
 */
 
-        /*
+        /* Archiviert: ThereAreWishesInTheDirectionWhichIsNotMyDirection
         public bool ThereAreWishesInTheDirectionWhichIsNotMyDirection
         {
             get
@@ -332,8 +333,7 @@ namespace LiftSimulation
                 return false;
 
             }
-        }
-        
+        }      
 
 
         public Defaults.Direction Direction
@@ -421,7 +421,8 @@ namespace LiftSimulation
             Syncronize.SwitchDirection();
         }
 
-        public void DeleteReqiredDirection()
+        /* Archiviert: DeleteReqiredDirection()
+         * public void DeleteReqiredDirection()
         {
             int i = Defaults.FloorToIdx( _currentFloor );
 
@@ -442,8 +443,9 @@ namespace LiftSimulation
             }
             _internRequired[ i ] = false;
             Syncronize.syncinnerWishes( Syncronize.To.UI );            
-        }
+        }*/
 
+        /* Archiviert: DeleteReqiredOppositeDirection()
         public void DeleteReqiredOppositeDirection()
         {
             int i = Defaults.FloorToIdx(_currentFloor);
@@ -465,28 +467,46 @@ namespace LiftSimulation
             }
             _internRequired[i] = false;
            Syncronize.syncinnerWishes( Syncronize.To.UI );            
+        }*/
+        
+        public void DeleteRequirementsHere()
+        {
+            int i = Defaults.FloorToIdx( _currentFloor );
+
+            _upwardRequired[ i ] = false;
+            _downwardRequired[ i ] = false;
+            _internRequired[ i ] = false;
+
+            Syncronize.syncUpwardWishes( Syncronize.To.UI );
+            Syncronize.syncDownwardWishes( Syncronize.To.UI );
+            Syncronize.syncinnerWishes( Syncronize.To.UI );
         }
 
         public void loggin()
         {
             Defaults._logentry entry;
-           if (CurrentState  == Moving)            {
-                   entry = new Defaults._logentry(_direction, CurrentFloor, Passengers, Defaults.State.Moving);
+            if( CurrentState == Moving )
+            {
+                entry = new Defaults._logentry( _direction, CurrentFloor, Passengers, Defaults.State.Moving );
             }
-           else if (CurrentState == FixedClosed)
-           {
-                entry = new Defaults._logentry(_direction, CurrentFloor, Passengers, Defaults.State.FixedClosed);
-           }
+            else if( CurrentState == FixedClosed )
+            {
+                entry = new Defaults._logentry( _direction, CurrentFloor, Passengers, Defaults.State.FixedClosed );
+            }
 
-           else if (CurrentState == FixedOpen)
-           {
-                entry = new Defaults._logentry(_direction, CurrentFloor, Passengers, Defaults.State.FixedOpen);
-           }
-           else   entry = new Defaults._logentry(_direction, CurrentFloor, Passengers, Defaults.State.Overload);
+            else if( CurrentState == FixedOpen )
+            {
+                entry = new Defaults._logentry( _direction, CurrentFloor, Passengers, Defaults.State.FixedOpen );
+            }
+            else entry = new Defaults._logentry( _direction, CurrentFloor, Passengers, Defaults.State.Overload );
 
-           Syncronize._logging(entry);
+            Syncronize._logging( entry );
         }
+            
+        
 
         #endregion
+
+        
     }
 }

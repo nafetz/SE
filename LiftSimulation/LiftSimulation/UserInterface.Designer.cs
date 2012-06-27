@@ -211,9 +211,9 @@
             this.label_passengers.AutoSize = true;
             this.label_passengers.Location = new System.Drawing.Point( 49, 25 );
             this.label_passengers.Name = "label_passengers";
-            this.label_passengers.Size = new System.Drawing.Size( 88, 17 );
+            this.label_passengers.Size = new System.Drawing.Size( 83, 17 );
             this.label_passengers.TabIndex = 0;
-            this.label_passengers.Text = "Passagierer:";
+            this.label_passengers.Text = "Passagiere:";
             // 
             // groupBox_door_control
             // 
