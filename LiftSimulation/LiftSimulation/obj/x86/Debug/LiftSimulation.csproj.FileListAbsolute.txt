@@ -72,3 +72,12 @@ C:\temp\se\nafetz-SE-55e480d\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSim
 C:\temp\se\nafetz-SE-55e480d\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.Properties.Resources.resources
 C:\temp\se\nafetz-SE-55e480d\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\temp\se\nafetz-SE-55e480d\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\s64581\Desktop\nafetz-SE-217ff40\nafetz-SE-217ff40\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.exe
+C:\Users\s64581\Desktop\nafetz-SE-217ff40\nafetz-SE-217ff40\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.pdb
+C:\Users\s64581\Desktop\nafetz-SE-217ff40\nafetz-SE-217ff40\LiftSimulation\LiftSimulation\bin\Debug\LiftSimulation.exe
+C:\Users\s64581\Desktop\nafetz-SE-217ff40\nafetz-SE-217ff40\LiftSimulation\LiftSimulation\bin\Debug\LiftSimulation.pdb
+C:\Users\s64581\Desktop\nafetz-SE-217ff40\nafetz-SE-217ff40\LiftSimulation\LiftSimulation\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\s64581\Desktop\nafetz-SE-217ff40\nafetz-SE-217ff40\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.UserInterface.resources
+C:\Users\s64581\Desktop\nafetz-SE-217ff40\nafetz-SE-217ff40\LiftSimulation\LiftSimulation\obj\x86\Debug\LiftSimulation.Properties.Resources.resources
+C:\Users\s64581\Desktop\nafetz-SE-217ff40\nafetz-SE-217ff40\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\s64581\Desktop\nafetz-SE-217ff40\nafetz-SE-217ff40\LiftSimulation\LiftSimulation\obj\x86\Debug\GenerateResource.write.1.tlog

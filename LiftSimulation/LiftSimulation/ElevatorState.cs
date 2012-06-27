@@ -75,9 +75,10 @@ namespace LiftSimulation
             }
             else //Randstockwerk --> Wenn er dort hält, kann dies als Grund nur einen Wunsch haben
             {
-                if(Elevator.ThereAreOppositeWishesOnThisFloor) //wenn dir Tür geöffnet wurde, ist der Wunsch erloschen -> darf nicht nochmal öffnen
+                Elevator.SwitchDirection();
+
+                if( Elevator.ThereAreOppositeWishesOnThisFloor || Elevator.ThereAreWishesOnThisFloor ) //wenn dir Tür geöffnet wurde, ist der Wunsch erloschen -> darf nicht nochmal öffnen
                 {
-                    Elevator.SwitchDirection();
                     Elevator.SetState(Defaults.State.FixedOpen);
                     return ;
                 }

@@ -56,8 +56,7 @@ namespace LiftSimulation
         /// EG      => 0;
         /// 1. OG   => 1;
         /// 2. UG   => -2
-        /// </summary>
-       
+        /// </summary>       
         public int CurrentFloor 
         {
             get { return _currentFloor; }
@@ -84,7 +83,6 @@ namespace LiftSimulation
         {
             get
             { 
-                //niedrigster Floor = ( 0 - AnzahlDerKellerGeschosse )
                 if( _currentFloor == ( 0 - Defaults.Basements ) )
                     return true;
                 if( _currentFloor == Defaults.Floors - Defaults.Basements -1  )
@@ -409,9 +407,15 @@ namespace LiftSimulation
             switch( _direction )
             {
                 case Defaults.Direction.Downward:
-                    { _direction = Defaults.Direction.Upward; } break;
+                    {
+                        if ( _currentFloor != ( Defaults.Floors - Defaults.Basements - 1))
+                            _direction = Defaults.Direction.Upward; 
+                    } break;
                 case Defaults.Direction.Upward:
-                    { _direction = Defaults.Direction.Downward; } break;
+                    {
+                        if (_currentFloor != (0 - Defaults.Basements)) 
+                            _direction = Defaults.Direction.Downward; 
+                    } break;
             }
 
             Syncronize.SwitchDirection();
@@ -462,8 +466,6 @@ namespace LiftSimulation
             _internRequired[i] = false;
            Syncronize.syncinnerWishes( Syncronize.To.UI );            
         }
-
-     
 
         public void loggin()
         {
