@@ -14,10 +14,10 @@ namespace LiftSimulation
 
         // State-Patterns
         private ElevatorState _state;
-        private ElevatorState MOVING = new Moving();
-        private ElevatorState FIXED_OPEN = new FixedOpen();
-        private ElevatorState FIXED_CLOSED = new FixedClosed();
-        private ElevatorState OVERLOAD = new Overload();
+        private ElevatorState MOVING = new Moving();                // Quasi - Konstante, da Memberlos
+        private ElevatorState FIXED_OPEN = new FixedOpen();         // s.o.
+        private ElevatorState FIXED_CLOSED = new FixedClosed();     // s.o.
+        private ElevatorState OVERLOAD = new Overload();            // s.o.
 
         // Floor-Stuff
         private int _currentFloor;
@@ -30,6 +30,23 @@ namespace LiftSimulation
         private int _passengers = 0;
 
         private bool _hasTask = false;
+        #endregion
+
+
+        #region Konstruktoren
+        public Elevator()
+        {              
+            _currentFloor = 0;           
+                     
+            for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
+            {
+                _downwardRequired.Add(false);
+                _upwardRequired.Add(false);
+                _internRequired.Add(false);
+            }
+            
+            _state = FIXED_CLOSED;
+        }
         #endregion
 
 
@@ -344,24 +361,7 @@ namespace LiftSimulation
             set { _passengers = value; }
         }
 
-        #endregion
-
-
-        #region Konstruktoren
-        public Elevator()
-        {              
-            _currentFloor = 0;           
-                     
-            for (int IDX = (Defaults.Floors - 1); IDX >= 0; IDX--)
-            {
-                _downwardRequired.Add(false);
-                _upwardRequired.Add(false);
-                _internRequired.Add(false);
-            }
-            
-            _state = FIXED_CLOSED;
-        }
-        #endregion
+        #endregion     
 
 
         #region Methoden
