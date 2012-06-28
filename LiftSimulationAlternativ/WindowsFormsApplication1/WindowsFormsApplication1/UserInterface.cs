@@ -18,13 +18,13 @@ namespace LiftSimulationAlternativ
 
         //private Defaults.MoreOrLess _passengersIO;
 
-        private Label[] floor_numbers; //Anzeige der Etatennummern
-        private Label[] current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
-        private GroupBox[] floors;    //GroupBoxen für die Etagen
-        private PictureBox[] doorstates;
-        private Image img_door1;
-        private Image img_door2;
-        private Image img_direction;
+        private Label[] label_floor_numbers; //Anzeige der Etatennummern
+        private Label[] label_current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
+        private GroupBox[] GroupBox_floors;    //GroupBoxen für die Etagen
+        private PictureBox[] PictureBox_doorstates;
+        private Image image_door1;
+        private Image image_door2;
+        private Image image_direction;
         private Button[] button_intern;
         private Button[] button_upward;
         private Button[] button_downward;
@@ -34,11 +34,11 @@ namespace LiftSimulationAlternativ
         private List<bool> upwards_requireds;
         private int floor;
         private int passengers;
+        private bool busy;
         private Defaults.Direction current_direction;
 
         private Defaults.Door door;
 
-        private bool busy;
         #endregion
 
         #region Konstruktoren
@@ -52,10 +52,10 @@ namespace LiftSimulationAlternativ
             ChangeDirection();            
             //_passengersIO = Defaults.MoreOrLess.Neither;
 
-            floors = new GroupBox[Defaults.Floors];
-            floor_numbers = new Label[Defaults.Floors];
-            current_position = new Label[Defaults.Floors];            
-            doorstates = new PictureBox[Defaults.Floors];
+            GroupBox_floors = new GroupBox[Defaults.Floors];
+            label_floor_numbers = new Label[Defaults.Floors];
+            label_current_position = new Label[Defaults.Floors];            
+            PictureBox_doorstates = new PictureBox[Defaults.Floors];
             button_intern = new Button[Defaults.Floors];
             button_upward = new Button[Defaults.Floors];
             button_downward = new Button[Defaults.Floors];
@@ -69,45 +69,49 @@ namespace LiftSimulationAlternativ
 
             door = Defaults.Door.Closed;
             busy = false;
+            intern_requireds = new List<bool>();
+            upwards_requireds = new List<bool>();
+            downwards_requireds = new List<bool>();
+
 
 
             for (int i = Defaults.Floors -1 ; i >= 0; i--)
             {
-                floors[i] = new GroupBox();
-                floors[i].Text = "";
-                floors[i].Location = new Point(30, Defaults.Floors*100 - 110*i );
-                floors[i].Height = 110;
-                floors[i].Width = 350;
-                floors[i].Name = "groupBox_floor" + i;
-                groupBox_outsite.Controls.Add(floors[i]);
+                GroupBox_floors[i] = new GroupBox();
+                GroupBox_floors[i].Text = "";
+                GroupBox_floors[i].Location = new Point(30, Defaults.Floors*100 - 110*i );
+                GroupBox_floors[i].Height = 110;
+                GroupBox_floors[i].Width = 350;
+                GroupBox_floors[i].Name = "groupBox_floor" + i;
+                groupBox_outsite.Controls.Add(GroupBox_floors[i]);
 
                 
-                floor_numbers[i] = new Label();
+                label_floor_numbers[i] = new Label();
                 switch (i){               
-                    case 0: floor_numbers[i].Text = "1. UG"; break;
-                    case 1: floor_numbers[i].Text = "EG"; break;
-                    default: floor_numbers[i].Text = (i -1) + ". OG"; break;
+                    case 0: label_floor_numbers[i].Text = "1. UG"; break;
+                    case 1: label_floor_numbers[i].Text = "EG"; break;
+                    default: label_floor_numbers[i].Text = (i -1) + ". OG"; break;
                 }
-                floor_numbers[i].Width = 70;
-                floor_numbers[i].Location = new Point(10,10);
-                floor_numbers[i].Name = "label_floor" + i;
-                floors[i].Controls.Add(floor_numbers[i]);
-                floor_numbers[i].Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                label_floor_numbers[i].Width = 70;
+                label_floor_numbers[i].Location = new Point(10,10);
+                label_floor_numbers[i].Name = "label_floor" + i;
+                GroupBox_floors[i].Controls.Add(label_floor_numbers[i]);
+                label_floor_numbers[i].Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
-                doorstates[i] = new PictureBox();
-                doorstates[i].Width = 30;
-                doorstates[i].Height = 30;
-                doorstates[i].Location = new Point(100, 50);
-                doorstates[i].Name = "pictureBox_doorstate" + i;
-                doorstates[i].Image = img_door2;
-                floors[i].Controls.Add(doorstates[i]);
+                PictureBox_doorstates[i] = new PictureBox();
+                PictureBox_doorstates[i].Width = 30;
+                PictureBox_doorstates[i].Height = 30;
+                PictureBox_doorstates[i].Location = new Point(100, 50);
+                PictureBox_doorstates[i].Name = "pictureBox_doorstate" + i;
+                PictureBox_doorstates[i].Image = image_door2;
+                GroupBox_floors[i].Controls.Add(PictureBox_doorstates[i]);
                 
-                current_position[i] = new Label();
-                current_position[i].Text = "#Position";
-                current_position[i].Name = "label_position" + i;
-                current_position[i].Width = 60;
-                current_position[i].Location = new Point(100, 12);
-                floors[i].Controls.Add(current_position[i]);
+                label_current_position[i] = new Label();
+                label_current_position[i].Text = "#Position";
+                label_current_position[i].Name = "label_position" + i;
+                label_current_position[i].Width = 60;
+                label_current_position[i].Location = new Point(100, 12);
+                GroupBox_floors[i].Controls.Add(label_current_position[i]);
 
 
                 button_intern[i] = new Button();
@@ -130,7 +134,7 @@ namespace LiftSimulationAlternativ
                     button_upward[i].Width = 70;
                     button_upward[i].Text = "Aufwärts";
                     button_upward[i].Name = "Button_up_" + i;
-                    floors[i].Controls.Add(button_upward[i]);
+                    GroupBox_floors[i].Controls.Add(button_upward[i]);
                     button_upward[i].Click += new System.EventHandler(ClickOutsideButton);
                    
                 }
@@ -143,7 +147,7 @@ namespace LiftSimulationAlternativ
                     button_downward[i].Width = 70;
                     button_downward[i].Text = "Abwärts";
                     button_downward[i].Name = "Button_up_" + i;
-                    floors[i].Controls.Add(button_downward[i]);
+                    GroupBox_floors[i].Controls.Add(button_downward[i]);
                     button_downward[i].Click += new System.EventHandler(ClickOutsideButton);
                  
                 }
@@ -183,8 +187,8 @@ namespace LiftSimulationAlternativ
             }// get
 
             set
-            {       List<bool> _upwards = value; //kann man die Liste einfach so kopieren?
-                    for (int i = 0; i < Defaults.Floors - 1; i++) //geht bis zum vorletzten, da es oben ohnehin kein "hoch" gibt
+            {       List<bool> _upwards = value; 
+                    for (int i = 0; i < Defaults.Floors - 1; i++) 
                     {
                         if (_upwards[i] == true) button_upward[i].Enabled = false;
                         else button_upward[i].Enabled = true;
@@ -305,7 +309,7 @@ namespace LiftSimulationAlternativ
                     default: position_value = pos-1 + ". OG"; break;
                 }
 
-                foreach (Label poslabel in current_position)
+                foreach (Label poslabel in label_current_position)
                 {
                     poslabel.Text = position_value; //äußere Label
                 }
@@ -316,41 +320,41 @@ namespace LiftSimulationAlternativ
                 {
                     if (i == pos)
                     {
-                        floors[i].BackColor = Color.White;
+                        GroupBox_floors[i].BackColor = Color.White;
                         //required[i].BackColor = Color.White;
                     }
                     else
                     {
-                        floors[i].BackColor = System.Drawing.SystemColors.Control;
+                        GroupBox_floors[i].BackColor = System.Drawing.SystemColors.Control;
                         //required[i].BackColor = System.Drawing.SystemColors.Control;
                     }
                 }
             }
         }
 
-        public Defaults.MoreOrLess PassengersIO
-        {
-            get { return _passengersIO; }
-            set { _passengersIO = value; }
-        }
+        //public Defaults.MoreOrLess PassengersIO
+        //{
+        //    get { return _passengersIO; }
+        //    set { _passengersIO = value; }
+        //}
 
         /// <summary>
         /// Anzeige der aktuellen Parameter im DataGridView
         /// </summary>
-        public Defaults._logentry logging{
-            set
-            {
+        //public Defaults._logentry logging{
+        //    set
+        //    {
 
-                int pos = dataGridView_log.RowCount + 1;
-                dataGridView_log.Rows.Add(pos.ToString(),
-                                       value._direction.ToString(),
-                                       value._floor.ToString(),
-                                       value._passenger.ToString(),
-                                       value._state.ToString()
-                    );
-                dataGridView_log.FirstDisplayedCell = dataGridView_log.Rows[dataGridView_log.RowCount - 1].Cells[0];
-                }
-        }
+        //        int pos = dataGridView_log.RowCount + 1;
+        //        dataGridView_log.Rows.Add(pos.ToString(),
+        //                               value._direction.ToString(),
+        //                               value._floor.ToString(),
+        //                               value._passenger.ToString(),
+        //                               value._state.ToString()
+        //            );
+        //        dataGridView_log.FirstDisplayedCell = dataGridView_log.Rows[dataGridView_log.RowCount - 1].Cells[0];
+        //        }
+        //}
 
         //public Button PlusPassengersButton
         //{
@@ -388,11 +392,11 @@ namespace LiftSimulationAlternativ
         /// Tür öffnen auf auf der GUI darstellen
         /// </summary>
         /// <param name="floor"></param>
-        public void open_door(int floor)
+        public void gui_open_door()
         {
             if (floor < 0 || floor > Defaults.Floors) return;
             //if (doorstates[floor].Image == img_door2)
-                doorstates[floor].Image = img_door1;
+                PictureBox_doorstates[floor].Image = image_door1;
             
         }
 
@@ -400,10 +404,10 @@ namespace LiftSimulationAlternativ
         /// Tür schießen auf der GUI darstellen
         /// </summary>
         /// <param name="floor"></param>
-        public void close_door(int floor)
+        public void gui_close_door()
         {
             if (floor < 0 || floor > Defaults.Floors) return;
-            if (doorstates[floor].Image == img_door1) doorstates[floor].Image = img_door2;
+            if (PictureBox_doorstates[floor].Image == image_door1) PictureBox_doorstates[floor].Image = image_door2;
 
         }
 
@@ -419,6 +423,8 @@ namespace LiftSimulationAlternativ
             button_more_passenger.Enabled = true;
 
             // Bild auf GUI umschalten
+            gui_open_door();
+            DeleteReqiredDirection();
 
             timer_tuer_zu.Stop();
             timer_tuer_zu.Start();
@@ -437,21 +443,53 @@ namespace LiftSimulationAlternativ
 
         public void go()
         {
-            if (
-                //upwards_requireds[Defaults.FloorToIdx(floor)] == true ||
-                //downwards_requireds[Defaults.FloorToIdx(floor)] == true ||
-                //intern_requireds[Defaults.FloorToIdx(floor)] == true
-                )
+
+            if (highesorlowestfloor() == true) switchDirection();
+
+            if (wishesHere() == true)
             {
                 openDoor();
+                return;
             }
- 
+
+            if (wishesInDirection() == true)
+            {
+                
+                return;
+            }
+
+            if(wishesInOppositeDirection()==true){
+                switchDirection();
+                
+                return;
+            }
+            
+            else if(wishesHereInOppositeDirection())
+
+          
+
+            busy = true;
+        }
+
+        public bool highesorlowestfloor()
+        {
+            if (floor < 1 || floor == Defaults.Floors) return true;
+            return false;
+        }
+
+        public void switchDirection()
+        {
+            switch(current_direction){
+                case Defaults.Direction.Upward: current_direction = Defaults.Direction.Downward; break;
+                case Defaults.Direction.Downward: current_direction = Defaults.Direction.Upward; break;
+            }
         }
 
         public bool wishesHere()
         {
             if (intern_requireds[Defaults.FloorToIdx(floor)] == true)
                 return true;
+
             switch (current_direction)
             {
                 case Defaults.Direction.Upward:
@@ -467,6 +505,26 @@ namespace LiftSimulationAlternativ
             }
             return false;
         }
+
+        public bool wishesHereInOppositeDirection()
+        {
+            switch (current_direction)
+            {
+                case Defaults.Direction.Upward:
+                    {
+                        if (downwards_requireds[Defaults.FloorToIdx(floor)] == true)
+                            return true;
+                    } break;
+                case Defaults.Direction.Downward:
+                    {
+                        if (upwards_requireds[Defaults.FloorToIdx(floor)] == true)
+                            return true;
+                    } break;
+            }
+            return false;
+        }
+
+
 
         public bool wishesInDirection()
         {
@@ -492,6 +550,54 @@ namespace LiftSimulationAlternativ
             }
             return false;
         }
+
+        public bool wishesInOppositeDirection()
+        {
+            switch (current_direction)
+            {
+                case Defaults.Direction.Upward:
+                    {
+                        for (int IDX = 0; IDX < Defaults.FloorToIdx(floor); IDX++)
+                        {
+                            if (upwards_requireds[IDX] == true || intern_requireds[IDX] == true || downwards_requireds[IDX] == true)
+                                return true;
+                        }
+                    } break;
+
+                case Defaults.Direction.Downward:
+                    {
+                        for (int IDX = Defaults.FloorToIdx(floor); IDX < Defaults.FloorToIdx(Defaults.FloorToIdx(Defaults.Floors)); IDX++)
+                        {
+                            if (upwards_requireds[IDX] == true || intern_requireds[IDX] == true || downwards_requireds[IDX] == true)
+                                return true;
+                        }
+                    } break;
+            }
+            return false;
+        }
+
+        public void DeleteReqiredDirection()
+        {
+          
+
+            switch (current_direction)
+            {
+                case Defaults.Direction.Upward:
+                    {
+                        upwards_requireds[Defaults.FloorToIdx(floor)] = false;
+                        button_upward[Defaults.FloorToIdx(floor)].Enabled = true;
+                        break;
+                    }
+                case Defaults.Direction.Downward:
+                    {
+                        downwards_requireds[Defaults.FloorToIdx(floor)] = false;
+                        button_downward[Defaults.FloorToIdx(floor)].Enabled = true;
+                        break;
+                    }
+            }
+            intern_requireds[Defaults.FloorToIdx(floor)] = false;
+            button_intern[Defaults.FloorToIdx(floor)].Enabled = true;
+        }
         #endregion
 
 
@@ -503,8 +609,8 @@ namespace LiftSimulationAlternativ
            // _passengersIO = Defaults.MoreOrLess.Neither;
            // //Defaults.ManualResetEvent.Set();
            //// Syncronize.DoorTimerReset();
-            passengers++;
-            label_passengers.Text = passengers.ToString();
+           // passengers++;
+            PassengersCount = ++passengers;
 
             if (passengers > 0)
             {
@@ -521,8 +627,8 @@ namespace LiftSimulationAlternativ
             //Defaults.ManualResetEvent.Set();
             if (passengers > 0)
             {
-                passengers--;
-                label_passengers.Text = passengers.ToString();
+                //passengers--;
+                PassengersCount = --passengers;
             }
             if (passengers == 0)
             {
@@ -571,21 +677,21 @@ namespace LiftSimulationAlternativ
         public void ChangeDirection()
         {
 
-            img_direction = pictureBox_direction.Image;
-            img_direction.RotateFlip(RotateFlipType.Rotate180FlipX);
-            pictureBox_direction.Image = img_direction;
+            image_direction = pictureBox_direction.Image;
+            image_direction.RotateFlip(RotateFlipType.Rotate180FlipX);
+            pictureBox_direction.Image = image_direction;
                
 
         }
 
-        public void BusyCheck()
-        {
-            //if (Syncronize.TaskStatus == false)
-            //{
-            //    Syncronize.TaskStatus = true;
-            //    Syncronize.executeLoop();
-            //}
-        }
+        //public void BusyCheck()
+        //{
+        //    //if (Syncronize.TaskStatus == false)
+        //    //{
+        //    //    Syncronize.TaskStatus = true;
+        //    //    Syncronize.executeLoop();
+        //    //}
+        //}
 
         private void timer_tuer_zu_Tick(object sender, EventArgs e)
         {
@@ -593,6 +699,7 @@ namespace LiftSimulationAlternativ
             closeDoor();
 
             //Move-Methode
+            go();
 
             //Syncronize.PassengerButtonsEnable(false);
            // Syncronize.SetState(Defaults.State.FixedClosed);
@@ -605,7 +712,7 @@ namespace LiftSimulationAlternativ
            currentButton.Enabled = false;           
            
            //Syncronize.syncinnerWishes(Syncronize.To.Elevator);
-           BusyCheck();
+           if (busy) go();
           // Syncronize.executeLoop();            
         }
 
@@ -616,7 +723,7 @@ namespace LiftSimulationAlternativ
 
            //Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
            //Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
-           BusyCheck();
+           if (busy) go();
            //Syncronize.executeLoop();
         }
 
@@ -624,6 +731,7 @@ namespace LiftSimulationAlternativ
         {
            timer_fahren.Stop(); 
            pictureBox_direction.Visible = false;
+           go();
            //Syncronize.syncinnerWishes(Syncronize.To.UI);
            //Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
            //Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
