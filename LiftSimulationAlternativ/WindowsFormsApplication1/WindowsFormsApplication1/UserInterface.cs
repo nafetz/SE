@@ -61,8 +61,8 @@ namespace LiftSimulationAlternativ
             button_downward = new Button[Defaults.Floors];
 
 
-            //img_door1 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.gif");
-            //img_door2 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.gif");
+            image_door1 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.gif");
+            image_door2 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.gif");
             current_direction = Defaults.Direction.Upward;
             floor = 0;
             passengers = 0;
@@ -320,67 +320,15 @@ namespace LiftSimulationAlternativ
                 {
                     if (i == pos)
                     {
-                        GroupBox_floors[i].BackColor = Color.White;
-                        //required[i].BackColor = Color.White;
+                        GroupBox_floors[i].BackColor = Color.Yellow;                       
                     }
                     else
                     {
-                        GroupBox_floors[i].BackColor = System.Drawing.SystemColors.Control;
-                        //required[i].BackColor = System.Drawing.SystemColors.Control;
+                        GroupBox_floors[i].BackColor = System.Drawing.SystemColors.Control;   
                     }
                 }
             }
         }
-
-        //public Defaults.MoreOrLess PassengersIO
-        //{
-        //    get { return _passengersIO; }
-        //    set { _passengersIO = value; }
-        //}
-
-        /// <summary>
-        /// Anzeige der aktuellen Parameter im DataGridView
-        /// </summary>
-        //public Defaults._logentry logging{
-        //    set
-        //    {
-
-        //        int pos = dataGridView_log.RowCount + 1;
-        //        dataGridView_log.Rows.Add(pos.ToString(),
-        //                               value._direction.ToString(),
-        //                               value._floor.ToString(),
-        //                               value._passenger.ToString(),
-        //                               value._state.ToString()
-        //            );
-        //        dataGridView_log.FirstDisplayedCell = dataGridView_log.Rows[dataGridView_log.RowCount - 1].Cells[0];
-        //        }
-        //}
-
-        //public Button PlusPassengersButton
-        //{
-        //    get { return button_more_passenger; }
-        //    set { button_more_passenger = value; }
-        //}
-
-        //public Button MinusPassengersButton
-        //{
-        //    get { return button_less_passenger; }
-        //    set { button_less_passenger = value; }
-        //}
-
-        //public Timer Doortimer
-        //{
-
-        //    get { return timer_tuer_zu; }
-        //    set { timer_tuer_zu = value; }
-
-        //}
-
-        //public Timer Movetimer
-        //{
-        //    get { return timer_fahren; }
-        //    set { timer_fahren = value; }
-        //}
 
         #endregion
 
@@ -396,7 +344,7 @@ namespace LiftSimulationAlternativ
         {
             if (floor < 0 || floor > Defaults.Floors) return;
             //if (doorstates[floor].Image == img_door2)
-                PictureBox_doorstates[floor].Image = image_door1;
+                PictureBox_doorstates[Defaults.FloorToIdx(floor)].Image = image_door1;
             
         }
 
@@ -407,14 +355,11 @@ namespace LiftSimulationAlternativ
         public void gui_close_door()
         {
             if (floor < 0 || floor > Defaults.Floors) return;
-            if (PictureBox_doorstates[floor].Image == image_door1) PictureBox_doorstates[floor].Image = image_door2;
+           // if (PictureBox_doorstates[floor].Image == image_door1) 
+            PictureBox_doorstates[Defaults.FloorToIdx(floor)].Image = image_door2;
 
         }
 
-        //public void ResetPassengerIO() 
-        //{
-        //    _passengersIO = Defaults.MoreOrLess.Neither;
-        //}
 
         public void openDoor()
         {
@@ -424,7 +369,7 @@ namespace LiftSimulationAlternativ
 
             // Bild auf GUI umschalten
             gui_open_door();
-            DeleteReqiredDirection();
+            DeleteReqired();
 
             timer_tuer_zu.Stop();
             timer_tuer_zu.Start();
@@ -435,6 +380,7 @@ namespace LiftSimulationAlternativ
             door = Defaults.Door.Closed;
             button_less_passenger.Enabled = false;
             button_more_passenger.Enabled = false;
+            gui_close_door();
 
             // Bild auf GUI umschalten
 
@@ -444,31 +390,71 @@ namespace LiftSimulationAlternativ
         public void go()
         {
 
-            if (highesorlowestfloor() == true) switchDirection();
-
             if (wishesHere() == true)
             {
                 openDoor();
                 return;
             }
 
-            if (wishesInDirection() == true)
+            if (DirectionwishesInDirection() == true)
             {
-                
+                floorchange();
+                timer_fahren.Start();
                 return;
             }
 
-            if(wishesInOppositeDirection()==true){
-                switchDirection();
-                
+            if(OppostieWishesInDirection()==true)
+            {
+                floorchange();
+                timer_fahren.Start();
                 return;
             }
-            
-            else if(wishesHereInOppositeDirection())
+
+            if (wishesHereInOppositeDirection())
+            {
+                switchDirection();
+                openDoor();
+                return;
+            }
+
+            if (OppostieWishesInOppositeDirection())
+            {
+                switchDirection();
+                floorchange();
+                timer_fahren.Start();
+                return;
+            }
+
+            if (DirectionWishesInOppositeDirection())
+            {
+                switchDirection();
+                floorchange();
+                timer_fahren.Start();
+                return;
+            }
 
           
 
             busy = true;
+        }
+
+        public void floorchange()
+        {
+            switch (current_direction)
+            {
+                case Defaults.Direction.Upward: floor++; break;
+                case Defaults.Direction.Downward: floor--; break;
+            }
+
+            if ((floor == 0 && current_direction == Defaults.Direction.Downward) || 
+                (floor == Defaults.FloorToIdx(floor) && current_direction == Defaults.Direction.Upward))
+            {
+                switchDirection();
+            }
+
+            pictureBox_direction.Visible = true;
+
+           
         }
 
         public bool highesorlowestfloor()
@@ -485,6 +471,11 @@ namespace LiftSimulationAlternativ
             }
         }
 
+
+        /// <summary>
+        /// Gibt es auf der aktuellen Etage innere Wünsche oder äußere Wünsche in Fahrtrichtung
+        /// </summary>
+        /// <returns>true or false</returns>
         public bool wishesHere()
         {
             if (intern_requireds[Defaults.FloorToIdx(floor)] == true)
@@ -506,6 +497,11 @@ namespace LiftSimulationAlternativ
             return false;
         }
 
+        /// <summary>
+        /// Gibt es auf der aktuellen Etage äußere Wünsche entgegen Fahrtrichtung
+        /// </summary>
+        /// <returns>true or false</returns>
+
         public bool wishesHereInOppositeDirection()
         {
             switch (current_direction)
@@ -524,26 +520,29 @@ namespace LiftSimulationAlternativ
             return false;
         }
 
+        /// <summary>
+        /// Gibt auf einer Etage in Fahrtrichtung Wünsche von innen oder von außen in Fahrtrichtung?
+        /// </summary>
+        /// <returns>true or false</returns>
 
-
-        public bool wishesInDirection()
+        public bool DirectionwishesInDirection()
         {
             switch (current_direction)
             {
                 case Defaults.Direction.Upward:
                     {
-                        for (int IDX = Defaults.FloorToIdx(floor); IDX < Defaults.FloorToIdx(Defaults.Floors); IDX++)
+                        for (int IDX = Defaults.FloorToIdx(floor); IDX < Defaults.FloorToIdx(Defaults.Floors)-1; IDX++)
                         {
-                            if (upwards_requireds[IDX] == true || intern_requireds[IDX] == true || downwards_requireds[IDX] == true)
+                            if (upwards_requireds[IDX] == true || intern_requireds[IDX] == true)
                                 return true;
                         }
                     }break;
 
                 case Defaults.Direction.Downward:
                     {
-                        for (int IDX = 0 ; IDX < Defaults.FloorToIdx(floor); IDX++)
+                        for (int IDX = 0 ; IDX < Defaults.FloorToIdx(floor)-1; IDX++)
                         {
-                            if (upwards_requireds[IDX] == true || intern_requireds[IDX] == true || downwards_requireds[IDX] == true)
+                            if (intern_requireds[IDX] == true || downwards_requireds[IDX] == true)
                                 return true;
                         }
                     } break;
@@ -551,7 +550,42 @@ namespace LiftSimulationAlternativ
             return false;
         }
 
-        public bool wishesInOppositeDirection()
+        /// <summary>
+        /// Gibt auf einer Etage in Fahrtrichtung Wünsche von außen entgegen der Fahrtrichtung?
+        /// </summary>
+        /// <returns>true or false</returns>
+       
+        public bool OppostieWishesInDirection()
+        {
+            switch (current_direction)
+            {
+                case Defaults.Direction.Upward:
+                    {
+                        for (int IDX = Defaults.FloorToIdx(floor); IDX < Defaults.FloorToIdx(Defaults.Floors)-1; IDX++)
+                        {
+                            if (downwards_requireds[IDX] == true)
+                                return true;
+                        }
+                    } break;
+
+                case Defaults.Direction.Downward:
+                    {
+                        for (int IDX = 0; IDX < Defaults.FloorToIdx(floor)-1; IDX++)
+                        {
+                            if (upwards_requireds[IDX] == true)
+                                return true;
+                        }
+                    } break;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Gibt auf einer Etage entgegen Fahrtrichtung Wünsche von inner oer von außen entgegen der Fahrtrichtung?
+        /// </summary>
+        /// <returns>true or false</returns>
+
+        public bool OppostieWishesInOppositeDirection()
         {
             switch (current_direction)
             {
@@ -559,16 +593,16 @@ namespace LiftSimulationAlternativ
                     {
                         for (int IDX = 0; IDX < Defaults.FloorToIdx(floor); IDX++)
                         {
-                            if (upwards_requireds[IDX] == true || intern_requireds[IDX] == true || downwards_requireds[IDX] == true)
+                            if (downwards_requireds[IDX] == true || intern_requireds[IDX] == true)
                                 return true;
                         }
                     } break;
 
                 case Defaults.Direction.Downward:
                     {
-                        for (int IDX = Defaults.FloorToIdx(floor); IDX < Defaults.FloorToIdx(Defaults.FloorToIdx(Defaults.Floors)); IDX++)
+                        for (int IDX = Defaults.FloorToIdx(Defaults.Floors)-Defaults.Basements-1; IDX > Defaults.FloorToIdx(floor); IDX--)
                         {
-                            if (upwards_requireds[IDX] == true || intern_requireds[IDX] == true || downwards_requireds[IDX] == true)
+                            if (upwards_requireds[IDX] == true)
                                 return true;
                         }
                     } break;
@@ -576,27 +610,57 @@ namespace LiftSimulationAlternativ
             return false;
         }
 
-        public void DeleteReqiredDirection()
-        {
-          
+        /// <summary>
+        /// Gibt auf einer Etage entgegen der Fahrtrichtung Wünsche von außen in Fahrtrichtung?
+        /// </summary>
+        /// <returns>true or false</returns>
 
+        public bool DirectionWishesInOppositeDirection()
+        {
             switch (current_direction)
             {
                 case Defaults.Direction.Upward:
                     {
-                        upwards_requireds[Defaults.FloorToIdx(floor)] = false;
-                        button_upward[Defaults.FloorToIdx(floor)].Enabled = true;
-                        break;
-                    }
+                        for (int IDX = 0; IDX < Defaults.FloorToIdx(floor); IDX++)
+                        {
+                            if (upwards_requireds[IDX] == true)
+                                return true;
+                        }
+                    } break;
+
                 case Defaults.Direction.Downward:
                     {
-                        downwards_requireds[Defaults.FloorToIdx(floor)] = false;
-                        button_downward[Defaults.FloorToIdx(floor)].Enabled = true;
-                        break;
-                    }
+                        for (int IDX = Defaults.FloorToIdx(Defaults.Floors)-Defaults.Basements-1; IDX > Defaults.FloorToIdx(floor); IDX--)
+                        {
+                            if (downwards_requireds[IDX] == true)
+                                return true;
+                        }
+                    } break;
             }
-            intern_requireds[Defaults.FloorToIdx(floor)] = false;
-            button_intern[Defaults.FloorToIdx(floor)].Enabled = true;
+            return false;
+        }
+
+        /// <summary>
+        /// Öffnen sich die Türen auf einer Etage werden alle inneren und äußeren Wünsche gelöscht
+        /// </summary>
+        public void DeleteReqired()
+        {
+
+            if(floor < Defaults.FloorToIdx(Defaults.Floors))
+            {
+                 upwards_requireds[Defaults.FloorToIdx(floor)] = false;
+                 button_upward[Defaults.FloorToIdx(floor)].Enabled = true;
+             }
+
+            if (floor > 0)
+            {
+                downwards_requireds[Defaults.FloorToIdx(floor)] = false;
+                button_downward[Defaults.FloorToIdx(floor)].Enabled = true;
+
+            }
+
+          intern_requireds[Defaults.FloorToIdx(floor)] = false;
+          button_intern[Defaults.FloorToIdx(floor)].Enabled = true;
         }
         #endregion
 
@@ -671,6 +735,29 @@ namespace LiftSimulationAlternativ
             //Syncronize.SetState(Defaults.State.FixedClosed);
             closeDoor();
         }
+
+        private void ClickInnerButton(object sender, EventArgs e)
+        {
+            Button currentButton = sender as Button;
+            currentButton.Enabled = false;
+            intern_requireds = InternRequired;
+            //Syncronize.syncinnerWishes(Syncronize.To.Elevator);
+            if (busy) go();
+            // Syncronize.executeLoop();            
+        }
+
+        private void ClickOutsideButton(object sender, EventArgs e)
+        {
+            Button currentButt = sender as Button;
+            currentButt.Enabled = false;
+            upwards_requireds = UpwardRequired;
+            downwards_requireds = DownwardRequired;
+
+            //Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
+            //Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
+            if (busy) go();
+            //Syncronize.executeLoop();
+        }
         #endregion
 
 
@@ -684,14 +771,6 @@ namespace LiftSimulationAlternativ
 
         }
 
-        //public void BusyCheck()
-        //{
-        //    //if (Syncronize.TaskStatus == false)
-        //    //{
-        //    //    Syncronize.TaskStatus = true;
-        //    //    Syncronize.executeLoop();
-        //    //}
-        //}
 
         private void timer_tuer_zu_Tick(object sender, EventArgs e)
         {
@@ -706,31 +785,13 @@ namespace LiftSimulationAlternativ
             
         }
 
-        private void ClickInnerButton(object sender, EventArgs e)
-        {
-           Button currentButton = sender as Button;           
-           currentButton.Enabled = false;           
-           
-           //Syncronize.syncinnerWishes(Syncronize.To.Elevator);
-           if (busy) go();
-          // Syncronize.executeLoop();            
-        }
 
-        private void ClickOutsideButton(object sender, EventArgs e)
-        {
-           Button currentButt = sender as Button;
-           currentButt.Enabled = false;
-
-           //Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
-           //Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
-           if (busy) go();
-           //Syncronize.executeLoop();
-        }
 
         private void timer_fahren_Tick(object sender, EventArgs e)
         {
            timer_fahren.Stop(); 
            pictureBox_direction.Visible = false;
+           CurrentPosition = floor;
            go();
            //Syncronize.syncinnerWishes(Syncronize.To.UI);
            //Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
