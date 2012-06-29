@@ -446,8 +446,8 @@ namespace LiftSimulationAlternativ
                 case Defaults.Direction.Downward: floor--; break;
             }
 
-            if ((floor == 0 && current_direction == Defaults.Direction.Downward) || 
-                (floor == Defaults.FloorToIdx(floor) && current_direction == Defaults.Direction.Upward))
+            if ((floor == -Defaults.Basements && current_direction == Defaults.Direction.Downward) || 
+                (floor == (Defaults.Floors - Defaults.Basements) && current_direction == Defaults.Direction.Upward))
             {
                 switchDirection();
             }
@@ -531,7 +531,7 @@ namespace LiftSimulationAlternativ
             {
                 case Defaults.Direction.Upward:
                     {
-                        for (int IDX = Defaults.FloorToIdx(floor); IDX < Defaults.FloorToIdx(Defaults.Floors)-1; IDX++)
+                        for (int IDX = Defaults.FloorToIdx(floor); IDX < Defaults.Floors; IDX++)
                         {
                             if (upwards_requireds[IDX] == true || intern_requireds[IDX] == true)
                                 return true;
@@ -540,7 +540,7 @@ namespace LiftSimulationAlternativ
 
                 case Defaults.Direction.Downward:
                     {
-                        for (int IDX = 0 ; IDX < Defaults.FloorToIdx(floor)-1; IDX++)
+                        for (int IDX = 0 ; IDX < Defaults.FloorToIdx(floor); IDX++)
                         {
                             if (intern_requireds[IDX] == true || downwards_requireds[IDX] == true)
                                 return true;
@@ -561,7 +561,7 @@ namespace LiftSimulationAlternativ
             {
                 case Defaults.Direction.Upward:
                     {
-                        for (int IDX = Defaults.FloorToIdx(floor); IDX < Defaults.FloorToIdx(Defaults.Floors)-1; IDX++)
+                        for (int IDX = Defaults.FloorToIdx(floor); IDX < Defaults.Floors; IDX++)
                         {
                             if (downwards_requireds[IDX] == true)
                                 return true;
@@ -600,7 +600,7 @@ namespace LiftSimulationAlternativ
 
                 case Defaults.Direction.Downward:
                     {
-                        for (int IDX = Defaults.FloorToIdx(Defaults.Floors)-Defaults.Basements-1; IDX > Defaults.FloorToIdx(floor); IDX--)
+                        for (int IDX = Defaults.Floors - Defaults.Basements; IDX > Defaults.FloorToIdx(floor); IDX--)
                         {
                             if (upwards_requireds[IDX] == true)
                                 return true;
@@ -630,7 +630,7 @@ namespace LiftSimulationAlternativ
 
                 case Defaults.Direction.Downward:
                     {
-                        for (int IDX = Defaults.FloorToIdx(Defaults.Floors)-Defaults.Basements-1; IDX > Defaults.FloorToIdx(floor); IDX--)
+                        for (int IDX = Defaults.Floors - Defaults.Basements; IDX > Defaults.FloorToIdx(floor); IDX--)
                         {
                             if (downwards_requireds[IDX] == true)
                                 return true;
@@ -646,13 +646,13 @@ namespace LiftSimulationAlternativ
         public void DeleteReqired()
         {
 
-            if(floor < Defaults.FloorToIdx(Defaults.Floors))
+            if(floor < Defaults.Floors-Defaults.Basements-1)
             {
                  upwards_requireds[Defaults.FloorToIdx(floor)] = false;
                  button_upward[Defaults.FloorToIdx(floor)].Enabled = true;
              }
 
-            if (floor > 0)
+            if (floor > (-Defaults.Basements))
             {
                 downwards_requireds[Defaults.FloorToIdx(floor)] = false;
                 button_downward[Defaults.FloorToIdx(floor)].Enabled = true;
