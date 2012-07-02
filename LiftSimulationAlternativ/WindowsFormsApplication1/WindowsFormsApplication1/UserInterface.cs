@@ -390,7 +390,12 @@ namespace LiftSimulationAlternativ
         public void go()
         {
 
-            if (wishesHere() == true)
+            if (checkforoverload() == true)
+            {
+               
+
+            }
+            else if (wishesHere() == true)
             {
                 openDoor();
                 button_open_door.Enabled = true;
@@ -602,6 +607,13 @@ namespace LiftSimulationAlternativ
           intern_requireds[Defaults.FloorToIdx(floor)] = false;
           button_intern[Defaults.FloorToIdx(floor)].Enabled = true;
         }
+
+        public bool checkforoverload()
+        {
+            if (passengers > 10) return true;
+            return false;
+
+        }
         #endregion
 
 
@@ -715,10 +727,17 @@ namespace LiftSimulationAlternativ
         private void timer_tuer_zu_Tick(object sender, EventArgs e)
         {
             timer_tuer_zu.Stop();
-            closeDoor();
+            if (checkforoverload() == true)
+            {
+                timer_tuer_zu.Start();
+            }
+            else
+            {
+                closeDoor();
+                go();
+            }
 
-            //Move-Methode
-            go();
+
 
             //Syncronize.PassengerButtonsEnable(false);
            // Syncronize.SetState(Defaults.State.FixedClosed);
