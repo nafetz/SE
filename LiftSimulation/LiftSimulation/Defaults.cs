@@ -1,10 +1,10 @@
-﻿#region using
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-#endregion
+using System.IO;
+
 
 namespace LiftSimulation
 {
@@ -18,6 +18,11 @@ namespace LiftSimulation
         public  enum State { Moving = 1, FixedOpen, FixedClosed, Overload };
         public  enum Direction { Upward = 1, Downward };
         public  enum MoreOrLess { More = 1, Less, Neither };
+
+        #endregion
+
+
+        #region interne Klassen/Structs
 
         public struct Logentry
         {
@@ -34,6 +39,61 @@ namespace LiftSimulation
                 _state = s;
             }
         }
+        public static class Log
+        {
+            #region Member
+
+            private string _path;
+            private StreamWriter _logger;
+
+            #endregion
+
+
+            #region Konstruktor
+
+            public Log()
+            {
+                _path = System.IO.Path.GetTempPath();
+
+                if( !File.Exists( _path + @"\Elevator_log.txt" ) )
+                {
+                    File.Create( _path + @"\Elevator_log.txt" );
+                }
+
+                _logger = new StreamWriter( _path + @"\Elevator_log.txt" );
+
+                _logger.WriteLine( "\n\n" );
+                _logger.WriteLine( "Begin New Log of " + DateTime.Now + "." );
+            }
+
+            #endregion
+
+
+            #region Destruktor
+
+            ~Log()
+            {
+                _logger.WriteLine( "End of Log." );
+                _logger.Close();
+            }
+
+            #endregion
+
+
+            #region Methoden
+
+            /// <summary>
+            /// Fügt dem Logfile einen neuen Eintrag hinzu (als neue Zeile)
+            /// </summary>
+            /// <param name="entry">hinzuzufügender Eintrag</param>
+            public void AddEntry( string entry )
+            {
+                _logger.WriteLine( entry );
+            }
+
+            #endregion
+        }
+        
         #endregion
 
 
