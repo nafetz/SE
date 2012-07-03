@@ -16,7 +16,6 @@ namespace LiftSimulationAlternativ
 
         #region Member
 
-        //private Defaults.MoreOrLess _passengersIO;
 
         private Label[] label_floor_numbers; //Anzeige der Etatennummern
         private Label[] label_current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
@@ -60,7 +59,7 @@ namespace LiftSimulationAlternativ
             button_upward = new Button[Defaults.Floors];
             button_downward = new Button[Defaults.Floors];
 
-
+            image_direction = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufwaerts.gif");
             image_door1 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.gif");
             image_door2 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.gif");
             current_direction = Defaults.Direction.Upward;
@@ -73,7 +72,7 @@ namespace LiftSimulationAlternativ
             upwards_requireds = new List<bool>();
             downwards_requireds = new List<bool>();
 
-
+            pictureBox_direction.Image = image_direction;
 
             for (int i = Defaults.Floors -1 ; i >= 0; i--)
             {
@@ -342,7 +341,7 @@ namespace LiftSimulationAlternativ
         /// <param name="floor"></param>
         public void gui_open_door()
         {
-            if (floor < 0 || floor > Defaults.Floors) return;
+          //  if (floor < 0 || floor > Defaults.Floors) return;
             //if (doorstates[floor].Image == img_door2)
                 PictureBox_doorstates[Defaults.FloorToIdx(floor)].Image = image_door1;
             
@@ -354,7 +353,7 @@ namespace LiftSimulationAlternativ
         /// <param name="floor"></param>
         public void gui_close_door()
         {
-            if (floor < 0 || floor > Defaults.Floors) return;
+            //if (floor < 0 || floor > Defaults.Floors) return;
            // if (PictureBox_doorstates[floor].Image == image_door1) 
             PictureBox_doorstates[Defaults.FloorToIdx(floor)].Image = image_door2;
 
@@ -392,7 +391,7 @@ namespace LiftSimulationAlternativ
 
             if (checkforoverload() == true)
             {
-               
+               return;
 
             }
             else if (wishesHere() == true)
@@ -566,7 +565,7 @@ namespace LiftSimulationAlternativ
                     {
                         for (int IDX = 0; IDX < Defaults.FloorToIdx(floor); IDX++)
                         {
-                            if (downwards_requireds[IDX] == true || intern_requireds[IDX] == true || downwards_requireds[IDX] == true)
+                            if (downwards_requireds[IDX] == true || intern_requireds[IDX] == true ||upwards_requireds[IDX] == true)
                                 return true;
                         }
                     } break;
@@ -610,7 +609,7 @@ namespace LiftSimulationAlternativ
 
         public bool checkforoverload()
         {
-            if (passengers > 10) return true;
+            if (passengers > Defaults.MaximumPassengers) return true;
             return false;
 
         }
@@ -620,12 +619,7 @@ namespace LiftSimulationAlternativ
         #region Button Clicks
         private void button_more_passenger_Click(object sender, EventArgs e) //+1 Button
         {
-           // _passengersIO = Defaults.MoreOrLess.More;
-           //  //Syncronize.executeLoop();
-           // _passengersIO = Defaults.MoreOrLess.Neither;
-           // //Defaults.ManualResetEvent.Set();
-           //// Syncronize.DoorTimerReset();
-           // passengers++;
+
             PassengersCount = ++passengers;
 
             if (passengers > 0)
@@ -636,14 +630,8 @@ namespace LiftSimulationAlternativ
 
         private void button_less_passenger_Click(object sender, EventArgs e) //-1 Button
         {
-            //_passengersIO = Defaults.MoreOrLess.Less;
-            //Syncronize.executeLoop();
-            //_passengersIO = Defaults.MoreOrLess.Neither;
-            //Syncronize.DoorTimerReset();
-            //Defaults.ManualResetEvent.Set();
             if (passengers > 0)
             {
-                //passengers--;
                 PassengersCount = --passengers;
             }
             if (passengers == 0)
@@ -673,18 +661,13 @@ namespace LiftSimulationAlternativ
 
         private void button_open_door_Click(object sender, EventArgs e)
         {
-            //Syncronize.DoorTimerReset();
-            //Syncronize.SetState(Defaults.State.FixedOpen); //ggf. überdenken
-            //open_door(Syncronize.syncFloor()); 
+
             openDoor();
         }
 
         private void button_close_door_Click(object sender, EventArgs e)
         {
-            //button_less_passenger.Enabled = false;
-            //button_more_passenger.Enabled = false;
-            //Syncronize.DoorTimerStop();
-            //Syncronize.SetState(Defaults.State.FixedClosed);
+
             closeDoor();
         }
 
@@ -693,9 +676,10 @@ namespace LiftSimulationAlternativ
             Button currentButton = sender as Button;
             currentButton.Enabled = false;
             intern_requireds = InternRequired;
-            //Syncronize.syncinnerWishes(Syncronize.To.Elevator);
-            if (!busy) go();
-            // Syncronize.executeLoop();            
+            if (!busy)
+            {
+                timer_tuer_zu.Start();
+            }         
         }
 
         private void ClickOutsideButton(object sender, EventArgs e)
@@ -703,12 +687,12 @@ namespace LiftSimulationAlternativ
             Button currentButt = sender as Button;
             currentButt.Enabled = false;
             upwards_requireds = UpwardRequired;
-            downwards_requireds = DownwardRequired;
+            downwards_requireds = DownwardRequired;         
+            if (!busy)
+            {
+                timer_tuer_zu.Start();
+            }
 
-            //Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
-            //Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
-            if (!busy) go();
-            //Syncronize.executeLoop();
         }
         #endregion
 
@@ -737,10 +721,6 @@ namespace LiftSimulationAlternativ
                 go();
             }
 
-
-
-            //Syncronize.PassengerButtonsEnable(false);
-           // Syncronize.SetState(Defaults.State.FixedClosed);
             
         }
 
@@ -752,10 +732,7 @@ namespace LiftSimulationAlternativ
            pictureBox_direction.Visible = false;
            CurrentPosition = floor;
            go();
-           //Syncronize.syncinnerWishes(Syncronize.To.UI);
-           //Syncronize.syncDownwardWishes(Syncronize.To.Elevator);
-           //Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
-           //Syncronize.executeLoop();
+
           
         }
 
