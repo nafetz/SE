@@ -308,12 +308,12 @@
             // 
             // timer_tuer_zu
             // 
-            this.timer_tuer_zu.Interval = 5000;
+            this.timer_tuer_zu.Interval = 3500;
             this.timer_tuer_zu.Tick += new System.EventHandler(this.timer_tuer_zu_Tick);
             // 
             // timer_fahren
             // 
-            this.timer_fahren.Interval = 2000;
+            this.timer_fahren.Interval = 3000;
             this.timer_fahren.Tick += new System.EventHandler(this.timer_fahren_Tick);
             // 
             // UserInterface
