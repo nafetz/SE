@@ -97,11 +97,19 @@ namespace LiftSimulation
         {
             get
             { 
-                if( _currentFloor == ( 0 - Defaults.Basements ) )
-                    return true;
-                if( _currentFloor == Defaults.Floors - Defaults.Basements -1  )
-                    return true;
-
+                switch (_direction)
+                {
+                    case Defaults.Direction.Downward:
+                        {
+                            if( _currentFloor == ( 0 - Defaults.Basements ) )
+                                return true;
+                        }break;
+                    case Defaults.Direction.Upward:
+                        {
+                            if( _currentFloor == Defaults.Floors - Defaults.Basements - 1 )
+                                return true;
+                        } break;
+                }
                 return false;
             }
         }
@@ -128,7 +136,6 @@ namespace LiftSimulation
                                 return true;
                         } break;
                 }
-
                 return false;
             }
         }
@@ -217,7 +224,7 @@ namespace LiftSimulation
         /// Wünsche in folgenen Etagen entlang der Fahrtrichtung
         /// Bsp: Hochfahren und weiter oben der Wunsch nach oben zu fahren
         /// </summary>
-        public bool DirectionWishesInMyDirection
+        public bool WishesInMyDirection
         {
             get
             {
@@ -227,7 +234,7 @@ namespace LiftSimulation
                         {
                             for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
                             {
-                                if (_internRequired[i] || _upwardRequired[i])
+                                if( _internRequired[ i ] || _upwardRequired[ i ] || _downwardRequired[ i ] )
                                     return true;
                             }
                         } break;
@@ -235,7 +242,7 @@ namespace LiftSimulation
                         {
                             for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
                             {
-                                if (_internRequired[i] || _downwardRequired[i])
+                                if( _internRequired[ i ] || _downwardRequired[ i ] || _upwardRequired[ i ] )
                                     return true;
                             }
                         } break;
@@ -244,6 +251,7 @@ namespace LiftSimulation
             }
         }
 
+        /*Archiviert: OppositeDirectionWishesInMyDirection
         /// <summary>
         /// Wünsche  in folgenden Etagen entgegen der Fahrtrichtung
         ///  Bsp: Hochfahren und weiter oben der Wunsch nach unten zu fahren
@@ -273,13 +281,12 @@ namespace LiftSimulation
                 }
                 return false;
             }
-        }
+        }*/
 
         /// <summary>
-        /// Wünsche in vorherigen Etagen entgegen der Fahrtrichtung
-        /// Bsp: Hochfahren und in unterer Etage Wunsch nach unten zu fahren
+        /// Gibt an, ob wünsche in den Geschossen vorliegen, die nicht in Fahrtrichtung liegen.
         /// </summary>
-        public bool OppositeDirectionWishesInMyOppositeDirection
+        public bool WishesInMyOppositeDirection
         {
             get
             {
@@ -289,7 +296,7 @@ namespace LiftSimulation
                         {
                             for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
                             {
-                                if (_internRequired[i] || _downwardRequired[i])
+                                if( _internRequired[ i ] || _downwardRequired[ i ] || _upwardRequired[ i ] )
                                     return true;
                             }
                         } break;
@@ -297,7 +304,7 @@ namespace LiftSimulation
                         {
                             for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
                             {
-                                if (_internRequired[i] || _upwardRequired[i])
+                                if( _internRequired[ i ] || _upwardRequired[ i ] || _downwardRequired[ i ] )
                                     return true;
                             }
                         } break;
@@ -305,11 +312,9 @@ namespace LiftSimulation
                 return false;
             }
         }
-       
-        /// <summary>
-        /// Wünsche in vorherigen Etagen entlang der Fahrtrichtung
-        /// Bsp: Hochfahren und in unterer Etage Wunsch nach oben zu fahren
-        /// </summary>
+
+
+        /* Archiviert: DirectionWishesInMyOppositeDirection
         public bool DirectionWishesInMyOppositeDirection
         {
             get
@@ -335,7 +340,7 @@ namespace LiftSimulation
                 }
                 return false;
             }
-        }
+        }*/
 
         /* Archiviert: AnyWishes (verweisfrei)
         public bool AnyWishes
