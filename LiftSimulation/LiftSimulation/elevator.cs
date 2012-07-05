@@ -93,7 +93,7 @@ namespace LiftSimulation
             set { _internRequired = value; }
         }
 
-        public bool ReachedHighestOrLowestFloor
+        public bool ReachedEndOfShaft
         {
             get
             { 
@@ -114,7 +114,11 @@ namespace LiftSimulation
             }
         }
 
-        public bool ThereAreWishesOnThisFloor
+        /// <summary>
+        /// Gibt an, ob auf der gegenwärtigen Etage ein interner Wunsch oder ein Wunsch in Fahrtrichtung vorliegt.
+        /// Liegt lediglich ein Wunsch entgegen der Fahrtrichtung vor, lautet das Ergebnis false!
+        /// </summary>
+        public bool TheresAFittingWishOnThisFloor
         {
             get
             {
@@ -140,7 +144,11 @@ namespace LiftSimulation
             }
         }
 
-        public bool ThereAreOppositeWishesOnThisFloor
+        /// <summary>
+        /// Gibt an, ob auf der gegenwärtigen Etage ein interner Wunsch oder ein Wunsch in Fahrtrichtung vorliegt.
+        /// Liegt lediglich ein Wunsch entgegen der Fahrtrichtung vor, lautet das Ergebnis false!
+        /// </summary>
+        public bool TheresAOppositeWisheOnThisFloor
         {
             get
             {
@@ -232,18 +240,24 @@ namespace LiftSimulation
                 {
                     case Defaults.Direction.Upward:
                         {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
+                            if( !ReachedEndOfShaft )
                             {
-                                if( _internRequired[ i ] || _upwardRequired[ i ] || _downwardRequired[ i ] )
-                                    return true;
+                                for( int i = Defaults.FloorToIdx( _currentFloor ) + 1; i < Defaults.Floors; i++ )
+                                {
+                                    if( _internRequired[ i ] || _upwardRequired[ i ] || _downwardRequired[ i ] )
+                                        return true;
+                                }
                             }
                         } break;
                     case Defaults.Direction.Downward:
                         {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
+                            if( !ReachedEndOfShaft )
                             {
-                                if( _internRequired[ i ] || _downwardRequired[ i ] || _upwardRequired[ i ] )
-                                    return true;
+                                for( int i = Defaults.FloorToIdx( _currentFloor ) -1; i >= 0; i-- )
+                                {
+                                    if( _internRequired[ i ] || _downwardRequired[ i ] || _upwardRequired[ i ] )
+                                        return true;
+                                }
                             }
                         } break;
                 }
