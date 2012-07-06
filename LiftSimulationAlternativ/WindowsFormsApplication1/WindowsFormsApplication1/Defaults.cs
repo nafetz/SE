@@ -75,15 +75,6 @@ namespace LiftSimulationAlternativ
         {
             return ( Floor + Basements );
         }
-
-        /// <summary>
-        /// konvertiert anhand Default.Floors und Defaults.Basements 
-        /// Index in nutzbare FloorNr.
-        /// </summary>
-        public static int IdxToFloor( int IDX )
-        {
-               return ( IDX - Basements );
-        }
         #endregion
     }
 }

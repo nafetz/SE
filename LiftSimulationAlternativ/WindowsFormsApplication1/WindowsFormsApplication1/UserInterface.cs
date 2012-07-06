@@ -17,28 +17,26 @@ namespace LiftSimulationAlternativ
         #region Member
 
 
-        private Label[] label_floor_numbers; //Anzeige der Etatennummern
-        private Label[] label_current_position; //Anzeige der aktuellen Etage (gleich in allen Labels)
+        private Label[] label_floor_numbers; //Labels für die Anzeige der Etatennummern
+        private Label[] label_current_position; //Labels für die Anzeige der aktuellen Etage (gleicher Text in allen Labels dieses Arrays )
         private GroupBox[] GroupBox_floors;    //GroupBoxen für die Etagen
-        private PictureBox[] PictureBox_doorstates;
-        private Image image_door1;
-        private Image image_door2;
-        private Image image_upward;
-        private Image image_downward;
-        private Button[] button_intern;
-        private Button[] button_upward;
-        private Button[] button_downward;
+        private PictureBox[] PictureBox_doorstates; //Zeigt Bilder für TürAuf oder TürZu
+        private Image image_door_open; //Bild für TürAuf
+        private Image image_door_close; //Bild f ür Tür Zu
+        private Image image_upward; //Bild für Pfeil nach oben
+        private Image image_downward; //Bild für Pfeil nach unten
+        private Button[] button_intern; //interne Fahrwunschbuttons
+        private Button[] button_upward; //äußere Buttons für Fahrwunsch nach oben
+        private Button[] button_downward; //äußere Buttons für Fahrwunsch nach unten
 
-        private List<bool> intern_requireds;
-        private List<bool> downwards_requireds;
+        private List<bool> intern_requireds; 
+        private List<bool> downwards_requireds; 
         private List<bool> upwards_requireds;
         private int floor;
         private int passengers;
         private bool busy;
         private Defaults.Direction current_direction;
-
-        private Defaults.Door door;
-
+               
         #endregion
 
         #region Konstruktoren
@@ -64,13 +62,12 @@ namespace LiftSimulationAlternativ
             image_downward = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufwaerts.gif");
             image_downward.RotateFlip(RotateFlipType.Rotate180FlipX);
             pictureBox_direction.Image = image_upward;
-            image_door1 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.jpeg");
-            image_door2 = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.jpeg");
+            image_door_open = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_auf.jpeg");
+            image_door_close = Image.FromFile(Defaults.GetProjectPath() + @"\Pictures\Aufzugtueren_zu.jpeg");
             current_direction = Defaults.Direction.Upward;
             floor = 0;
             passengers = 0;
 
-            door = Defaults.Door.Closed;
             busy = false;
             intern_requireds = new List<bool>();
             upwards_requireds = new List<bool>();
@@ -107,7 +104,7 @@ namespace LiftSimulationAlternativ
                 PictureBox_doorstates[i].Height = 30;
                 PictureBox_doorstates[i].Location = new Point(100, 50);
                 PictureBox_doorstates[i].Name = "pictureBox_doorstate" + i;
-                PictureBox_doorstates[i].Image = image_door2;
+                PictureBox_doorstates[i].Image = image_door_close;
                 GroupBox_floors[i].Controls.Add(PictureBox_doorstates[i]);
 
                 label_current_position[i] = new Label();
@@ -354,7 +351,7 @@ namespace LiftSimulationAlternativ
         {
             //  if (floor < 0 || floor > Defaults.Floors) return;
             //if (doorstates[floor].Image == img_door2)
-            PictureBox_doorstates[Defaults.FloorToIdx(floor)].Image = image_door1;
+            PictureBox_doorstates[Defaults.FloorToIdx(floor)].Image = image_door_open;
 
         }
 
@@ -366,14 +363,15 @@ namespace LiftSimulationAlternativ
         {
             //if (floor < 0 || floor > Defaults.Floors) return;
             // if (PictureBox_doorstates[floor].Image == image_door1) 
-            PictureBox_doorstates[Defaults.FloorToIdx(floor)].Image = image_door2;
+            PictureBox_doorstates[Defaults.FloorToIdx(floor)].Image = image_door_close;
 
         }
 
-
+        /// <summary>
+        /// Funktionilitäten beim Öffnen der Tür
+        /// </summary>
         public void openDoor()
         {
-            door = Defaults.Door.Open;
             button_less_passenger.Enabled = true;
             button_more_passenger.Enabled = true;
 
@@ -385,10 +383,13 @@ namespace LiftSimulationAlternativ
             timer_tuer_zu.Start();
         }
 
+        /// <summary>
+        /// Funktionilitäten beim Schließen der Tür
+        /// </summary>
+
         public void closeDoor()
         {
-            door = Defaults.Door.Closed;
-            button_less_passenger.Enabled = false;
+             button_less_passenger.Enabled = false;
             button_more_passenger.Enabled = false;
             gui_close_door();
 
@@ -397,6 +398,9 @@ namespace LiftSimulationAlternativ
             timer_tuer_zu.Stop();
         }
 
+        /// <summary>
+        /// Abarbeitung des Fahrstuhlalgorithmzus
+        /// </summary>
         public void go()
         {
 
@@ -446,6 +450,9 @@ namespace LiftSimulationAlternativ
             else busy = false;
         }
 
+        /// <summary>
+        /// Behandlung von Etagenwechsel
+        /// </summary>
         public void floorchange()
         {
             switch (current_direction)
@@ -458,7 +465,7 @@ namespace LiftSimulationAlternativ
             button_open_door.Enabled = false;
 
             if ((floor == -Defaults.Basements && current_direction == Defaults.Direction.Downward) ||
-                (floor == (Defaults.Floors - Defaults.Basements - 1) && current_direction == Defaults.Direction.Upward))
+                (floor == (Defaults.Floors - Defaults.Basements - 1) && current_direction == Defaults.Direction.Upward)) //ganz oben oder ganz unten --> Richtungswechsel
             {
                 switchDirection();
             }
@@ -467,13 +474,10 @@ namespace LiftSimulationAlternativ
 
 
         }
-
-        public bool highesorlowestfloor()
-        {
-            if (floor < 1 || floor == Defaults.Floors) return true;
-            return false;
-        }
-
+ 
+        /// <summary>
+        /// Richtungswechsel
+        /// </summary>
         public void switchDirection()
         {
             switch (current_direction)
@@ -619,6 +623,10 @@ namespace LiftSimulationAlternativ
             button_intern[Defaults.FloorToIdx(floor)].Enabled = true;
         }
 
+       /// <summary>
+       /// Überprüft ob Überladen
+       /// </summary>
+       /// <returns></returns>
         public bool checkforoverload()
         {
             if (passengers > Defaults.MaximumPassengers) return true;
@@ -629,7 +637,13 @@ namespace LiftSimulationAlternativ
 
 
         #region Button Clicks
-        private void button_more_passenger_Click(object sender, EventArgs e) //+1 Button
+
+        /// <summary>
+        /// Der +1 Button wurde gedrückt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button_more_passenger_Click(object sender, EventArgs e) 
         {
 
             PassengersCount = ++passengers;
@@ -639,7 +653,11 @@ namespace LiftSimulationAlternativ
                 button_less_passenger.Enabled = true;
             }
         }
-
+        /// <summary>
+        /// Der -1 Button wurde gedrückt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_less_passenger_Click(object sender, EventArgs e) //-1 Button
         {
             if (passengers > 0)
@@ -652,6 +670,11 @@ namespace LiftSimulationAlternativ
             }
         }
 
+       /// <summary>
+       /// Notfallbutton wurde gedrückt
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void button_emergency_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Notruf betätigt. Verbindung zur Zentrale wird hergestellt.");
@@ -671,18 +694,32 @@ namespace LiftSimulationAlternativ
             //Syncronize.syncUpwardWishes(Syncronize.To.Elevator);
         }
 
+       /// <summary>
+       /// Türöffnungsbutton wurde gedrückt
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void button_open_door_Click(object sender, EventArgs e)
         {
 
             openDoor();
         }
-
+        /// <summary>
+        /// Türschließungsbutton wurde gedrückt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_close_door_Click(object sender, EventArgs e)
         {
 
             closeDoor();
         }
 
+        /// <summary>
+        /// Innerer Wunsch wurde betätigt
+        /// </summary>
+        /// <param name="sender">Der jeweilige Button</param>
+        /// <param name="e"></param>
         private void ClickInnerButton(object sender, EventArgs e)
         {
             Button currentButton = sender as Button;
@@ -694,6 +731,11 @@ namespace LiftSimulationAlternativ
             }
         }
 
+        /// <summary>
+        /// Äußere Wunsch wurde betätigt
+        /// </summary>
+        /// <param name="sender">Der jeweilige Button wurde betätigt</param>
+        /// <param name="e"></param>
         private void ClickOutsideButton(object sender, EventArgs e)
         {
             Button currentButt = sender as Button;
@@ -709,17 +751,11 @@ namespace LiftSimulationAlternativ
         #endregion
 
 
-        //public void ChangeDirection()
-        //{
-
-        //    image_updward = pictureBox_direction.Image;
-        //    image_updward.RotateFlip(RotateFlipType.Rotate180FlipX);
-        //    pictureBox_direction.Image = image_updward;
-
-
-        //}
-
-
+        /// <summary>
+        /// Türschließungstimer abgelaufen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer_tuer_zu_Tick(object sender, EventArgs e)
         {
             timer_tuer_zu.Stop();
@@ -737,7 +773,11 @@ namespace LiftSimulationAlternativ
         }
 
 
-
+        /// <summary>
+        /// Fahr-Timer abgelaufen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer_fahren_Tick(object sender, EventArgs e)
         {
             timer_fahren.Stop();
@@ -747,18 +787,6 @@ namespace LiftSimulationAlternativ
 
 
         }
-
-        public void show_direction()
-        {
-            pictureBox_direction.Visible = true;
-        }
-
-        public void enableInnerButtons(bool value)
-        {
-            for (int i = 0; i < Defaults.Floors; i++)
-                button_intern[i].Enabled = value;
-        }
-
 
     }
 
