@@ -22,11 +22,7 @@ namespace LiftSimulation
         {
             _elevator = Elevator;
             _ui = UI;
-
-            //_elevator.SetState(Defaults.State.Fixed);
-
             _ui.CurrentPosition = Elevator.CurrentFloor;
-            _ui.enableInnerButtons(false);
         }
 
         #endregion
@@ -36,7 +32,8 @@ namespace LiftSimulation
 
         public static bool TaskStatus
         {
-            get{
+            get
+            {
                 return _elevator.TaskStatus;
             }
 
@@ -54,7 +51,6 @@ namespace LiftSimulation
         public static int SyncFloor()
         {
             return Defaults.FloorToIdx(_elevator.CurrentFloor);
-
         }
 
         public static void SyncUpwardWishes(To who)
@@ -63,7 +59,7 @@ namespace LiftSimulation
             {
                 case To.UI: 
                     {
-                    _ui.UpwardRequired = _elevator.UpwardRequired;
+                        _ui.UpwardRequired = _elevator.UpwardRequired;
                     } break;
                 case To.Elevator: 
                     {
@@ -78,7 +74,7 @@ namespace LiftSimulation
             {
                 case To.UI: 
                     {
-                    _ui.DownwardRequired = _elevator.DownwardRequired;
+                        _ui.DownwardRequired = _elevator.DownwardRequired;
                     } break;
                 case To.Elevator: 
                     {
@@ -109,6 +105,9 @@ namespace LiftSimulation
             {
                 _elevator.Passengers--;
                 _ui.PassengersCount = _elevator.Passengers;
+
+                Log.AddEntry("Person ausgestiegen, Anzahl der Personen im Fahrstuhl: " + _elevator.Passengers);
+
                 _ui.ResetPassengerIO();
                 return false;
             }
@@ -117,6 +116,9 @@ namespace LiftSimulation
             {
                 _elevator.Passengers++;
                 _ui.PassengersCount = _elevator.Passengers;
+
+                Log.AddEntry("Person eingestiegen, Anzahl der Personen im Fahrstuhl: " + _elevator.Passengers);
+
                 _ui.ResetPassengerIO();
                 return false;
             }
@@ -143,9 +145,7 @@ namespace LiftSimulation
 
         public static void SetState(Defaults.State state)
         {
-            //_ui.Doortimer.Start();
-
-            _elevator.SetState(state);        
+            _elevator.SetState(state);
         }
 
         public static void ResetDoorTimer()
@@ -188,16 +188,6 @@ namespace LiftSimulation
         public static void CloseDoor()
         {
             _ui.close_door(Defaults.FloorToIdx(_elevator.CurrentFloor));
-        }
-
-        public static void EnableInnerButtons(bool value)
-        {
-            _ui.enableInnerButtons(true);
-        }
-
-        public static void _logging(Defaults.Logentry entry)
-        {
-            _ui.logging = entry;
         }
 
         #endregion

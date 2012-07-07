@@ -25,14 +25,9 @@ namespace LiftSimulation
             Syncronize.EnablePassengerButtons(true);
 
             elevator.DeleteRequirementsHere();
-
-            //Elevator.DeleteReqiredOppositeDirection();
-            //Elevator.DeleteReqiredDirection();
             
             if (!Syncronize.SyncPassengers()) 
-                Syncronize.ResetDoorTimer(); // Lichtschrake übertreten --> Neustart des Türtimers
-
-            elevator.loggin(); //keep rollin' rollin' rollin rollin' !!!!!!!! ;)
+                Syncronize.ResetDoorTimer();
 
             if (elevator.Passengers <= 0)
                 Syncronize.EnablePassengerMinusButton(false);
@@ -43,7 +38,6 @@ namespace LiftSimulation
             {
                 elevator.SetState(Defaults.State.Overload);
                 Syncronize.StopDoorTimer();
-                // return ;
             }            
         }          
     }
@@ -52,28 +46,26 @@ namespace LiftSimulation
     {
         public override void Loop(Elevator elevator)
         {
-            elevator.loggin();
             Syncronize.CloseDoor();
 
-            if (!elevator.ReachedEndOfShaft) //Kein Randstockwerk --> nur Anhalten wenn Haltewunsch in Fahrtrichtung
+            if (!elevator.ReachedEndOfShaft)
             {
                 if (elevator.TheresAFittingWishOnThisFloor)
                 {
                     elevator.SetState(Defaults.State.FixedOpen);
                     return ;
                 }
-                else if (!elevator.WishesInMyDirection && elevator.TheresAOppositeWisheOnThisFloor) 
+                else if (!elevator.WishesInMyDirection && elevator.TheresAOppositeWishOnThisFloor) 
                 {
                     elevator.SetState(Defaults.State.FixedOpen);
                     return;
                 }
             }
-            else //Randstockwerk --> Wenn er dort hält, kann dies als Grund nur einen Wunsch haben
+            else
             {
                 elevator.SwitchDirection();
 
-                // wenn man pokern will, lässt man die abfrage weg, da er nur dann ganz hoch oder runter fährt, wenn es dort wünsche gibt.
-                if( elevator.TheresAOppositeWisheOnThisFloor || elevator.TheresAFittingWishOnThisFloor ) //wenn die Tür geöffnet wurde, ist der Wunsch erloschen -> darf nicht nochmal öffnen
+                if( elevator.TheresAOppositeWishOnThisFloor || elevator.TheresAFittingWishOnThisFloor )
                 {
                     elevator.SetState(Defaults.State.FixedOpen);
                     return ;
@@ -83,33 +75,26 @@ namespace LiftSimulation
             if( elevator.WishesInMyDirection )
             {
                 elevator.SetState( Defaults.State.Moving );
-                return; //3.7.2012
+                return;
             }
 
-            else if( elevator.TheresAOppositeWisheOnThisFloor )
+            else if( elevator.TheresAOppositeWishOnThisFloor )
             {
                 elevator.SwitchDirection();
                 elevator.SetState( Defaults.State.FixedOpen );
-                return; //3.7.2012
+                return;
             }
+
             else if( elevator.WishesInMyOppositeDirection )
             {
                 elevator.SwitchDirection();
                 elevator.SetState( Defaults.State.Moving );
-                return; //3.7.2012
+                return;
             }
-
-            //else if (Elevator.ReachedHighestOrLowestFloor)
-            //{
-            //    Elevator.SwitchDirection();
-            //    Elevator.SetState(Defaults.State.FixedOpen);
-
-            //}
 
             else
             {
                 elevator.TaskStatus = false;
-                //Elevator.SetState(Defaults.State.FixedOpen);
             }
         }
     }
@@ -123,7 +108,7 @@ namespace LiftSimulation
                 elevator.SwitchDirection();
             }
 
-            if(elevator.TheresAFittingWishOnThisFloor /*|| elevator.ThereAreOppositeWishesOnThisFloor*/)
+            if(elevator.TheresAFittingWishOnThisFloor)
             {
                 elevator.SetState(Defaults.State.FixedClosed);
                 return;
@@ -137,24 +122,21 @@ namespace LiftSimulation
                         {
                             elevator.CurrentFloor++;
                             Syncronize.SyncCurrentFloor();
-                            //Elevator.DeleteReqired();
                         } break;
                     case Defaults.Direction.Downward:
                         {
                             elevator.CurrentFloor--;
                             Syncronize.SyncCurrentFloor();
-                            //Elevator.DeleteReqired();
                         } break;
-                }// switch
+                }
 
-                elevator.loggin();
+                Log.AddEntry("Aktuelle Etage:" + elevator.CurrentFloor.ToString());
                 Syncronize.ResetMoveTimer();
                 Syncronize.ShowDirection();
-                // Elevator.DeleteReqired();
                 return;
             }
 
-            else if( elevator.TheresAOppositeWisheOnThisFloor )
+            else if( elevator.TheresAOppositeWishOnThisFloor )
             {
                 elevator.SwitchDirection();
                 elevator.SetState( Defaults.State.FixedClosed );
@@ -167,7 +149,6 @@ namespace LiftSimulation
     {
         public override void Loop(Elevator Elevator) 
         {
-            Elevator.loggin();
             Syncronize.SyncPassengers();
             if ( !Elevator.CheckForOverload() )
                 Elevator.SetState( Defaults.State.FixedOpen );

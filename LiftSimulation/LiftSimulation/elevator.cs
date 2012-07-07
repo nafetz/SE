@@ -14,18 +14,18 @@ namespace LiftSimulation
 
         // State-Patterns
         private ElevatorState _state;
-        private ElevatorState MOVING = new Moving();                // Quasi - Konstante, da Memberlos
+        private ElevatorState MOVING = new Moving();                // Quasi - Konstante, da memberlos
         private ElevatorState FIXED_OPEN = new FixedOpen();         // s.o.
         private ElevatorState FIXED_CLOSED = new FixedClosed();     // s.o.
         private ElevatorState OVERLOAD = new Overload();            // s.o.
 
-        // Floor-Stuff
+        // Geschossumgebung
         private int _currentFloor;
         List<bool> _upwardRequired = new List<bool>();
         List<bool> _downwardRequired = new List<bool>();
         List<bool> _internRequired = new List<bool>();
 
-        // Riding
+        // Was man zu Fahren braucht
         private Defaults.Direction _direction = Defaults.Direction.Upward;
         private int _passengers = 0;
 
@@ -34,6 +34,7 @@ namespace LiftSimulation
 
 
         #region Konstruktoren
+
         public Elevator()
         {              
             _currentFloor = 0;           
@@ -47,6 +48,7 @@ namespace LiftSimulation
             
             _state = FIXED_CLOSED;
         }
+
         #endregion
 
 
@@ -66,10 +68,10 @@ namespace LiftSimulation
 
         /// <summary>
         /// Nummer der gegenwärtigen Etage.
-        /// Achtung!!! Nicht nullbasiert :
-        /// EG      => 0;
-        /// 1. OG   => 1;
-        /// 2. UG   => -2
+        /// Achtung!!! Nicht nullbasiert
+        /// Erdgeschoss         => 0;
+        /// 1. Obergeschoss     => 1;
+        /// 2. Untergeschoss    => -2
         /// </summary>       
         public int CurrentFloor 
         {
@@ -77,6 +79,7 @@ namespace LiftSimulation
             set { _currentFloor = value; }
         }
 
+        // Wunschlisten
         public List<bool> UpwardRequired 
         {
             get { return _upwardRequired; }
@@ -145,10 +148,10 @@ namespace LiftSimulation
         }
 
         /// <summary>
-        /// Gibt an, ob auf der gegenwärtigen Etage ein interner Wunsch oder ein Wunsch in Fahrtrichtung vorliegt.
-        /// Liegt lediglich ein Wunsch entgegen der Fahrtrichtung vor, lautet das Ergebnis false!
+        /// Gibt an, ob auf der gegenwärtigen Etage ein Wunsch entgegen der Fahrtrichtung vorliegt.
+        /// Liegt kein Wunsch entgegen der Fahrtrichtung vor, lautet das Ergebnis false!
         /// </summary>
-        public bool TheresAOppositeWisheOnThisFloor
+        public bool TheresAOppositeWishOnThisFloor
         {
             get
             {
@@ -170,66 +173,8 @@ namespace LiftSimulation
             }
         }
 
-        /* Archiviert: ThereAreWishesInMyDirection
-        public bool ThereAreWishesInMyDirection
-        {
-            get
-            {
-                switch (_direction)
-                {
-                    case Defaults.Direction.Upward:
-                        {
-                            for ( int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++ )
-                            {
-                                if ( _internRequired[i]  || _upwardRequired[i] ) 
-                                    return true;
-                            }
-                        } break;
-                    case Defaults.Direction.Downward:
-                        {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
-                            {
-                                if( _internRequired[ i ] || _downwardRequired[ i ] )
-                                    return true;
-                            }
-                        } break;
-                }
-                return false;
-            }
-        }
-*/
-
-        /* Archiviert: ThereAreWishesInTheDirectionWhichIsNotMyDirection
-        public bool ThereAreWishesInTheDirectionWhichIsNotMyDirection
-        {
-            get
-            {
-                switch (_direction)
-                {
-                    case Defaults.Direction.Upward:
-                        {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
-                            {
-                                if (_internRequired[i] || _downwardRequired[i])
-                                    return true;
-                            }
-                        } break;
-                    case Defaults.Direction.Downward:
-                        {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
-                            {
-                                if (_internRequired[i] || _upwardRequired[i] )
-                                    return true;
-                            }
-                        } break;
-                }
-                return false;
-            }
-        }
-         * */
-
         /// <summary>
-        /// Wünsche in folgenen Etagen entlang der Fahrtrichtung
+        /// Gibt an, ob Wünsche in den folgenen Etagen entlang der Fahrtrichtung vorliegen
         /// Bsp: Hochfahren und weiter oben der Wunsch nach oben zu fahren
         /// </summary>
         public bool WishesInMyDirection
@@ -265,40 +210,8 @@ namespace LiftSimulation
             }
         }
 
-        /*Archiviert: OppositeDirectionWishesInMyDirection
         /// <summary>
-        /// Wünsche  in folgenden Etagen entgegen der Fahrtrichtung
-        ///  Bsp: Hochfahren und weiter oben der Wunsch nach unten zu fahren
-        /// </summary>
-        public bool OppositeDirectionWishesInMyDirection
-        {
-            get
-            {
-                switch (_direction)
-                {
-                    case Defaults.Direction.Upward:
-                        {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
-                            {
-                                if (_downwardRequired[i])
-                                    return true;
-                            }
-                        } break;
-                    case Defaults.Direction.Downward:
-                        {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
-                            {
-                                if (_upwardRequired[i])
-                                    return true;
-                            }
-                        } break;
-                }
-                return false;
-            }
-        }*/
-
-        /// <summary>
-        /// Gibt an, ob wünsche in den Geschossen vorliegen, die nicht in Fahrtrichtung liegen.
+        /// Gibt an, ob Wünsche in den Geschossen vorliegen, die nicht in Fahrtrichtung liegen.
         /// </summary>
         public bool WishesInMyOppositeDirection
         {
@@ -327,47 +240,6 @@ namespace LiftSimulation
             }
         }
 
-
-        /* Archiviert: DirectionWishesInMyOppositeDirection
-        public bool DirectionWishesInMyOppositeDirection
-        {
-            get
-            {
-                switch (_direction)
-                {
-                    case Defaults.Direction.Upward:
-                        {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i >= 0; i--)
-                            {
-                                if (_upwardRequired[i])
-                                    return true;
-                            }
-                        } break;
-                    case Defaults.Direction.Downward:
-                        {
-                            for (int i = Defaults.FloorToIdx(_currentFloor); i < Defaults.Floors; i++)
-                            {
-                                if (_downwardRequired[i])
-                                    return true;
-                            }
-                        } break;
-                }
-                return false;
-            }
-        }*/
-
-        /* Archiviert: AnyWishes (verweisfrei)
-        public bool AnyWishes
-        {
-            get
-            {
-                if (DirectionWishesInMyDirection || DirectionWishesInMyOppositeDirection || OppositeDirectionWishesInMyDirection || OppositeDirectionWishesInMyOppositeDirection)
-                    return true;
-                return false;
-
-            }
-        }      */
-
         public Defaults.Direction Direction
         {
             get { return _direction; }
@@ -394,15 +266,17 @@ namespace LiftSimulation
             switch ( newState )
             {
                 case Defaults.State.Moving      : _state = MOVING;       break;
-                case Defaults.State.FixedOpen  : _state = FIXED_OPEN;    break;
+                case Defaults.State.FixedOpen   : _state = FIXED_OPEN;    break;
                 case Defaults.State.FixedClosed : _state = FIXED_CLOSED;  break;
                 case Defaults.State.Overload    : _state = OVERLOAD;     break;
             }
+
+            Log.AddEntry("Neuer Zustand: " + newState.ToString());
             this._state.Loop(this);
         }
 
         /// <summary>
-        /// überprüft, ob die Anzahl der Passagiere über dem zulässigen Maximum liegt
+        /// Überprüft, ob die Anzahl der Passagiere über dem zulässigen Maximum liegt
         /// </summary>
         /// <returns>true, wenn Fahrstuhl überladen, sonst false</returns>
         public bool CheckForOverload()
@@ -414,7 +288,7 @@ namespace LiftSimulation
         }
 
         /// <summary>
-        /// ändert Fahrtrichtung ins entgegengesetzte
+        /// Ändert die Fahrtrichtung.
         /// </summary>
         public void SwitchDirection()
         {
@@ -433,56 +307,9 @@ namespace LiftSimulation
             }
 
             Syncronize.SwitchDirection();
+            Log.AddEntry("Richtungswechsel, neue Richtung: " + _direction.ToString());
         }
 
-        /* Archiviert: DeleteReqiredDirection()
-         * public void DeleteReqiredDirection()
-        {
-            int i = Defaults.FloorToIdx( _currentFloor );
-
-            switch (_direction)
-            {
-                case Defaults.Direction.Upward:
-                    {
-                        _upwardRequired[ i ] = false;
-                        Syncronize.syncUpwardWishes(Syncronize.To.UI);
-                        break;
-                    }
-                case Defaults.Direction.Downward:
-                    {
-                        _downwardRequired[ i ] = false;
-                        Syncronize.syncDownwardWishes( Syncronize.To.UI );
-                        break;
-                    }
-            }
-            _internRequired[ i ] = false;
-            Syncronize.syncinnerWishes( Syncronize.To.UI );            
-        }*/
-
-        /* Archiviert: DeleteReqiredOppositeDirection()
-        public void DeleteReqiredOppositeDirection()
-        {
-            int i = Defaults.FloorToIdx(_currentFloor);
-
-            switch (_direction)
-            {
-                case Defaults.Direction.Downward:
-                    {
-                        _upwardRequired[i] = false;
-                         Syncronize.syncDownwardWishes(Syncronize.To.UI);
-                        break;
-                    }
-                case Defaults.Direction.Upward:
-                    {
-                        _downwardRequired[i] = false;
-                         Syncronize.syncUpwardWishes( Syncronize.To.UI );
-                        break;
-                    }
-            }
-            _internRequired[i] = false;
-           Syncronize.syncinnerWishes( Syncronize.To.UI );            
-        }*/
-        
         public void DeleteRequirementsHere()
         {
             int i = Defaults.FloorToIdx( _currentFloor );
@@ -495,27 +322,7 @@ namespace LiftSimulation
             Syncronize.SyncDownwardWishes( Syncronize.To.UI );
             Syncronize.SyncInnerWishes( Syncronize.To.UI );
         }
-
-        public void loggin()
-        {
-            Defaults.Logentry entry;
-            if( CurrentState == MOVING )
-            {
-                entry = new Defaults.Logentry( _direction, _currentFloor, _passengers, Defaults.State.Moving );
-            }
-            else if( CurrentState == FIXED_CLOSED )
-            {
-                entry = new Defaults.Logentry( _direction, _currentFloor, _passengers, Defaults.State.FixedClosed );
-            }
-
-            else if( CurrentState == FIXED_OPEN )
-            {
-                entry = new Defaults.Logentry( _direction, _currentFloor, _passengers, Defaults.State.FixedOpen );
-            }
-            else entry = new Defaults.Logentry( _direction, _currentFloor, _passengers, Defaults.State.Overload );
-
-            Syncronize._logging( entry );
-        }         
+      
 
         #endregion        
     }

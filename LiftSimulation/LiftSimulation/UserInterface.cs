@@ -93,7 +93,7 @@ namespace LiftSimulation
                 button_intern[i].Location = new Point(20, Defaults.Floors*45 - 45 * i);
                 button_intern[i].Height = 40;
                 button_intern[i].Width = 100;
-                button_intern[i].Name = "Button_int"+i;
+                button_intern[i].Name = "Button_int_"+i;
                 switch (i){               
                     case 0: button_intern[i].Text = "1. UG"; break;
                     case 1: button_intern[i].Text = "EG"; break;
@@ -120,7 +120,7 @@ namespace LiftSimulation
                     button_downward[i].Height = 30;
                     button_downward[i].Width = 70;
                     button_downward[i].Text = "Abwärts";
-                    button_downward[i].Name = "Button_up_" + i;
+                    button_downward[i].Name = "Button_down_" + i;
                     groupBox_Floors[i].Controls.Add(button_downward[i]);
                     button_downward[i].Click += new System.EventHandler(ClickOutsideButton);                 
                 }                                      
@@ -288,67 +288,20 @@ namespace LiftSimulation
                 {
                     if (i == pos)
                     {
-                        groupBox_Floors[i].BackColor = Color.White;
-                        //required[i].BackColor = Color.White;
+                        groupBox_Floors[i].BackColor = Color.WhiteSmoke;
                     }
                     else
                     {
                         groupBox_Floors[i].BackColor = System.Drawing.SystemColors.Control;
-                        //required[i].BackColor = System.Drawing.SystemColors.Control;
                     }
                 }
             }
         }
-
-        /*  Kein Verweis gefunden
-        /// <summary>
-        /// Wert zur Anzeige der aktuellen Richtung
-        /// Wird das überhaupt gebraucht?
-        /// </summary>
-        public Defaults.Direction Direction
-        {
-            set
-            {
-                Defaults.Direction direction = value;
-                switch (direction)
-                {
-                    case Defaults.Direction.Downward:
-                        {
-                            pictureBox_direction.Hide();
-                            // dein Code hier
-                        } break;
-                    case Defaults.Direction.Upward:
-                        {
-                            // und hier
-                        } break;
-                }
-            }
-        }
-        */
 
         public Defaults.MoreOrLess PassengersIO
         {
             get { return _passengersIO; }
             set { _passengersIO = value; }
-        }
-
-        /// <summary>
-        /// Anzeige der aktuellen Parameter im DataGridView
-        /// </summary>
-        public Defaults.Logentry logging{
-            set
-            {
-
-                int pos = dataGridView_log.RowCount + 1;
-              /*  dataGridView_log.Rows.Add(pos.ToString(),
-                                       value._direction.ToString(),
-                                       value._floor.ToString(),
-                                       value._passenger.ToString(),
-                                       value._state.ToString()
-                    );
-                dataGridView_log.FirstDisplayedCell = dataGridView_log.Rows[dataGridView_log.RowCount - 1].Cells[0];
-                */
-            }
         }
 
         public Button PlusPassengersButton
@@ -388,7 +341,6 @@ namespace LiftSimulation
         public void open_door(int floor)
         {
             if (floor < 0 || floor > Defaults.Floors) return;
-            //if (doorstates[floor].Image == img_door2)
                 pictBox_DoorStates[floor].Image = img_door1;            
         }
 
@@ -413,20 +365,22 @@ namespace LiftSimulation
             Button currentButton = sender as Button;
             currentButton.Enabled = false;
 
+            Log.AddEntry("Button im Fahrstuhl betätigt: " + currentButton.Name.ToString());
+
             Syncronize.SyncInnerWishes( Syncronize.To.Elevator );
-            BusyCheck();
-            // Syncronize.executeLoop();            
+            BusyCheck();          
         }
 
         private void ClickOutsideButton( object sender, EventArgs e )
         {
-            Button currentButt = sender as Button;
-            currentButt.Enabled = false;
+            Button currentButton = sender as Button;
+            currentButton.Enabled = false;
+
+            Log.AddEntry("Äußerer Button betätigt: " + currentButton.Name.ToString());
 
             Syncronize.SyncDownwardWishes( Syncronize.To.Elevator );
             Syncronize.SyncUpwardWishes( Syncronize.To.Elevator );
             BusyCheck();
-            //Syncronize.executeLoop();
         }
 
         private void button_more_passenger_Click( object sender, EventArgs e ) //+1 Button
@@ -434,8 +388,6 @@ namespace LiftSimulation
             _passengersIO = Defaults.MoreOrLess.More;
             Syncronize.ExecuteLoop();
             _passengersIO = Defaults.MoreOrLess.Neither;
-            //Defaults.ManualResetEvent.Set();
-            // Syncronize.DoorTimerReset();
         }
 
         private void button_less_passenger_Click( object sender, EventArgs e ) //-1 Button
@@ -443,27 +395,12 @@ namespace LiftSimulation
             _passengersIO = Defaults.MoreOrLess.Less;
             Syncronize.ExecuteLoop();
             _passengersIO = Defaults.MoreOrLess.Neither;
-            //Syncronize.DoorTimerReset();
-            //Defaults.ManualResetEvent.Set();
         }
 
         private void button_emergency_Click( object sender, EventArgs e )
         {
-            MessageBox.Show( "Notruf betätigt. Fahrstuhl kommt an der nächstbesten Etage zum Stillstand. Fahrwünsche werden gelöscht." );
-
-            /********************************************
-             *           das Logging fehlt              *
-             ********************************************/           
-
-            for( int i = 0; i < Defaults.Floors; i++ )
-            {
-                button_intern[ i ].Enabled = true;
-                if( i != 0 ) button_downward[ i ].Enabled = true;
-                if( i != Defaults.Floors - 1 ) button_upward[ i ].Enabled = true;
-            }
-            Syncronize.SyncDownwardWishes( Syncronize.To.Elevator );
-            Syncronize.SyncInnerWishes( Syncronize.To.Elevator );
-            Syncronize.SyncUpwardWishes( Syncronize.To.Elevator );
+            MessageBox.Show( "Notruf betätigt. Sprechverbindung zur Zentrale wird aufgebaut." );
+            Log.AddEntry("Notruf betätigt.");
         }
 
         private void button_open_door_Click( object sender, EventArgs e )
@@ -471,19 +408,10 @@ namespace LiftSimulation
             button_less_passenger.Enabled = true;
             button_more_passenger.Enabled = true;
             Syncronize.ResetDoorTimer();
-            Syncronize.SetState( Defaults.State.FixedOpen ); //ggf. überdenken
+            Syncronize.SetState( Defaults.State.FixedOpen );
             open_door( Syncronize.SyncFloor() );
         }
 
-        private void button_close_door_Click( object sender, EventArgs e )
-        {
-            // Alles Entfernt, da der Button nur Placebo sein soll..
-
-            //button_less_passenger.Enabled = false;
-            //button_more_passenger.Enabled = false;
-            //Syncronize.DoorTimerStop();
-            //Syncronize.SetState(Defaults.State.FixedClosed);
-        }
         #endregion
 
         public void ChangeDirection()
@@ -520,14 +448,17 @@ namespace LiftSimulation
         }
 
         public void show_direction() 
-        { pictureBox_direction.Visible = true; }
-
-        public void enableInnerButtons( bool value )
+        { 
+            pictureBox_direction.Visible = true; 
+        }
+        
+        private void UserInterface_FormClosing(object sender, FormClosingEventArgs e)
         {
-            for( int i = 0; i < Defaults.Floors; i++ )
-                button_intern[ i ].Enabled = value;
+            Log.Close();
         }
 
         #endregion
+
+       
     }
 }

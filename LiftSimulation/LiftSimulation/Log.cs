@@ -10,39 +10,10 @@ namespace LiftSimulation
     {
         #region Member
 
-        private static string _path;
-        private static StreamWriter _logger;
+        private static string _path = System.IO.Path.GetTempPath();
+        private static StreamWriter _logger = null;
 
-        #endregion
-
-
-        #region Konstruktor
-
-        //public Log()
-        //{
-        //    _path = System.IO.Path.GetTempPath();
-
-        //    if( !File.Exists( _path + @"\Elevator_log.txt" ) )
-        //    {
-        //        File.Create( _path + @"\Elevator_log.txt" );
-        //    }
-
-        //    _logger = new StreamWriter( _path + @"\Elevator_log.txt" );
-
-        //    _logger.WriteLine( "\n\n" );
-        //    _logger.WriteLine( "Begin New Log of " + DateTime.Now + "." );
-        //}
-
-        #endregion
-
-
-        #region Destruktor
-
-        //~Log()
-        //{
-        //    _logger.WriteLine( "End of Log." );
-        //    _logger.Close();
-        //}
+        private static bool firstUsage = true;
 
         #endregion
 
@@ -55,9 +26,23 @@ namespace LiftSimulation
         /// <param name="entry">hinzuzufügender Eintrag</param>
         public static void AddEntry( string entry )
         {
-            _logger.WriteLine( entry );
+            if (firstUsage)
+            {
+                _logger = new StreamWriter(_path + @"\Elevator_log_" + DateTime.Now.ToString().Replace(".","_").Replace(" ", "_").Replace(":","_") + ".txt");
+                _logger.WriteLine("Logfile vom " + DateTime.Now);
+                _logger.WriteLine("Tester: " + System.Environment.UserName);
+                _logger.WriteLine("");
+                firstUsage = false;
+            }
+
+            _logger.WriteLine( DateTime.Now.ToString().Substring(11) + " Uhr: " + entry );
         }
 
+        public static void Close()
+        {
+            if(_logger!=null)
+                _logger.Close();
+        }
         #endregion
     }
 }
