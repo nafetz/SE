@@ -22,27 +22,6 @@ namespace LiftSimulation
         #endregion
 
 
-        #region interne Klassen/Structs
-
-        public struct Logentry
-        {
-            public Direction _direction;
-            public int _floor;
-            public int _passenger;
-            public State _state;
-
-            public Logentry(Direction d, int f, int p, State s)
-            {
-                _direction = d;
-                _floor = f;
-                _passenger = p;
-                _state = s;
-            }
-        }
-        
-        #endregion
-
-
         #region Properties
 
         /// <summary>
@@ -62,7 +41,7 @@ namespace LiftSimulation
         }
 
         /// <summary>
-        /// Maximal zulässige Anzahl von Fahrgästen in einem Fahrstuhl
+        /// Maximal zulässige Anzahl von Fahrgästen im Fahrstuhl
         /// </summary>
         public static int MaximumPassengers
         {
@@ -75,7 +54,7 @@ namespace LiftSimulation
         #region Methoden
 
         /// <summary>
-        /// Ermittelt den Pfad zum Projektverzeichnis
+        /// Gitb den Pfad zum Projektverzeichnis zurück
         /// </summary>
         /// <returns>Pfad des VS-Projektes</returns>
         public static string GetProjectPath()
@@ -90,7 +69,7 @@ namespace LiftSimulation
         }
 
         /// <summary>
-        /// konvertiert anhand Default.Floors und Defaults.Basements 
+        /// Konvertiert anhand Default.Floors und Defaults.Basements 
         /// FloorNr. in nutzbaren List/Array-Index
         /// </summary>
         public static int FloorToIdx( int floor )
@@ -98,14 +77,6 @@ namespace LiftSimulation
             return ( floor + _numberOfBasementFloors );
         }
 
-        /// <summary>
-        /// konvertiert anhand Default.Floors und Defaults.Basements 
-        /// Index in nutzbare FloorNr.
-        /// </summary>
-        public static int IdxToFloor( int idx )
-        {
-               return ( idx - _numberOfBasementFloors );
-        }
         #endregion
     }
 }
