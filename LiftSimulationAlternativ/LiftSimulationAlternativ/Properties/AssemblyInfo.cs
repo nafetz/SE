@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // Allgemeine Informationen über eine Assembly werden über die folgenden 
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
-[assembly: AssemblyTitle("WindowsFormsApplication1")]
+[assembly: AssemblyTitle("LiftSimulationAlternativ")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WindowsFormsApplication1")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCompany("HTW FBI")]
+[assembly: AssemblyProduct("LiftSimulationAlternativ")]
+[assembly: AssemblyCopyright("Copyright © HTW FBI 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Die folgende GUID bestimmt die ID der Typbibliothek, wenn dieses Projekt für COM verfügbar gemacht wird
-[assembly: Guid("b218795e-0651-4123-895f-cce3e267ded6")]
+[assembly: Guid("8ed58981-4807-494a-9c80-6f6b10a5c966")]
 
 // Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 //
