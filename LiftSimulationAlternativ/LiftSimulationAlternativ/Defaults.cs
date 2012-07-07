@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 #endregion
 
-namespace LiftSimulationAlternativ
+namespace Alternativ
 {
     public static class Defaults
     {
@@ -14,7 +14,7 @@ namespace LiftSimulationAlternativ
         private static int _numberOfFloors = 6;
         private static int _numberOfBasementFloors = 1;
         private static int _maxNumberOfPassengers = 10;
-        public  enum Direction { Upward = 1, Downward };
+        public enum Direction { Upward = 1, Downward };
         public enum Door { Open = 1, Closed };
 
         #endregion
@@ -32,7 +32,7 @@ namespace LiftSimulationAlternativ
         /// <summary>
         /// Anzahl Kellergeschosse
         /// </summary>
-        public static int Basements 
+        public static int Basements
         {
             get { return _numberOfBasementFloors; }
         }
@@ -42,7 +42,7 @@ namespace LiftSimulationAlternativ
         /// </summary>
         public static int MaximumPassengers
         {
-            get { return _maxNumberOfPassengers; } 
+            get { return _maxNumberOfPassengers; }
         }
 
 
@@ -71,9 +71,9 @@ namespace LiftSimulationAlternativ
         /// konvertiert anhand Default.Floors und Defaults.Basements 
         /// FloorNr. in nutzbaren List/Array-Index
         /// </summary>
-        public static int FloorToIdx( int Floor )
+        public static int FloorToIdx(int Floor)
         {
-            return ( Floor + Basements );
+            return (Floor + Basements);
         }
         #endregion
     }

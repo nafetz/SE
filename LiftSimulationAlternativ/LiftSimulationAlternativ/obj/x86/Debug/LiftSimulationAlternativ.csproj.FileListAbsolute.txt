@@ -1,0 +1,9 @@
+c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\LiftSimulationAlternativ.Properties.Resources.resources
+c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\bin\Debug\LiftSimulationAlternativ.exe
+c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\bin\Debug\LiftSimulationAlternativ.pdb
+c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\LiftSimulationAlternativ.exe
+c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\LiftSimulationAlternativ.pdb
+c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\Alternativ.UserInterface.resources

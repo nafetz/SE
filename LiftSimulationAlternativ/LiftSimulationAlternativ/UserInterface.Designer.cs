@@ -1,4 +1,6 @@
-﻿namespace LiftSimulationAlternativ
+﻿
+
+namespace Alternativ
 {
     partial class UserInterface
     {
@@ -33,7 +35,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserInterface));
             this.groupBox_outsite = new System.Windows.Forms.GroupBox();
             this.groupBox_inside = new System.Windows.Forms.GroupBox();
-            this.dataGridView_log = new System.Windows.Forms.DataGridView();
             this.Eintrag = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Richtung = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Etage = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,7 +58,6 @@
             this.timer_tuer_zu = new System.Windows.Forms.Timer(this.components);
             this.timer_fahren = new System.Windows.Forms.Timer(this.components);
             this.groupBox_inside.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_log)).BeginInit();
             this.groupBox_control_inside.SuspendLayout();
             this.groupBox_passengers_control.SuspendLayout();
             this.groupBox_door_control.SuspendLayout();
@@ -77,7 +77,6 @@
             // 
             // groupBox_inside
             // 
-            this.groupBox_inside.Controls.Add(this.dataGridView_log);
             this.groupBox_inside.Controls.Add(this.groupBox_control_inside);
             this.groupBox_inside.Location = new System.Drawing.Point(480, 10);
             this.groupBox_inside.Name = "groupBox_inside";
@@ -85,31 +84,9 @@
             this.groupBox_inside.TabIndex = 1;
             this.groupBox_inside.TabStop = false;
             this.groupBox_inside.Text = "Lift-Steuerung innen";
-            // 
-            // dataGridView_log
-            // 
-            this.dataGridView_log.AllowUserToAddRows = false;
-            this.dataGridView_log.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle2.NullValue = "-";
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_log.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView_log.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridView_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView_log.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_log.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Eintrag,
-            this.Richtung,
-            this.Etage,
-            this.Passagierer,
-            this.Status});
-            this.dataGridView_log.GridColor = System.Drawing.SystemColors.Control;
-            this.dataGridView_log.Location = new System.Drawing.Point(21, 572);
-            this.dataGridView_log.Margin = new System.Windows.Forms.Padding(2);
-            this.dataGridView_log.Name = "dataGridView_log";
-            this.dataGridView_log.Size = new System.Drawing.Size(390, 153);
-            this.dataGridView_log.TabIndex = 1;
+
+
+
             // 
             // Eintrag
             // 
@@ -140,12 +117,7 @@
             this.Passagierer.Name = "Passagierer";
             this.Passagierer.ReadOnly = true;
             this.Passagierer.Width = 75;
-            // 
-            // Status
-            // 
-            this.Status.HeaderText = "Status";
-            this.Status.Name = "Status";
-            this.Status.ReadOnly = true;
+
             // 
             // groupBox_control_inside
             // 
@@ -234,7 +206,6 @@
             this.button_close_door.TabIndex = 2;
             this.button_close_door.Text = "> <";
             this.button_close_door.UseVisualStyleBackColor = true;
-            this.button_close_door.Click += new System.EventHandler(this.button_close_door_Click);
             // 
             // button_open_door
             // 
@@ -327,7 +298,6 @@
             this.Name = "UserInterface";
             this.Text = "Lift - Simulation";
             this.groupBox_inside.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_log)).EndInit();
             this.groupBox_control_inside.ResumeLayout(false);
             this.groupBox_passengers_control.ResumeLayout(false);
             this.groupBox_passengers_control.PerformLayout();
