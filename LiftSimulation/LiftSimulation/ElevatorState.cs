@@ -9,16 +9,16 @@ namespace LiftSimulation
 {
     #region Zustandsklassen
 
-    class ElevatorState
+    interface ElevatorState
     {
-        public virtual void Loop(Elevator Elevator) { }
+        void Loop( Elevator Elevator );
     }
 
     #region Konkrete Zustände
 
     class FixedOpen : ElevatorState
     {
-        public override void Loop( Elevator elevator ) 
+        public void Loop( Elevator elevator ) 
         {
             Syncronize.OpenDoor();
             Syncronize.ResetDoorTimer();
@@ -44,18 +44,18 @@ namespace LiftSimulation
 
     class FixedClosed : ElevatorState
     {
-        public override void Loop(Elevator elevator)
+        public void Loop(Elevator elevator)
         {
             Syncronize.CloseDoor();
 
             if (!elevator.ReachedEndOfShaft)
             {
-                if (elevator.TheresAFittingWishOnThisFloor)
+                if (elevator.FittingWishOnThisFloor)
                 {
                     elevator.SetState(Defaults.State.FixedOpen);
                     return ;
                 }
-                else if (!elevator.WishesInMyDirection && elevator.TheresAOppositeWishOnThisFloor) 
+                else if (!elevator.WishesInMyDirection && elevator.OppositeWishOnThisFloor) 
                 {
                     elevator.SetState(Defaults.State.FixedOpen);
                     return;
@@ -65,7 +65,7 @@ namespace LiftSimulation
             {
                 elevator.SwitchDirection();
 
-                if( elevator.TheresAOppositeWishOnThisFloor || elevator.TheresAFittingWishOnThisFloor )
+                if( elevator.OppositeWishOnThisFloor || elevator.FittingWishOnThisFloor )
                 {
                     elevator.SetState(Defaults.State.FixedOpen);
                     return ;
@@ -78,7 +78,7 @@ namespace LiftSimulation
                 return;
             }
 
-            else if( elevator.TheresAOppositeWishOnThisFloor )
+            else if( elevator.OppositeWishOnThisFloor )
             {
                 elevator.SwitchDirection();
                 elevator.SetState( Defaults.State.FixedOpen );
@@ -101,14 +101,14 @@ namespace LiftSimulation
 
     class Moving : ElevatorState 
     {
-        public override void Loop(Elevator elevator) 
+        public void Loop(Elevator elevator) 
         {
             if( elevator.ReachedEndOfShaft )
             {
                 elevator.SwitchDirection();
             }
 
-            if(elevator.TheresAFittingWishOnThisFloor)
+            if(elevator.FittingWishOnThisFloor)
             {
                 elevator.SetState(Defaults.State.FixedClosed);
                 return;
@@ -136,7 +136,7 @@ namespace LiftSimulation
                 return;
             }
 
-            else if( elevator.TheresAOppositeWishOnThisFloor )
+            else if( elevator.OppositeWishOnThisFloor )
             {
                 elevator.SwitchDirection();
                 elevator.SetState( Defaults.State.FixedClosed );
@@ -147,7 +147,7 @@ namespace LiftSimulation
 
     class Overload : ElevatorState 
     {
-        public override void Loop(Elevator Elevator) 
+        public void Loop(Elevator Elevator) 
         {
             Syncronize.SyncPassengers();
             if ( !Elevator.CheckForOverload() )

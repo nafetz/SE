@@ -238,12 +238,12 @@
             // timer_tuer_zu
             // 
             this.timer_tuer_zu.Interval = 5000;
-            this.timer_tuer_zu.Tick += new System.EventHandler(this.timer_tuer_zu_Tick);
+            this.timer_tuer_zu.Tick += new System.EventHandler(this.TickTimerCloseDoor);
             // 
             // timer_fahren
             // 
             this.timer_fahren.Interval = 2000;
-            this.timer_fahren.Tick += new System.EventHandler(this.timer_fahren_Tick);
+            this.timer_fahren.Tick += new System.EventHandler(this.TickTimerGo);
             // 
             // UserInterface
             // 
@@ -255,7 +255,7 @@
             this.MinimumSize = new System.Drawing.Size(1000, 800);
             this.Name = "UserInterface";
             this.Text = "Lift - Simulation";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserInterface_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.groupBox_inside.ResumeLayout(false);
             this.groupBox_control_inside.ResumeLayout(false);
             this.groupBox_passengers_control.ResumeLayout(false);

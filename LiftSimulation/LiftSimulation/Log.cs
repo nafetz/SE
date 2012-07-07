@@ -13,7 +13,7 @@ namespace LiftSimulation
         private static string _path = System.IO.Path.GetTempPath();
         private static StreamWriter _logger = null;
 
-        private static bool firstUsage = true;
+        private static bool _firstUsage = true;
 
         #endregion
 
@@ -26,13 +26,13 @@ namespace LiftSimulation
         /// <param name="entry">hinzuzufügender Eintrag</param>
         public static void AddEntry( string entry )
         {
-            if (firstUsage)
+            if (_firstUsage)
             {
                 _logger = new StreamWriter(_path + @"\Elevator_log_" + DateTime.Now.ToString().Replace(".","_").Replace(" ", "_").Replace(":","_") + ".txt");
                 _logger.WriteLine("Logfile vom " + DateTime.Now);
                 _logger.WriteLine("Tester: " + System.Environment.UserName);
                 _logger.WriteLine("");
-                firstUsage = false;
+                _firstUsage = false;
             }
 
             _logger.WriteLine( DateTime.Now.ToString().Substring(11) + " Uhr: " + entry );

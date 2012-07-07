@@ -74,6 +74,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="cd_ElevatorState.cd" />
+    <None Include="cd_Log.cd" />
+    <None Include="cd_Defaults.cd" />
+    <None Include="cd_Elevator.cd" />
+    <None Include="cd_Synchronize.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

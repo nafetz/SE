@@ -134,13 +134,13 @@ namespace LiftSimulation
 
         public static void EnablePassengerButtons(bool value)
         {
-            _ui.PlusPassengersButton.Enabled = value;
-            _ui.MinusPassengersButton.Enabled = value;
+            _ui.PlusPassengerButton.Enabled = value;
+            _ui.MinusPassengerButton.Enabled = value;
         }
 
         public static void EnablePassengerMinusButton(bool value)
         {
-            _ui.MinusPassengersButton.Enabled = value;
+            _ui.MinusPassengerButton.Enabled = value;
         }
 
         public static void SetState(Defaults.State state)
@@ -150,28 +150,28 @@ namespace LiftSimulation
 
         public static void ResetDoorTimer()
         {
-            _ui.Doortimer.Stop();
-            _ui.Doortimer.Start();
+            _ui.DoorTimer.Stop();
+            _ui.DoorTimer.Start();
         }
 
         public static void StopDoorTimer()
         {
-            _ui.Doortimer.Stop();
+            _ui.DoorTimer.Stop();
         }
 
         public static void ResetMoveTimer()
         {
-            _ui.Movetimer.Start();
+            _ui.MoveTimer.Start();
         }
 
         public static void SwitchDirection()
         {
-            _ui.ChangeDirection();
+            _ui.SwitchDirection();
         }        
 
         public static void ShowDirection()
         {
-            _ui.show_direction();
+            _ui.ShowDirection();
         }
 
         public static void ExecuteLoop()
@@ -182,12 +182,12 @@ namespace LiftSimulation
 
         public static void OpenDoor()
         {
-            _ui.open_door(Defaults.FloorToIdx(_elevator.CurrentFloor));
+            _ui.OpenDoor(Defaults.FloorToIdx(_elevator.CurrentFloor));
         }
 
         public static void CloseDoor()
         {
-            _ui.close_door(Defaults.FloorToIdx(_elevator.CurrentFloor));
+            _ui.CloseDoor(Defaults.FloorToIdx(_elevator.CurrentFloor));
         }
 
         #endregion

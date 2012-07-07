@@ -37,7 +37,7 @@ namespace LiftSimulation
         public UserInterface()
         {
             InitializeComponent();  //Intialisierung der statisch erzeugten Formularelemente
-            ChangeDirection();            
+            SwitchDirection();            
             _passengersIO = Defaults.MoreOrLess.Neither;
 
             groupBox_Floors = new GroupBox[Defaults.Floors];
@@ -304,19 +304,19 @@ namespace LiftSimulation
             set { _passengersIO = value; }
         }
 
-        public Button PlusPassengersButton
+        public Button PlusPassengerButton
         {
             get { return button_more_passenger; }
             set { button_more_passenger = value; }
         }
 
-        public Button MinusPassengersButton
+        public Button MinusPassengerButton
         {
             get { return button_less_passenger; }
             set { button_less_passenger = value; }
         }
 
-        public Timer Doortimer
+        public Timer DoorTimer
         {
 
             get { return timer_tuer_zu; }
@@ -324,7 +324,7 @@ namespace LiftSimulation
 
         }
 
-        public Timer Movetimer
+        public Timer MoveTimer
         {
             get { return timer_fahren; }
             set { timer_fahren = value; }
@@ -338,7 +338,7 @@ namespace LiftSimulation
         /// Tür öffnen auf auf der GUI darstellen
         /// </summary>
         /// <param name="floor"></param>
-        public void open_door(int floor)
+        public void OpenDoor(int floor)
         {
             if (floor < 0 || floor > Defaults.Floors) return;
                 pictBox_DoorStates[floor].Image = img_door1;            
@@ -348,7 +348,7 @@ namespace LiftSimulation
         /// Tür schießen auf der GUI darstellen
         /// </summary>
         /// <param name="floor"></param>
-        public void close_door(int floor)
+        public void CloseDoor(int floor)
         {
             if (floor < 0 || floor > Defaults.Floors) return;
             if (pictBox_DoorStates[floor].Image == img_door1) pictBox_DoorStates[floor].Image = img_door2;
@@ -409,12 +409,12 @@ namespace LiftSimulation
             button_more_passenger.Enabled = true;
             Syncronize.ResetDoorTimer();
             Syncronize.SetState( Defaults.State.FixedOpen );
-            open_door( Syncronize.SyncFloor() );
+            OpenDoor( Syncronize.SyncFloor() );
         }
 
         #endregion
 
-        public void ChangeDirection()
+        public void SwitchDirection()
         {
             img_direction = pictureBox_direction.Image;
             img_direction.RotateFlip( RotateFlipType.Rotate180FlipX );
@@ -430,14 +430,14 @@ namespace LiftSimulation
             }
         }
 
-        private void timer_tuer_zu_Tick( object sender, EventArgs e )
+        private void TickTimerCloseDoor( object sender, EventArgs e )
         {
             timer_tuer_zu.Stop();
             Syncronize.EnablePassengerButtons( false );
             Syncronize.SetState( Defaults.State.FixedClosed );
         }
 
-        private void timer_fahren_Tick( object sender, EventArgs e )
+        private void TickTimerGo( object sender, EventArgs e )
         {
             timer_fahren.Stop();
             pictureBox_direction.Visible = false;
@@ -447,12 +447,12 @@ namespace LiftSimulation
             Syncronize.ExecuteLoop();
         }
 
-        public void show_direction() 
+        public void ShowDirection() 
         { 
             pictureBox_direction.Visible = true; 
         }
         
-        private void UserInterface_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             Log.Close();
         }

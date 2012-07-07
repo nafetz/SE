@@ -121,7 +121,7 @@ namespace LiftSimulation
         /// Gibt an, ob auf der gegenwärtigen Etage ein interner Wunsch oder ein Wunsch in Fahrtrichtung vorliegt.
         /// Liegt lediglich ein Wunsch entgegen der Fahrtrichtung vor, lautet das Ergebnis false!
         /// </summary>
-        public bool TheresAFittingWishOnThisFloor
+        public bool FittingWishOnThisFloor
         {
             get
             {
@@ -151,7 +151,7 @@ namespace LiftSimulation
         /// Gibt an, ob auf der gegenwärtigen Etage ein Wunsch entgegen der Fahrtrichtung vorliegt.
         /// Liegt kein Wunsch entgegen der Fahrtrichtung vor, lautet das Ergebnis false!
         /// </summary>
-        public bool TheresAOppositeWishOnThisFloor
+        public bool OppositeWishOnThisFloor
         {
             get
             {
