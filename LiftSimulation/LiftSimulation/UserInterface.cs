@@ -192,7 +192,7 @@ namespace LiftSimulation
             }// get
             set
             {
-                List<bool> _downwards = value; //kann man die Liste einfach so kopieren?
+                List<bool> _downwards = value; 
                 for (int i = 1; i < Defaults.Floors; i++) //startet bei 1, da es unten ohnehin kein "runter" gibt
                 {
                     if (_downwards[i] == true) button_downward[i].Enabled = false;

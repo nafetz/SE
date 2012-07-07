@@ -48,16 +48,16 @@ namespace LiftSimulation
         {
             Syncronize.CloseDoor();
 
-            if (!elevator.ReachedEndOfShaft)
+            if( !elevator.ReachedEndOfShaft )
             {
-                if (elevator.FittingWishOnThisFloor)
+                if( elevator.FittingWishOnThisFloor )
                 {
-                    elevator.SetState(Defaults.State.FixedOpen);
-                    return ;
+                    elevator.SetState( Defaults.State.FixedOpen );
+                    return;
                 }
-                else if (!elevator.WishesInMyDirection && elevator.OppositeWishOnThisFloor) 
+                else if( !elevator.WishesInMyDirection && elevator.OppositeWishOnThisFloor )
                 {
-                    elevator.SetState(Defaults.State.FixedOpen);
+                    elevator.SetState( Defaults.State.FixedOpen );
                     return;
                 }
             }
@@ -78,12 +78,12 @@ namespace LiftSimulation
                 return;
             }
 
-            else if( elevator.OppositeWishOnThisFloor )
-            {
-                elevator.SwitchDirection();
-                elevator.SetState( Defaults.State.FixedOpen );
-                return;
-            }
+            //else if( elevator.OppositeWishOnThisFloor )
+            //{
+            //    elevator.SwitchDirection();
+            //    elevator.SetState( Defaults.State.FixedOpen );
+            //    return;
+            //}
 
             else if( elevator.WishesInMyOppositeDirection )
             {

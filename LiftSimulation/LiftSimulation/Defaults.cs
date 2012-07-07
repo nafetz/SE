@@ -72,6 +72,8 @@ namespace LiftSimulation
         /// Konvertiert anhand Default.Floors und Defaults.Basements 
         /// FloorNr. in nutzbaren List/Array-Index
         /// </summary>
+        /// <param name="floor">Geschossnummer</param>
+        /// <returns>Index des Geschosses</returns>
         public static int FloorToIdx( int floor )
         {
             return ( floor + _numberOfBasementFloors );

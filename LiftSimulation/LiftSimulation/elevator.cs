@@ -96,6 +96,9 @@ namespace LiftSimulation
             set { _internRequired = value; }
         }
 
+        /// <summary>
+        /// Gibt an, ob der Fahrstuhl das Ende des Fahrstuhlschachtes in Fahrtrichtung erreicht hat.
+        /// </summary>
         public bool ReachedEndOfShaft
         {
             get
@@ -310,6 +313,9 @@ namespace LiftSimulation
             Log.AddEntry("Richtungswechsel, neue Richtung: " + _direction.ToString());
         }
 
+        /// <summary>
+        /// Löscht die Wünsche auf der aktuellen Etage
+        /// </summary>
         public void DeleteRequirementsHere()
         {
             int i = Defaults.FloorToIdx( _currentFloor );

@@ -1,0 +1,959 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
+  dslVersion="1.0.0.0"
+  Id="7c6046f5-a099-4f51-9bf7-87a7a391ce87"
+  name="ad_FixedOpen" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="152be557-cf1c-4399-bd3a-bea01929ca79">
+      <body>Zu viele Personen im Fahrstuhl?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="f3f0fd06-e6d5-4604-8518-92bef9736b72"
+          LastKnownName="Decision1"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="d053f9c1-5f9d-4612-9d7e-b65af8c1fc17">
+      <body>Passagiere ein/ausgestiegen?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="b083e73a-e4df-44f4-8631-bb10d6ab9855"
+          LastKnownName="Passengers +/-"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="78d4227d-7307-4a23-8f38-d583bb507fec">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="39669864-509e-4dd9-ba50-40e92e4869aa">
+      <body>nein</body>
+    </comment>
+    <comment
+      Id="0e09bd65-7e5a-4adb-a120-433670326064">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="ee4c85ac-d5a4-4a9d-9c2e-8faf8025fd76">
+      <body>nein</body>
+    </comment>
+    <comment
+      Id="7fe30a7a-7036-4401-8a8d-8b353a64fd90">
+      <body>Ende des Fahrstuhlschachtes erreicht?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="488114c8-ac6a-40f4-8067-2323013ec6d6"
+          LastKnownName="Decision1"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="e3c6ea42-672d-45e7-8b33-6beef49e69a7">
+      <body>Wunsch in Fahrtrichtung hier || Gegenrichtungswunsch hier &amp; kein Wunsch in Fahrtrichtung
+</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="a5befc1c-6719-465e-a2e2-d02cfe7f3547"
+          LastKnownName="Decision2"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="ea92e071-2c8e-44f5-acbb-bd7693a51cc0">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="4ac77dff-309f-4c11-9905-b70316533b68">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="41931d2d-a955-4c36-8424-ff6fcf148f73">
+      <body>nein</body>
+    </comment>
+    <comment
+      Id="e1eb4161-c7fc-4004-bb71-8cfbce0e8988">
+      <body>nein</body>
+    </comment>
+    <comment
+      Id="4acd7226-5012-450b-82e1-018d73ea957d">
+      <body>Wünsche hier?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="ec8e204f-e4ed-446f-a8d1-dcdffab83b2c"
+          LastKnownName="Decision3"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="ae1f5f5a-fbde-45e2-919f-d5933acc9b7b">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="714c2297-88a9-4241-9e09-f4236998bf2e">
+      <body>Wünsche in Fahrtrichtung?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="a4b9da9d-d418-415c-b82c-c9ba29123e43"
+          LastKnownName="Decision4"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="e3ca6707-ae15-40d4-96c4-8f0aa6f2d0fb">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="65aa23d5-8cc1-44f3-b677-699f0e930816">
+      <body>nein</body>
+    </comment>
+    <comment
+      Id="193c0fd6-f53b-46a5-aa1f-87e788eb135d">
+      <body>Ende des Fahstuhlschachtes?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="bd89c1de-d948-4304-ad11-24c4317817b6"
+          LastKnownName="Decision1"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="e9494f94-853f-469e-8429-fb384b88d50e">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="0d394a64-4262-49ec-9aa0-9838d8f836ca">
+      <body>nein</body>
+    </comment>
+    <comment
+      Id="e0c6e411-4f4b-4df5-b4b5-f8652d5f8545">
+      <body>Passende Wünsche hier?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="56e114e4-9693-45ab-a8d9-183f6cdbff3a"
+          LastKnownName="Decision2"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="1582cc81-8c10-40d7-9a14-21ae84a7fa30">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="fc21b98d-d4b0-4af3-b7bb-575c3aca8e45">
+      <body>Wünsche in Fahrtrichtung?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="45e8d3de-e0da-487d-a12f-859b5517a6b0"
+          LastKnownName="Decision3"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="e2e8751e-e138-4166-817d-cbe2423a7323">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="05a3fc3a-dfd2-4119-96f9-287386677704">
+      <body>nein</body>
+    </comment>
+    <comment
+      Id="040f3535-a2e3-420d-ae7d-749e5363c397">
+      <body>nein</body>
+    </comment>
+    <comment
+      Id="a00eafc1-317c-4857-9152-8a132f8baad9">
+      <body>Gegenrichtungswunsch hier?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="256f8a93-a63a-4942-908f-15633c28a01c"
+          LastKnownName="Decision4"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="2709bc02-40ba-4630-8a49-e33be5dc8149">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="5743e991-8b02-45c0-be73-9b85c0d330ba">
+      <body>nein</body>
+    </comment>
+    <comment
+      Id="20a4424c-5bb8-43a8-825c-af1f2cbfa661">
+      <body>Zu viele Passagiere?</body>
+      <annotatedElements>
+        <decisionNodeMoniker
+          Id="319aa00a-4b15-430c-83bf-fd32558b2ee0"
+          LastKnownName="Decision1"
+          LastKnownLocation="ad_FixedOpen.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="fb91ae61-8ce3-4bcd-aeed-2607c5f3a63f">
+      <body>ja</body>
+    </comment>
+    <comment
+      Id="18ed2250-9088-41af-8701-6270d2da229c">
+      <body>nein</body>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <activity
+        Id="a17613c7-df09-47d5-bceb-69c2be8d6034"
+        name="Activity1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="466c765a-daba-4512-b25b-4ae8662c4b25"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="90611c5c-861c-4f1e-a9e7-0a0d0687dd59"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="0b6bac49-7ad9-405a-bb4c-0b33bffc5804"
+                  LastKnownName="Öffne Fahrstuhltür"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction
+            Id="0b6bac49-7ad9-405a-bb4c-0b33bffc5804"
+            name="Öffne Fahrstuhltür"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="f7894afb-3972-4535-a23a-8e84d17a07f2"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="eb84b7a6-1802-4b3c-a9d0-2afa4816fb39"
+                  LastKnownName="Lösche Wünsche auf aktueller Etage"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="eb84b7a6-1802-4b3c-a9d0-2afa4816fb39"
+            name="Lösche Wünsche auf aktueller Etage"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="521787d2-6954-4bdf-96ef-9e7071cc1a7f"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="b083e73a-e4df-44f4-8631-bb10d6ab9855"
+                  LastKnownName="Passengers +/-"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="b083e73a-e4df-44f4-8631-bb10d6ab9855"
+            name="Passengers +/-"
+            isLeaf="false">
+            <description>Passagiere ein/ausgestiegen?</description>
+            <flowNodeTargets>
+              <controlFlow
+                Id="4c0e5d6e-f409-4b14-ab14-c4d35d08aa4d"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="4bb0654b-259d-4c55-972d-c0fdfb2843a2"
+                  LastKnownName="Synchronisiere Passagiere"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="464c37db-4a99-4e16-b79e-670cfe9e94cb"
+                isLeaf="false">
+                <mergeNodeMoniker
+                  Id="cded9ed5-db23-4b51-b19a-95052d491029"
+                  LastKnownName="Merge1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="4bb0654b-259d-4c55-972d-c0fdfb2843a2"
+            name="Synchronisiere Passagiere"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="b00e4d55-682f-444f-9e39-fcb993357877"
+                isLeaf="false">
+                <mergeNodeMoniker
+                  Id="cded9ed5-db23-4b51-b19a-95052d491029"
+                  LastKnownName="Merge1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="f3f0fd06-e6d5-4604-8518-92bef9736b72"
+            name="Decision1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="fb00223a-ae40-4122-a7fa-d892e19193c4"
+                name="ja"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="386f44aa-d718-47cf-8088-98bf1da3a8c2"
+                  LastKnownName="Setze Zustand Überlast"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+                <description>ja</description>
+              </controlFlow>
+              <controlFlow
+                Id="6409a2a8-e0c2-42d1-921d-d3424cc13640"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="b529a74b-1227-4e1f-9ac9-f2f66c07388b"
+                  LastKnownName="ActivityFinal1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="386f44aa-d718-47cf-8088-98bf1da3a8c2"
+            name="Setze Zustand Überlast"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="7ecc18b0-195b-4941-acfb-e461ad336041"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="9ec8f060-1f50-4468-9c71-e9a0cdbb7575"
+                  LastKnownName="ActivityFinal2"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="b529a74b-1227-4e1f-9ac9-f2f66c07388b"
+            name="ActivityFinal1"
+            isLeaf="false" />
+          <activityFinalNode
+            Id="9ec8f060-1f50-4468-9c71-e9a0cdbb7575"
+            name="ActivityFinal2"
+            isLeaf="false" />
+          <mergeNode
+            Id="cded9ed5-db23-4b51-b19a-95052d491029"
+            name="Merge1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="d6f2bf7a-0e22-41de-9570-1c6d53c354e9"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="f3f0fd06-e6d5-4604-8518-92bef9736b72"
+                  LastKnownName="Decision1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </mergeNode>
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="c24d7d03-a33b-4eb8-97ca-d450254c4c77"
+        name="Activity2"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="33631b24-1e83-4a26-a1ab-64243d14049a"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="656c3a29-f098-4549-ae84-04f77cdfaaf8"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="c26f5410-d9fa-488c-9d51-87ed8a2fb598"
+                  LastKnownName="Schließe Fahrstuhltür"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction
+            Id="c26f5410-d9fa-488c-9d51-87ed8a2fb598"
+            name="Schließe Fahrstuhltür"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="1404a494-306d-412a-b656-690dcae7e7ef"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="488114c8-ac6a-40f4-8067-2323013ec6d6"
+                  LastKnownName="Decision1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="488114c8-ac6a-40f4-8067-2323013ec6d6"
+            name="Decision1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="3aefd658-687c-4410-a0bf-eb2f7864e329"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="a5befc1c-6719-465e-a2e2-d02cfe7f3547"
+                  LastKnownName="Decision2"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="f743d349-f7eb-43b4-a7ad-5af2664aab89"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="cbd3edde-51ba-49e8-be5d-02e7bd3febed"
+                  LastKnownName="Wechsle Richtung"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <decisionNode
+            Id="a5befc1c-6719-465e-a2e2-d02cfe7f3547"
+            name="Decision2"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="d6c8752c-dcce-452f-b2b5-a737a4589c94"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="50db22d5-d3a8-40d1-8126-5f68b9059d2c"
+                  LastKnownName="Setze Zustand FixedOpen"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="c7e57b0e-e9a2-41e3-8c72-56d3e3840729"
+                isLeaf="false">
+                <mergeNodeMoniker
+                  Id="96186528-66cf-49d5-bb03-1cd24b9c02ef"
+                  LastKnownName="Merge1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="50db22d5-d3a8-40d1-8126-5f68b9059d2c"
+            name="Setze Zustand FixedOpen"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="6be1f35e-ae37-4e2b-9c8a-6bdcf6ebd924"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="2127920c-07a7-488c-a9e6-83d43fc80a44"
+                  LastKnownName="ActivityFinal1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <mergeNode
+            Id="96186528-66cf-49d5-bb03-1cd24b9c02ef"
+            name="Merge1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="a099c289-481b-48f1-a614-628115232a9d"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="a4b9da9d-d418-415c-b82c-c9ba29123e43"
+                  LastKnownName="Decision4"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </mergeNode>
+          <activityFinalNode
+            Id="2127920c-07a7-488c-a9e6-83d43fc80a44"
+            name="ActivityFinal1"
+            isLeaf="false" />
+          <opaqueAction
+            Id="cbd3edde-51ba-49e8-be5d-02e7bd3febed"
+            name="Wechsle Richtung"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="607b48fb-c1b0-4990-ade9-87138a407563"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="ec8e204f-e4ed-446f-a8d1-dcdffab83b2c"
+                  LastKnownName="Decision3"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="ec8e204f-e4ed-446f-a8d1-dcdffab83b2c"
+            name="Decision3"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="c2275c15-9206-4f26-9100-8e8d7024e966"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="952495a7-ff6f-4901-99f8-8bb34f72424d"
+                  LastKnownName="Setze Zustand FixedOpen"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="42fe39c7-fad9-4832-8bd6-372599e0cf11"
+                isLeaf="false">
+                <mergeNodeMoniker
+                  Id="96186528-66cf-49d5-bb03-1cd24b9c02ef"
+                  LastKnownName="Merge1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="952495a7-ff6f-4901-99f8-8bb34f72424d"
+            name="Setze Zustand FixedOpen"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="41d3c81b-bafe-4def-a12e-a86ab3eff014"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="0c76be0e-901a-4591-aae8-7544e91451b6"
+                  LastKnownName="ActivityFinal2"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="0c76be0e-901a-4591-aae8-7544e91451b6"
+            name="ActivityFinal2"
+            isLeaf="false" />
+          <decisionNode
+            Id="a4b9da9d-d418-415c-b82c-c9ba29123e43"
+            name="Decision4"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="15c7f3ea-8d74-4543-af1e-91fda0df6c76"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="70a3687c-12ce-438d-8bd5-3d2a3c0d81dd"
+                  LastKnownName="Setze Zustand Fahrend"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="90057730-ff60-4b70-a643-eff27e5c75b5"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="e82d926d-b423-4c7d-b372-459bd392d866"
+                  LastKnownName="setze busy=false"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="70a3687c-12ce-438d-8bd5-3d2a3c0d81dd"
+            name="Setze Zustand Fahrend"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="0702fa40-797d-4ec2-bc5e-2d6c8c336ba2"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="bb58b347-1b2a-40ca-8ac8-8ea46227b911"
+                  LastKnownName="ActivityFinal3"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="bb58b347-1b2a-40ca-8ac8-8ea46227b911"
+            name="ActivityFinal3"
+            isLeaf="false" />
+          <opaqueAction
+            Id="e82d926d-b423-4c7d-b372-459bd392d866"
+            name="setze busy=false"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="d54316a9-0d47-4d27-a526-9f76e4652047"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="3231b742-0b45-4733-9b8c-81efaa72ecd0"
+                  LastKnownName="ActivityFinal4"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="3231b742-0b45-4733-9b8c-81efaa72ecd0"
+            name="ActivityFinal4"
+            isLeaf="false" />
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="c7777b44-6db3-4052-88d6-a5e8eb75f5a9"
+        name="Activity3"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="f3b3b5f7-ee4c-4add-aff6-07ab483baef9"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="3d562061-e895-41a4-a79e-3aef0aeea12b"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="bd89c1de-d948-4304-ad11-24c4317817b6"
+                  LastKnownName="Decision1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <decisionNode
+            Id="bd89c1de-d948-4304-ad11-24c4317817b6"
+            name="Decision1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="d50b5201-485b-465d-8e68-f325c30aa966"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="c1f34f67-fb97-42f2-9d64-84138c68d5ef"
+                  LastKnownName="Wechsle Richtung"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="1a998e67-1bd1-4b1c-97b6-725bc4269aac"
+                isLeaf="false">
+                <mergeNodeMoniker
+                  Id="55b480bc-11a4-4534-99d9-7c2d8e3175c4"
+                  LastKnownName="Merge1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="c1f34f67-fb97-42f2-9d64-84138c68d5ef"
+            name="Wechsle Richtung"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="f4fb9b32-543b-4e52-abe6-4765ecd5f2e7"
+                isLeaf="false">
+                <mergeNodeMoniker
+                  Id="55b480bc-11a4-4534-99d9-7c2d8e3175c4"
+                  LastKnownName="Merge1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <mergeNode
+            Id="55b480bc-11a4-4534-99d9-7c2d8e3175c4"
+            name="Merge1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="872e3de8-e514-4ad9-aec5-5529da89ef52"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="56e114e4-9693-45ab-a8d9-183f6cdbff3a"
+                  LastKnownName="Decision2"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </mergeNode>
+          <decisionNode
+            Id="56e114e4-9693-45ab-a8d9-183f6cdbff3a"
+            name="Decision2"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="fafe5e36-b160-4362-b1fd-6718529fd8b3"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="19ebd4c2-4b37-4fa2-8483-80014f27e2fc"
+                  LastKnownName="Setze Zustand FixedClosed"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="ae11d653-a743-4ad1-bf5d-7808939b0735"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="45e8d3de-e0da-487d-a12f-859b5517a6b0"
+                  LastKnownName="Decision3"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="19ebd4c2-4b37-4fa2-8483-80014f27e2fc"
+            name="Setze Zustand FixedClosed"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="fc93adb6-20e4-4b66-9c82-b084c5c1ab03"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="800cbc06-fdcd-4096-8946-7562f8a66169"
+                  LastKnownName="ActivityFinal1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="800cbc06-fdcd-4096-8946-7562f8a66169"
+            name="ActivityFinal1"
+            isLeaf="false" />
+          <decisionNode
+            Id="45e8d3de-e0da-487d-a12f-859b5517a6b0"
+            name="Decision3"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="fc163e2f-4878-41cf-9e88-e75f5d656f4a"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="2a68d76e-7f78-49d2-b38f-9b9813858610"
+                  LastKnownName="Action1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="3c1d3b10-fd60-4b18-a108-326761ab58b8"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="256f8a93-a63a-4942-908f-15633c28a01c"
+                  LastKnownName="Decision4"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="2a68d76e-7f78-49d2-b38f-9b9813858610"
+            name="Action1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="6d20cd98-c6d8-4c3b-86f5-318c3e74590b"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="9788298d-2812-4d36-a097-e8fc2c560faf"
+                  LastKnownName="ActivityFinal2"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="9788298d-2812-4d36-a097-e8fc2c560faf"
+            name="ActivityFinal2"
+            isLeaf="false" />
+          <decisionNode
+            Id="256f8a93-a63a-4942-908f-15633c28a01c"
+            name="Decision4"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="b6217ee1-b8a2-4cca-a4a1-a2c0438e6486"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="dd98a198-ca38-4c54-a1bd-e2f324a0ab5b"
+                  LastKnownName="ActivityFinal4"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="7861fd17-81bf-49c8-b135-7408637fcb02"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="e9496926-4268-45cd-9d2f-6a4ca3e29675"
+                  LastKnownName="Wechsle Richtung"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="e9496926-4268-45cd-9d2f-6a4ca3e29675"
+            name="Wechsle Richtung"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="829dc20b-f148-4034-b331-e1dba3c2f994"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="f2254dca-7a7d-4b36-b264-94dbf130de2b"
+                  LastKnownName="Setze Zustand FixedClosed"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="f2254dca-7a7d-4b36-b264-94dbf130de2b"
+            name="Setze Zustand FixedClosed"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="93a5816b-ed13-4090-9f4f-7297f9910356"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="2bde5066-9ac6-4d87-b2d0-863d8393c32d"
+                  LastKnownName="ActivityFinal3"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="2bde5066-9ac6-4d87-b2d0-863d8393c32d"
+            name="ActivityFinal3"
+            isLeaf="false" />
+          <activityFinalNode
+            Id="dd98a198-ca38-4c54-a1bd-e2f324a0ab5b"
+            name="ActivityFinal4"
+            isLeaf="false" />
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="7b0f79c2-6624-44e0-95cc-1ee41c8d24c6"
+        name="Activity4"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="a2af9823-fb98-4ce9-903e-d639455afcbf"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="c138c09a-bc5c-4863-9ac1-61fc5dc29207"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="4c903ced-2815-485b-b926-d2a1907f159b"
+                  LastKnownName="Synchronisiere Passagiere"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction
+            Id="4c903ced-2815-485b-b926-d2a1907f159b"
+            name="Synchronisiere Passagiere"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="bd1bfd94-6d7a-45a1-927c-8d44b2768425"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="319aa00a-4b15-430c-83bf-fd32558b2ee0"
+                  LastKnownName="Decision1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="319aa00a-4b15-430c-83bf-fd32558b2ee0"
+            name="Decision1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="2b13032d-5b6d-4949-b7e0-f83dbbff5a23"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="0d3ff57f-6f8e-41b6-90ae-82eaa16a508e"
+                  LastKnownName="Setze Zustand FixedOpen"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="085177e7-411b-4372-bf3b-a24428d692df"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="01f30f14-7031-4fa1-8109-d9e1536ca58a"
+                  LastKnownName="ActivityFinal1"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="0d3ff57f-6f8e-41b6-90ae-82eaa16a508e"
+            name="Setze Zustand FixedOpen"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="43568c1b-6568-4563-acc6-941dfd771546"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="1ac517e7-1b61-4f20-bc45-4ea95e8a4339"
+                  LastKnownName="ActivityFinal2"
+                  LastKnownLocation="ad_FixedOpen.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode
+            Id="01f30f14-7031-4fa1-8109-d9e1536ca58a"
+            name="ActivityFinal1"
+            isLeaf="false" />
+          <activityFinalNode
+            Id="1ac517e7-1b61-4f20-bc45-4ea95e8a4339"
+            name="ActivityFinal2"
+            isLeaf="false" />
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>

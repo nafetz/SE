@@ -38,6 +38,9 @@ namespace LiftSimulation
             _logger.WriteLine( DateTime.Now.ToString().Substring(11) + " Uhr: " + entry );
         }
 
+        /// <summary>
+        /// Schließt _logger, sofern dieser initialisiert wurde
+        /// </summary>
         public static void Close()
         {
             if(_logger!=null)

@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="d39aaa5c-6990-4045-8008-0179006d1368" name="Activity1" linkedPackageId="83af1a4e-f5c2-4b45-88b2-14320218d138" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <ownedCommentsInternal>
+    <comment Id="07946346-168c-47a4-8835-e777afa1b6a2">
+      <elementDefinition Id="152be557-cf1c-4399-bd3a-bea01929ca79" />
+      <body>Zu viele Personen im Fahrstuhl?</body>
+      <annotatedElements>
+        <decisionNodeMoniker Id="0fb8a8aa-3231-40c6-abf5-2c5f63b378d4" LastKnownName="Decision1" />
+      </annotatedElements>
+    </comment>
+    <comment Id="18b6c86b-a92f-4a13-a5ed-afeade71ce13">
+      <elementDefinition Id="d053f9c1-5f9d-4612-9d7e-b65af8c1fc17" />
+      <body>Passagiere ein/ausgestiegen?</body>
+      <annotatedElements>
+        <decisionNodeMoniker Id="481150ea-5017-4391-83c6-18a35f5aa7cb" LastKnownName="Passengers +/-" />
+      </annotatedElements>
+    </comment>
+    <comment Id="ddfd5636-14c6-48f2-b77c-3888196bf6e1">
+      <elementDefinition Id="78d4227d-7307-4a23-8f38-d583bb507fec" />
+      <body>ja</body>
+    </comment>
+    <comment Id="f2641096-b662-4639-8e71-4865186a4fe4">
+      <elementDefinition Id="39669864-509e-4dd9-ba50-40e92e4869aa" />
+      <body>nein</body>
+    </comment>
+    <comment Id="0f65f72f-be31-436a-af59-71f5abbe5f76">
+      <elementDefinition Id="0e09bd65-7e5a-4adb-a120-433670326064" />
+      <body>ja</body>
+    </comment>
+    <comment Id="11fa4628-4eaa-41db-b67c-3165ccdfcdcc">
+      <elementDefinition Id="ee4c85ac-d5a4-4a9d-9c2e-8faf8025fd76" />
+      <body>nein</body>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="d6b8f318-b535-4009-963e-6cfd081b5add">
+      <profileInstance Id="a3c895c0-53a9-4221-ab13-c4f3d221b137" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="00c3228a-9d3e-4e1e-9475-6742f2d667d3">
+      <profileInstance Id="d4962dd3-7eee-4864-8f2a-6fa70b94770a" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="5f763939-9ea9-4ffa-a7cc-22d8bd60ab4a" name="Activity1" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="a17613c7-df09-47d5-bceb-69c2be8d6034" />
+        <nodes>
+          <initialNode Id="09836dcc-32e0-4d25-b1a6-3f9bd48c1d79" name="Initial1" isLeaf="false">
+            <elementDefinition Id="466c765a-daba-4512-b25b-4ae8662c4b25" />
+            <flowNodeTargets>
+              <controlFlow Id="9aefe923-cb98-4748-8282-cc60ec257d75" isLeaf="false">
+                <opaqueActionMoniker Id="4fb15d4b-9d94-4d79-8cd4-e2a333b852db" LastKnownName="Öffne Fahrstuhltür" />
+                <elementDefinition Id="90611c5c-861c-4f1e-a9e7-0a0d0687dd59" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction Id="4fb15d4b-9d94-4d79-8cd4-e2a333b852db" name="Öffne Fahrstuhltür" isLeaf="false">
+            <elementDefinition Id="0b6bac49-7ad9-405a-bb4c-0b33bffc5804" />
+            <flowNodeTargets>
+              <controlFlow Id="959a2d23-5624-4610-a5a5-8e8a11ce379b" isLeaf="false">
+                <opaqueActionMoniker Id="689031bf-e21e-45f7-860b-666e3bcac5de" LastKnownName="Lösche Wünsche auf aktueller Etage" />
+                <elementDefinition Id="f7894afb-3972-4535-a23a-8e84d17a07f2" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="689031bf-e21e-45f7-860b-666e3bcac5de" name="Lösche Wünsche auf aktueller Etage" isLeaf="false">
+            <elementDefinition Id="eb84b7a6-1802-4b3c-a9d0-2afa4816fb39" />
+            <flowNodeTargets>
+              <controlFlow Id="b1a82603-338d-4b5c-95d4-4a6ee7712e1d" isLeaf="false">
+                <decisionNodeMoniker Id="481150ea-5017-4391-83c6-18a35f5aa7cb" LastKnownName="Passengers +/-" />
+                <elementDefinition Id="521787d2-6954-4bdf-96ef-9e7071cc1a7f" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode Id="481150ea-5017-4391-83c6-18a35f5aa7cb" name="Passengers +/-" isLeaf="false">
+            <description>Passagiere ein/ausgestiegen?</description>
+            <elementDefinition Id="b083e73a-e4df-44f4-8631-bb10d6ab9855" />
+            <flowNodeTargets>
+              <controlFlow Id="8efdadfc-cd1f-420d-b511-d4ad360964fd" isLeaf="false">
+                <opaqueActionMoniker Id="b53cac57-9728-4487-b962-8dc6ea9e51cd" LastKnownName="Synchronisiere Passagiere" />
+                <elementDefinition Id="4c0e5d6e-f409-4b14-ab14-c4d35d08aa4d" />
+              </controlFlow>
+              <controlFlow Id="2666062c-e33f-4043-acfc-3b9fd5680f90" isLeaf="false">
+                <mergeNodeMoniker Id="a901c2ef-9cc2-42a3-ac87-214ff757b79f" LastKnownName="Merge1" />
+                <elementDefinition Id="464c37db-4a99-4e16-b79e-670cfe9e94cb" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction Id="b53cac57-9728-4487-b962-8dc6ea9e51cd" name="Synchronisiere Passagiere" isLeaf="false">
+            <elementDefinition Id="4bb0654b-259d-4c55-972d-c0fdfb2843a2" />
+            <flowNodeTargets>
+              <controlFlow Id="60780f8f-1dae-4c7d-adfe-88adb0c6b81f" isLeaf="false">
+                <mergeNodeMoniker Id="a901c2ef-9cc2-42a3-ac87-214ff757b79f" LastKnownName="Merge1" />
+                <elementDefinition Id="b00e4d55-682f-444f-9e39-fcb993357877" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode Id="0fb8a8aa-3231-40c6-abf5-2c5f63b378d4" name="Decision1" isLeaf="false">
+            <elementDefinition Id="f3f0fd06-e6d5-4604-8518-92bef9736b72" />
+            <flowNodeTargets>
+              <controlFlow Id="e3164d46-52ab-422f-bccd-047a7c8b4a16" name="ja" isLeaf="false">
+                <opaqueActionMoniker Id="035c6c0f-30f8-44fc-a927-a5fdd5ab40b4" LastKnownName="Setze Zustand Überlast" />
+                <description>ja</description>
+                <elementDefinition Id="fb00223a-ae40-4122-a7fa-d892e19193c4" />
+              </controlFlow>
+              <controlFlow Id="45d259ef-2064-49ad-86d6-1de779077c77" isLeaf="false">
+                <activityFinalNodeMoniker Id="242b83c6-139b-4af5-bef4-2c3f1beeb35b" LastKnownName="ActivityFinal1" />
+                <elementDefinition Id="6409a2a8-e0c2-42d1-921d-d3424cc13640" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction Id="035c6c0f-30f8-44fc-a927-a5fdd5ab40b4" name="Setze Zustand Überlast" isLeaf="false">
+            <elementDefinition Id="386f44aa-d718-47cf-8088-98bf1da3a8c2" />
+            <flowNodeTargets>
+              <controlFlow Id="7453cd27-5708-4065-8251-eb368fe23fcf" isLeaf="false">
+                <activityFinalNodeMoniker Id="aebfd1c1-73e3-4170-9060-3472ac9b8067" LastKnownName="ActivityFinal2" />
+                <elementDefinition Id="7ecc18b0-195b-4941-acfb-e461ad336041" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode Id="242b83c6-139b-4af5-bef4-2c3f1beeb35b" name="ActivityFinal1" isLeaf="false">
+            <elementDefinition Id="b529a74b-1227-4e1f-9ac9-f2f66c07388b" />
+          </activityFinalNode>
+          <activityFinalNode Id="aebfd1c1-73e3-4170-9060-3472ac9b8067" name="ActivityFinal2" isLeaf="false">
+            <elementDefinition Id="9ec8f060-1f50-4468-9c71-e9a0cdbb7575" />
+          </activityFinalNode>
+          <mergeNode Id="a901c2ef-9cc2-42a3-ac87-214ff757b79f" name="Merge1" isLeaf="false">
+            <elementDefinition Id="cded9ed5-db23-4b51-b19a-95052d491029" />
+            <flowNodeTargets>
+              <controlFlow Id="91b8d969-e740-4dbd-a541-96b0c94d8ece" isLeaf="false">
+                <decisionNodeMoniker Id="0fb8a8aa-3231-40c6-abf5-2c5f63b378d4" LastKnownName="Decision1" />
+                <elementDefinition Id="d6f2bf7a-0e22-41de-9570-1c6d53c354e9" />
+              </controlFlow>
+            </flowNodeTargets>
+          </mergeNode>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="83af1a4e-f5c2-4b45-88b2-14320218d138" name="ad_FixedOpen">
+    <elementDefinition Id="7c6046f5-a099-4f51-9bf7-87a7a391ce87" />
+  </package>
+</activityRootModel>
