@@ -409,7 +409,7 @@ namespace Alternativ
                 button_open_door.Enabled = true;
                 button_close_door.Enabled = true;
                 busy = true;
-                //return;
+               
             }
 
             else if (wishesInDirection() == true)
@@ -417,7 +417,7 @@ namespace Alternativ
                 floorchange();
                 busy = true;
                 timer_fahren.Start();
-                // return;
+              
             }
 
 
@@ -428,7 +428,7 @@ namespace Alternativ
                 button_open_door.Enabled = true;
                 button_close_door.Enabled = true;
                 openDoor();
-                //return;
+              
             }
 
 
@@ -438,7 +438,7 @@ namespace Alternativ
                 busy = true;
                 floorchange();
                 timer_fahren.Start();
-                //return;
+                
             }
 
             else busy = false;

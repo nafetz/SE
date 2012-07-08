@@ -7,3 +7,5 @@ c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\bin\Debug\LiftSimulati
 c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\LiftSimulationAlternativ.exe
 c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\LiftSimulationAlternativ.pdb
 c:\temp\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\Alternativ.UserInterface.resources
+C:\4.Semester\SE2\SE\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\LiftSimulationAlternativ.exe
+C:\4.Semester\SE2\SE\LiftSimulationAlternativ\LiftSimulationAlternativ\obj\x86\Debug\LiftSimulationAlternativ.pdb
