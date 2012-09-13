@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftSimulation", "LiftSimulation\LiftSimulation.csproj", "{F246B580-9A79-4ED8-94C3-82C3A36871FC}"
 EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "ad_FixedOpen", "ad_FixedOpen\ad_FixedOpen.modelproj", "{D4FDC553-BAC9-4288-940A-5511097DA0E0}"
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "ADs", "ad_FixedOpen\ADs.modelproj", "{D4FDC553-BAC9-4288-940A-5511097DA0E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
